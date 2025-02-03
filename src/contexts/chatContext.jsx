@@ -3,8 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const ChatContext = createContext(undefined)
 
-const STORAGE_KEY = 'chatgpt_clone_chats';
-const CURRENT_CHAT_KEY = 'chatgpt_clone_current_chat';
+const STORAGE_KEY = 'chats';
+const CURRENT_CHAT_KEY = 'current-chat';
 
 function loadChatsFromStorage() {
     const storedChats = localStorage.getItem(STORAGE_KEY);
@@ -15,7 +15,6 @@ function loadChatsFromStorage() {
             createdAt: new Date(chat.createdAt),
             messages: chat.messages.map((msg) => ({
                 ...msg,
-                timestamp: new Date(msg.timestamp),
             })),
         }));
     }
@@ -24,7 +23,6 @@ function loadChatsFromStorage() {
             id: '1',
             title: 'New chat',
             messages: [],
-            createdAt: new Date(),
         },
     ];
 }
@@ -120,6 +118,19 @@ const ChatProvider = ({ children }) => {
             setIsTyping(false);
         } catch (error) {
             console.error("Error fetching the response:", error);
+            setChats((prev) =>
+                prev.map((chat) =>
+                    chat.id === currentChatId
+                        ? {
+                            ...chat, messages: [...chat.messages, {
+                                id: (Date.now() + 1).toString(),
+                                content: "Sorry, I couldn't get a response right now.",
+                                isUser: false,
+                            }]
+                        }
+                        : chat
+                )
+            );
         }
     }
 
