@@ -12,7 +12,6 @@ function loadChatsFromStorage() {
         const chats = JSON.parse(storedChats);
         return chats.map((chat) => ({
             ...chat,
-            createdAt: new Date(chat.createdAt),
             messages: chat.messages.map((msg) => ({
                 ...msg,
             })),
