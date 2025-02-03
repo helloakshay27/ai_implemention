@@ -3,8 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const ChatContext = createContext(undefined)
 
-const STORAGE_KEY = 'chats';
-const CURRENT_CHAT_KEY = 'current-chat';
+const STORAGE_KEY = 'all_chats';
+const CURRENT_CHAT_KEY = 'current_chat';
 
 function loadChatsFromStorage() {
     const storedChats = localStorage.getItem(STORAGE_KEY);
