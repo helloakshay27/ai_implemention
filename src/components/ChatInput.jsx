@@ -22,11 +22,11 @@ const ChatInput = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your message..."
-                    className="w-100 p-3 input rounded-2 border "
+                    className="w-100 p-3 input rounded-2 border bg-transparent text-white"
                 />
                 <button
                     type="submit"
-                    className="position-absolute p-2 border-0 submit-btn"
+                    className="position-absolute p-2 border-0 rounded-1 submit-btn"
                     disabled={!input.trim()}
                 >
                     <Send size={20} />
