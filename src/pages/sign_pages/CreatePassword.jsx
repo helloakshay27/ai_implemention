@@ -176,7 +176,7 @@ const CreatePassword = () => {
                                         {/* Submit button */}
                                         <button
                                             type="submit"
-                                            className="btn mt-4 submit-create-password btn-primary mt-2"
+                                            className="btn mt-4 submit-create-password btn-primary mt-2 purple-btn2"
                                             disabled={loading}
                                         >
                                             {loading ? "Resetting Password..." : "Reset Password"}

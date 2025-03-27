@@ -85,7 +85,7 @@
 
 .chat-area {
     padding: 5px 10px;
-    height: calc(90vh - 121.667px);
+    height: calc(83vh - 121.667px);
     overflow-y: auto;
 }
 
@@ -148,3 +148,410 @@
         height: calc(90vh - 146.667px);
     }
 }
+
+.dropdown {
+    width: 180px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.dropdown-header {
+    color: #000;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    transition: background 0.3s ease-in-out;
+}
+
+.dropdown-header:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-body {
+    padding: 5px;
+    border-top: 1px solid #E5E8EC;
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.dropdown-body.open {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    
+}
+
+.dropdown-item {
+    padding: 12px;
+    color: #000;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 6px;
+}
+
+.dropdown-item:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+}
+
+.dropdown-item-dot {
+    opacity: 0;
+    color: #000;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform: scale(0.8);
+}
+
+.dropdown-item-dot.selected {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.icon {
+    font-size: 14px;
+    color: #000;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease-in-out;
+}
+
+.icon.open {
+    transform: rotate(90deg);
+}
+
+
+
+  /* Modal Overlay */
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;
+}
+
+/* Modal Dialog */
+.modal-dialog {
+    max-width: 400px;
+    width: 90%;
+}
+
+/* Modal Content */
+.modal-content {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: none;
+}
+
+/* Close Button */
+.btn-close {
+    /* background: none; */
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease-in-out;
+}
+
+.btn-close:hover {
+    color: #000;
+}
+
+/* Avatar */
+.avatar2 {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* Name & Email */
+h5 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 10px;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Sign Out Button */
+.purple-btn2 {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+}
+
+.purple-btn2:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .modal-dialog {
+        max-width: 90%;
+    }
+}
+/* Header Styling */
+.container-fluid {
+    /* background: #fff; */
+    /* padding: 10px 20px; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Toggler */
+.navbar-toggler {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler-icon {
+    width: 22px;
+    height: 3px;
+    background: white;
+    display: block;
+    position: relative;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 3px;
+    background: white;
+    left: 0;
+    transition: 0.3s;
+}
+
+.navbar-toggler-icon::before {
+    top: -6px;
+}
+
+.navbar-toggler-icon::after {
+    bottom: -6px;
+}
+
+/* Navbar Logo */
+.container-fluid img {
+    height: 40px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.container-fluid img:hover {
+    transform: scale(1.1);
+}
+
+/* Header Icons */
+.header-icons {
+    display: flex;
+    align-items: center;
+}
+
+/* Profile Link */
+.header-icons ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header-icons li a {
+    color: #6a11cb;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease-in-out;
+}
+
+.header-icons li a:hover {
+    color: #2575fc;
+}
+
+/* Profile Icon */
+.header-icons li svg {
+    transition: transform 0.3s ease-in-out;
+}
+
+.header-icons li a:hover svg {
+    transform: scale(1.2);
+}
+
+.border-top {
+    border-top: 1px solid #ccc;
+  }
+  
+  .p-3 {
+    padding: 1rem;
+  }
+  
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .position-relative {
+    position: relative;
+  }
+  
+  .form {
+    max-width: 800px;
+  }
+  
+  .w-100 {
+    width: 100%;
+  }
+  
+  .input {
+    font-size: 1rem;
+    padding: 0.75rem;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+  }
+  
+  .rounded-2 {
+    border-radius: 0.5rem;
+  }
+  
+  .border {
+    border: 1px solid #ddd;
+  }
+  
+  .bg-transparent {
+    background-color: transparent;
+  }
+  
+  .text-white {
+    color: #fff;
+  }
+  
+  /* Button Styles for ChatInput */
+  /* .pin-btn,
+  .voice-btn,
+  .submit-btn {
+
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 0.25rem;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .pin-btn:hover,
+  .voice-btn:hover,
+  .submit-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  } */
+  
+  /* Active state for Voice Button */
+  .voice-btn.recording {
+    background: red;
+    color: white;
+  }
+  
+  /* Recording Overlay Styles */
+  .recording-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 30px;
+    border-radius: 10px;
+    color: #fff;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .recording-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+  }
+  
+  .recording-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: red;
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Utility for SVG icons */
+  svg {
+    display: block;
+  }

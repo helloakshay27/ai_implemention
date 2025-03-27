@@ -96,7 +96,7 @@ const Forgot = () => {
                                         {/* Submit button */}
                                         <button
                                             type="submit"
-                                            className="btn mt-3 submit-forget-password btn-primary mt-2"
+                                            className="btn mt-3 submit-forget-password btn-primary mt-2 purple-btn2"
                                             disabled={loading}
                                         >
                                             {loading ? "Loading..." : "Next"}

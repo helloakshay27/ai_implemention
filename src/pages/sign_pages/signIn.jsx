@@ -157,36 +157,7 @@ const SignIn = () => {
                                         style={{ width: "35%", height: "auto", margin: "0 auto" }}
                                     />
 
-                                    <div className="d-flex mt-2 gap-3 align-items-center">
-                                        <div className="form-group">
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="radio"
-                                                    name="contentSelector"
-                                                    value="content1"
-                                                    checked={selectedContent === "content1"}
-                                                    onChange={() => toggleContent("content1")}
-                                                />
-                                                <label className="form-check-label">Login With Password
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="radio"
-                                                    name="contentSelector"
-                                                    value="content2"
-                                                    checked={selectedContent === "content2"}
-                                                    onChange={() => toggleContent("content2")}
-                                                />
-                                                <label className="form-check-label">Login With OTP
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                               
 
                                     {selectedContent === "content1" && (
                                         <div className="mt-2 login-content">
@@ -224,7 +195,7 @@ const SignIn = () => {
 
 
                                             {error && <p className="text-danger">{error}</p>}
-                                            <button onClick={handlePasswordLogin} type="submit" className="btn btn-danger mt-2">
+                                            <button onClick={handlePasswordLogin} type="submit" className="btn btn-danger mt-2 purple-btn2">
                                                 {loading ? "Logging in..." : "Login"}
                                             </button>
                                             <button className="btn purple-btn2 mt-3 " onClick={regiterPage} style={{ width: "100%", background: "white", color: "black" }}>

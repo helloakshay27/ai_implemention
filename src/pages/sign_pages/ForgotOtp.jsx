@@ -89,7 +89,7 @@ const ForgotOtp = () => {
                                         </div>
                                         {error && <p className="text-danger">{error}</p>}
                                         {/* Submit button */}
-                                        <button type="submit" className="btn submit-otp btn-success mt-2" disabled={loading}>
+                                        <button type="submit" className="btn submit-otp btn-success mt-2 purple-btn2" disabled={loading}>
                                             {loading ? "Verifying..." : "Next"}
                                         </button>
                                         <p className="another-way">

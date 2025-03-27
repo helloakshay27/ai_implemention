@@ -76,11 +76,11 @@ const Register = () => {
           <div className="container-fluid">
             <div className="row align-items-center vh-100 login_bg justify-content-center">
               <div className="col-lg-7 col-md-7 vh-50 d-flex align-items-center">
-                <div className="login-sec">
+                <div className="login-sec" style={{ width: "500px" }}>
                   <img
                     className="logo_img"
-                    style={{ width: 100, height: 100, margin: "auto" }}
-                    src="https://panchshil.gophygital.work/uploads/pms/company_setup/logo/226/Panchshil_logo.png"
+                    style={{ width: 100, height: 85, margin: "auto" }}
+                    src="https://lockated.com/assets/logo-87235e425cea36e6c4c9386959ec756051a0331c3a77aa6826425c1d9fabf82e.png"
                     alt="Logo"
                   />
 
@@ -147,7 +147,7 @@ const Register = () => {
                     </div>
 
                     {error && <p className="text-danger">{error}</p>}
-                    <button type="submit" className="btn btn-danger mt-2">
+                    <button type="submit" className="btn btn-danger mt-2 purple-btn2">
                       {loading ? "Register in..." : "Register"}
                     </button>
                     <button className="btn purple-btn2 mt-3 " onClick={regiterPage} style={{ width: "100%", background: "white", color: "black" }}>

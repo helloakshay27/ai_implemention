@@ -97,7 +97,7 @@ div {
 }
 
 .forget-btn {
-  color: var(--red);
+  color: linear-gradient(135deg, #6a11cb, #2575fc);
 }
 
 .login_module {
@@ -107,9 +107,23 @@ div {
 }
 
 .login_bg {
+  position: relative;
+  overflow: hidden; /* Ensures the pseudo-element stays contained */
+}
+
+/* Pseudo-element for the blurred background image */
+.login_bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("https://vendor.panchshil.com/assets/pan_logo-4e1c867e2fada5efc385ef5c565a0ad3b533cd396d1ed187a0bc7fdec161a35a.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("https://vendor.panchshil.com/assets/pan_logo-4e1c867e2fada5efc385ef5c565a0ad3b533cd396d1ed187a0bc7fdec161a35a.jpg");
+  filter: blur(1.2px); /* Adjust the blur level as needed */
+  z-index: -1; /* Place the background behind your content */
 }
 
 img {
@@ -131,7 +145,6 @@ h2 {
 .create-new-password-content,
 .forget-password-content {
   width: 100%;
-  max-width: 380px;
 }
 
 /* Style for form inputs */
@@ -186,12 +199,13 @@ h2 {
 .login-sec {
   border-radius: 42px;
   border: 1px solid rgba(58, 58, 51, 0.4);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0px 3px 8px 0px rgba(217, 217, 217, 0.08);
+  background: #222222d9;
+     box-shadow: 0px 3px 8px 0px rgba(217, 217, 217, 0.08);
   padding: 4% 10%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  width: 450px;
 }
 
 .password-toggle {
@@ -213,6 +227,7 @@ h2 {
 }
 
 .form-group label {
+  color: var(--light-grey) !important;
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -333,7 +348,7 @@ input#confirmPassword {
 }
 
 .paganation span {
-  color: var(--red);
+  color: linear-gradient(135deg, #6a11cb, #2575fc);
 }
 
 .paganation p {
