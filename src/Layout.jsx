@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        <div className="d-flex w-100">
+        <div className="website-content">
             <Sidebar
                 isSidebarOpen={isSidebarOpen}
                 setIsSidebarOpen={setIsSidebarOpen}
