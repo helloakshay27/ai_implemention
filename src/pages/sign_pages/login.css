@@ -39,11 +39,11 @@ div {
 
 :root {
   --body-bg-color: #ffffff;
-  --red: #de7008;
+  --red:rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
   --lightred: #9e2c2d;
   --black: #000000;
   --light-green: #8ed7c6;
-  --grey: #3a3a33;
+  --grey: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
   --light-grey: #8692a6;
   --text-color: #084236;
 }
@@ -176,7 +176,7 @@ h2 {
 /* Style for the login button */
 
 .btn {
-  width: 100%;
+  /* width: 100%; */
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
@@ -333,10 +333,21 @@ input#confirmPassword {
 }
 
 .forget-password-content p {
-  color: var(--light-grey) !important;
+  color: var(--body-bg-color) !important;
+}
+p {
+  color: var(--body-bg-color) !important;
 }
 
+
 .forget-password-content h2 {
+  color: var(--body-bg-color) !important;
+
+  font-weight: 400;
+}
+h2 {
+  color: var(--body-bg-color) !important;
+
   font-weight: 400;
 }
 
@@ -348,7 +359,7 @@ input#confirmPassword {
 }
 
 .paganation span {
-  color: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: var(--grey);
 }
 
 .paganation p {

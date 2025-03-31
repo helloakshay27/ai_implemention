@@ -310,6 +310,7 @@ p {
 
 /* Sign Out Button */
 .purple-btn2 {
+    width: 100%;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: white;
     border: none;
@@ -554,4 +555,9 @@ p {
   /* Utility for SVG icons */
   svg {
     display: block;
+  }
+
+
+  .bot-message p{
+    color: #000 !important;
   }
