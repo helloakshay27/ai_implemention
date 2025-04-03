@@ -37,11 +37,10 @@ const SignIn = () => {
         }
 
         try {
-            const response = await axios.post("https://panchshil-super.lockated.com/users/signin.json", {
-                user: {
-                    email,
-                    password,
-                },
+            const response = await axios.post("https://ai-implementation.lockated.com/login/", {
+
+                email,
+                password,
             });
 
             console.log(response.data.access_token);
@@ -157,7 +156,7 @@ const SignIn = () => {
                                         style={{ width: "35%", height: "auto", margin: "0 auto" }}
                                     />
 
-                               
+
 
                                     {selectedContent === "content1" && (
                                         <div className="mt-2 login-content">

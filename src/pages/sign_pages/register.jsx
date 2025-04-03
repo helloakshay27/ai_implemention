@@ -9,6 +9,8 @@ const Register = () => {
   const [mobile, setMobile] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+  const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -41,6 +43,7 @@ const Register = () => {
         firstname,
         lastname,
         mobile,
+        password,
       });
 
       if (response.data.access_token) {
@@ -76,7 +79,7 @@ const Register = () => {
           <div className="container-fluid">
             <div className="row align-items-center vh-100 login_bg justify-content-center">
               <div className="col-lg-7 col-md-7 vh-50 d-flex align-items-center">
-                <div className="login-sec" style={{ width: "500px" }}>
+                <div className="login-sec" style={{  padding: "1% 8%" }}>
                   <img
                     className="logo_img"
                     style={{ width: 100, height: 85, margin: "auto" }}
@@ -87,7 +90,7 @@ const Register = () => {
                   <form
                     onSubmit={handlePasswordLogin}
                     className="mt-2 login-content"
-                    style={{ width: "295px" }}
+                    
                   >
                     <div className="form-group position-relative">
                       <label className="mb-1" htmlFor="email">
@@ -142,6 +145,19 @@ const Register = () => {
                         placeholder="Enter mobile"
                         value={mobile}
                         onChange={(e) => setMobile(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group position-relative">
+                      <label className="mb-1" htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        id="password"
+                        className="form-control"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                       />
                     </div>
