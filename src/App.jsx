@@ -13,6 +13,7 @@ import Register from "./pages/sign_pages/register";
 import Forgot from "./pages/sign_pages/Forgot";
 import ForgotOtp from "./pages/sign_pages/ForgotOtp";
 import CreatePassword from "./pages/sign_pages/CreatePassword";
+import ForgotPassword from './pages/sign_pages/ForgotPassword';
 
 import RootLayout from "./pages/sign_pages/RootLayout";
 import ProtectedRoute from "./pages/sign_pages/ProtectedRoute";
@@ -27,9 +28,9 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<Forgot />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/forgot-otp" element={<ForgotOtp />} />
-        <Route path="/reset-password" element={<CreatePassword />} />
+        <Route path="/reset-password/:id" element={<CreatePassword />} />
 
         {/* Protected Routes */}
         <Route

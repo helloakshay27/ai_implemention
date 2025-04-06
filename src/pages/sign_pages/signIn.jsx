@@ -37,7 +37,7 @@ const SignIn = () => {
         }
 
         try {
-            const response = await axios.post("https://ai-implementation.lockated.com/login/", {
+            const response = await axios.post("https://ai-implementation.lockated.com/login", {
 
                 email,
                 password,
