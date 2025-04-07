@@ -37,6 +37,11 @@ const Header = () => {
     navigate("/login");
   };
 
+  const email = sessionStorage.getItem("email");
+const firstName = sessionStorage.getItem("firstname");
+const avatarLetter = firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() || "U";
+
+
   return (
     <>
       <div
@@ -62,8 +67,8 @@ const Header = () => {
                 <div className="avatar__letters2">A</div>
               </div>
               <br />
-              <h5>{sessionStorage.getItem("firstname") || "First Name"}</h5>
-              <p>{sessionStorage.getItem("email") || "example@example.com"}</p>
+              <h5>{firstName || "First Name"}</h5>
+              <p>{email || "example@example.com"}</p>
               <button
                 className="purple-btn2 my-3"
                 aria-label="Close"

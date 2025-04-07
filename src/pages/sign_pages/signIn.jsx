@@ -25,41 +25,41 @@ const SignIn = () => {
 
     const handlePasswordLogin = async (e) => {
         e.preventDefault();
-        setError(""); // Reset error state
+        setError("");
         setLoading(true);
-
-        // Email validation
+    
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             setError("Please enter a valid email address.");
             setLoading(false);
             return;
         }
-
+    
         try {
-            const response = await axios.post("https://ai-implementation.lockated.com/login/",{
-                 email,
+            const response = await axios.post("https://ai-implementation.lockated.com/login/", {
+                email,
                 password,
             });
-
-            console.log(response.data.access_token);
-
-            if (response.data.access_token) {
-                localStorage.setItem("access_token", response.data.access_token);
-                sessionStorage.setItem("email", response.data.email);
-                sessionStorage.setItem("firstname", response.data.firstname);
-
-                // Redirect to the home page
+    
+            const user = response.data?.user;
+    
+            if (user) {
+                localStorage.setItem("access_token", user.api_key);
+                sessionStorage.setItem("email", user.email);
+                sessionStorage.setItem("firstname", user.first_name || "");
+    
                 navigate("/");
             } else {
                 setError("Login failed. Please check your credentials.");
             }
         } catch (err) {
             setError("An error occurred during login. Please try again.");
+            console.error(err);
         } finally {
             setLoading(false);
         }
     };
+    
 
     const handleSendOtp = async (e) => {
         e.preventDefault();
