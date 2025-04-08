@@ -28,13 +28,14 @@ function loadChatsFromStorage() {
         }
     }
 
-    return [
-        {
-            id: default_id,
-            title: 'New chat',
-            messages: [],
-        }
-    ];
+    const defaultChat = [{
+        id: default_id,
+        title: 'New chat',
+        messages: [],
+      }];
+    
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultChat));
+      return defaultChat;
 }
 
 
@@ -43,6 +44,7 @@ function loadCurrentChatFromStorage() {
     if (currentChatId) {
         return currentChatId;
     }else{
+        localStorage.setItem(CURRENT_CHAT_KEY, default_id);
          return default_id;
      }
 }
@@ -62,6 +64,11 @@ function loadCurrentChatFromStorage() {
             console.error("Error parsing CURRENT_CHAT_MODE:", e);
           }
         }
+        const default_mode={
+            id: default_id,
+            mode: 0
+        }
+        localStorage.setItem(CURRENT_CHAT_MODE_KEY, JSON.stringify([default_mode]));
         return 0;
       }
       
@@ -80,20 +87,6 @@ const ChatProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem(CURRENT_CHAT_KEY, currentChatId);
     }, [currentChatId]);
-
-    useEffect(() => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (!stored) {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
-        }
-      }, []);
-
-      useEffect(() => {
-        const stored = localStorage.getItem(CURRENT_CHAT_KEY);
-        if (!stored) {
-          localStorage.setItem(CURRENT_CHAT_KEY, JSON.stringify(currentChatId));
-        }
-      }, []);
       
 
     useEffect(() => {
