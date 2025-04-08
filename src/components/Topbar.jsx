@@ -1,10 +1,14 @@
 import { Menu } from "lucide-react"
 import React, { useState,createContext, useEffect } from "react"
 
+const CURRENT_CHAT_MODE_KEY = 'current_chat_mode';
+const CURRENT_CHAT_KEY = 'current_chat';
+
 
 const Topbar = ({ setIsSidebarOpen }) => {
     const data = [{ id: 0, label: "Personal" }, { id: 1, label: "Professional" }];
-    const Chat_id=localStorage.getItem("current_chat");
+    const Chat_id=localStorage.getItem(CURRENT_CHAT_KEY);
+    console.log(Chat_id);
     const [isOpen, setOpen] = useState(false);
     const [items, setItem] = useState(data);
     const [selectedItem, setSelectedItem] = useState(0);
@@ -12,17 +16,17 @@ const Topbar = ({ setIsSidebarOpen }) => {
     const toggleDropdown = () => setOpen(!isOpen);
 
     useEffect(() => {
-        const existing = JSON.parse(localStorage.getItem("CURRENT_CHAT_MODE"));
-        
-
-        const updated = existing.filter((item) => item.id !== Chat_id);
+        const existing = JSON.parse(localStorage.getItem(CURRENT_CHAT_MODE_KEY));
+        let updated = [];
+        if(existing){
+        updated = existing.filter((item) => item.id !== Chat_id);}
       
         updated.push({
           mode: selectedItem,
           id: Chat_id,
         });
       
-        localStorage.setItem("CURRENT_CHAT_MODE", JSON.stringify(updated));
+        localStorage.setItem( CURRENT_CHAT_MODE_KEY,JSON.stringify(updated));
         window.dispatchEvent(new Event("modeChanged"));
       }, [selectedItem, Chat_id]);
       

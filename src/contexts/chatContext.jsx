@@ -7,36 +7,56 @@ const ChatContext = createContext(undefined)
 
 const STORAGE_KEY = 'all_chats';
 const CURRENT_CHAT_KEY = 'current_chat';
+const CURRENT_CHAT_MODE_KEY = 'current_chat_mode';
+const default_id=Date.now().toString();
 
 
 function loadChatsFromStorage() {
     const storedChats = localStorage.getItem(STORAGE_KEY);
+
     if (storedChats) {
-        const chats = JSON.parse(storedChats);
-        return chats.map((chat) => ({
-            ...chat,
-            messages: chat.messages.map((msg) => ({
-                ...msg,
-            })),
-        }));
+        try {
+            const chats = JSON.parse(storedChats);
+            return chats.map((chat) => ({
+                ...chat,
+                messages: chat?.messages?.map((msg) => ({
+                    ...msg,
+                })) || [],
+            }));
+        } catch (e) {
+            console.error("Error parsing stored chats:", e);
+        }
     }
+
+    return [
+        {
+            id: default_id,
+            title: 'New chat',
+            messages: [],
+        }
+    ];
 }
 
+
 function loadCurrentChatFromStorage() {
-    return localStorage.getItem(CURRENT_CHAT_KEY) ;
+    const currentChatId = localStorage.getItem(CURRENT_CHAT_KEY);
+    if (currentChatId) {
+        return currentChatId;
+    }else{
+         return default_id;
+     }
 }
 
     function loadCurrentModeFromStorage() {
-        const chatModes = localStorage.getItem("CURRENT_CHAT_MODE");
+        const chatModes = localStorage.getItem(CURRENT_CHAT_MODE_KEY);
         const currentId = loadCurrentChatFromStorage();
-        console.log(currentId);
         if (chatModes) {
           try {
             const parsed = JSON.parse(chatModes);
       
             if (Array.isArray(parsed)) {
               const match = parsed.find((chat) => chat.id === currentId);
-              return match.mode;
+              return match?.mode;
             }
           } catch (e) {
             console.error("Error parsing CURRENT_CHAT_MODE:", e);
@@ -60,7 +80,22 @@ const ChatProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem(CURRENT_CHAT_KEY, currentChatId);
     }, [currentChatId]);
-    
+
+    useEffect(() => {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (!stored) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
+        }
+      }, []);
+
+      useEffect(() => {
+        const stored = localStorage.getItem(CURRENT_CHAT_KEY);
+        if (!stored) {
+          localStorage.setItem(CURRENT_CHAT_KEY, JSON.stringify(currentChatId));
+        }
+      }, []);
+      
+
     useEffect(() => {
         const handleModeChange = () => {
             const newMode = loadCurrentModeFromStorage();
