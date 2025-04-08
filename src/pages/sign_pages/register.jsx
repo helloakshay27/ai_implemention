@@ -54,7 +54,7 @@ const handleResendOTP=async(e)=>{
       email,
      })
 
-     if(response.success){
+     if(response.data.message){
       toast.success("OTP sent successfully");
       startResendTimer();
       setLoading(false);

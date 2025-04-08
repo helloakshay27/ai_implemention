@@ -8,6 +8,7 @@ const ChatContext = createContext(undefined)
 const STORAGE_KEY = 'all_chats';
 const CURRENT_CHAT_KEY = 'current_chat';
 
+
 function loadChatsFromStorage() {
     const storedChats = localStorage.getItem(STORAGE_KEY);
     if (storedChats) {
@@ -19,23 +20,38 @@ function loadChatsFromStorage() {
             })),
         }));
     }
-    return [
-        {
-            id: '1',
-            title: 'New chat',
-            messages: [],
-        },
-    ];
 }
 
 function loadCurrentChatFromStorage() {
-    return localStorage.getItem(CURRENT_CHAT_KEY) || '1';
+    return localStorage.getItem(CURRENT_CHAT_KEY) ;
 }
+
+    function loadCurrentModeFromStorage() {
+        const chatModes = localStorage.getItem("CURRENT_CHAT_MODE");
+        const currentId = loadCurrentChatFromStorage();
+        console.log(currentId);
+        if (chatModes) {
+          try {
+            const parsed = JSON.parse(chatModes);
+      
+            if (Array.isArray(parsed)) {
+              const match = parsed.find((chat) => chat.id === currentId);
+              return match.mode;
+            }
+          } catch (e) {
+            console.error("Error parsing CURRENT_CHAT_MODE:", e);
+          }
+        }
+        return 0;
+      }
+      
 
 const ChatProvider = ({ children }) => {
     const [chats, setChats] = useState(loadChatsFromStorage);
     const [currentChatId, setCurrentChatId] = useState(loadCurrentChatFromStorage);
+    const [mode, setMode] = useState(loadCurrentModeFromStorage);
     const [isTyping, setIsTyping] = useState(false);
+    const token=localStorage.getItem('access_token');
 
     useEffect(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
@@ -45,6 +61,13 @@ const ChatProvider = ({ children }) => {
         localStorage.setItem(CURRENT_CHAT_KEY, currentChatId);
     }, [currentChatId]);
 
+    useEffect(() => {
+        window.addEventListener('modeChanged', loadCurrentModeFromStorage);
+        return()=>{
+            window.removeEventListener('modeChanged', loadCurrentModeFromStorage);
+        }
+    },[currentChatId,chats]);
+
     const createNewChat = () => {
         const newChat = {
             id: Date.now().toString(),
@@ -53,6 +76,7 @@ const ChatProvider = ({ children }) => {
         };
         setChats((prev) => [...prev, newChat]);
         setCurrentChatId(newChat.id);
+
     };
 
     const deleteChat = (chatId) => {
@@ -61,9 +85,11 @@ const ChatProvider = ({ children }) => {
             const remainingChats = chats.filter((chat) => chat.id !== chatId);
             if (remainingChats.length > 0) {
                 setCurrentChatId(remainingChats[0].id);
+
             } else {
                 createNewChat();
             }
+            
         }
     };
 
@@ -87,27 +113,27 @@ const ChatProvider = ({ children }) => {
         );
 
         try {
-            setIsTyping(true)
-
-            const response = await axios.post(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
-                {
-                    contents: [
-                        {
-                            parts: [
-                                {
-                                    text: content
-                                }
-                            ]
-                        }
-                    ]
-                }
-            );
+            setIsTyping(true);
+            let response;
+             console.log(mode);
+            if (mode == 0) {
+                response = await axios.post(`https://ai-implementation.lockated.com/process_prompt/?token=${token}`, {
+                    user_prompt: content,
+                });
+            } else {
+                response = await axios.post(`https://ai-implementation.lockated.com/process_prompt/?token=${token}`, {
+                    user_input: content,
+                });
+            }
+            
 
             const aiMessage = {
                 id: (Date.now() + 1).toString(),
-                content: response.data.candidates[0].content.parts[0].text,
+                content: response.data.response,
                 isUser: false,
             };
+
+            console.log(aiMessage);
 
             setChats((prev) =>
                 prev.map((chat) =>

@@ -40,10 +40,6 @@ const ChatInput = () => {
         inputRef.current?.focus();
     };
 
-    const handlePinMessage = () => {
-        console.log("Message pinned!");
-        // Implement pinning logic here
-    };
 
     const handleVoiceInput = () => {
         if (!isRecording) {
@@ -72,18 +68,7 @@ const ChatInput = () => {
                     aria-label="Chat message input"
                 />
 
-                {/* Pin Message Button */}
-                <button
-                    type="button"
-                    className="position-absolute p-2 border-0 rounded-1 pin-btn"
-                    onClick={handlePinMessage}
-                    title="Pin Message"
-                    aria-label="Pin message"
-                    style={{ right: "100px", top: "50%", transform: "translateY(-50%)" }}
-                >
-                    <Pin size={20} />
-                </button>
-
+                
                 {/* Voice Message Button */}
                 <button
                     type="button"

@@ -53,7 +53,7 @@ const SignIn = () => {
                 setError("Login failed. Please check your credentials.");
             }
         } catch (err) {
-            setError("An error occurred during login. Please try again.");
+            setError(err.response?.data?.error || "An error occurred during login. Please try again");
             console.error(err);
         } finally {
             setLoading(false);
