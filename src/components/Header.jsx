@@ -38,8 +38,8 @@ const Header = () => {
   };
 
   const email = sessionStorage.getItem("email");
-const firstName = sessionStorage.getItem("firstname");
-const avatarLetter = firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() || "U";
+  const firstName = sessionStorage.getItem("firstname");
+  const avatarLetter = firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() || "U";
 
 
   return (
@@ -67,8 +67,8 @@ const avatarLetter = firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() 
                 <div className="avatar__letters2">A</div>
               </div>
               <br />
-              <h5 style={{color:"black"}}>{firstName || "First Name"}</h5>
-              <p style={{color:"black"}}>{email || "example@example.com"}</p>
+              <h5 style={{ color: "black" }}>{firstName || "First Name"}</h5>
+              <p style={{ color: "black" }}>{email || "example@example.com"}</p>
               <button
                 className="purple-btn2 my-3"
                 aria-label="Close"
@@ -102,7 +102,7 @@ const avatarLetter = firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() 
               <li>
                 <a
                   style={{
-                   
+
                   }}
                   className=" "
                   onClick={handleOpen}
