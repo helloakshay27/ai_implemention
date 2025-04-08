@@ -60,13 +60,19 @@ const ChatProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem(CURRENT_CHAT_KEY, currentChatId);
     }, [currentChatId]);
-
+    
     useEffect(() => {
-        window.addEventListener('modeChanged', loadCurrentModeFromStorage);
-        return()=>{
-            window.removeEventListener('modeChanged', loadCurrentModeFromStorage);
-        }
-    },[currentChatId,chats]);
+        const handleModeChange = () => {
+            const newMode = loadCurrentModeFromStorage();
+            setMode(newMode);
+        };
+    
+        window.addEventListener('modeChanged', handleModeChange);
+        return () => {
+            window.removeEventListener('modeChanged', handleModeChange);
+        };
+    }, [currentChatId, chats]);
+    
 
     const createNewChat = () => {
         const newChat = {
