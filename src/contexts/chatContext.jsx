@@ -163,7 +163,7 @@ const ChatProvider = ({ children }) => {
 
             const aiMessage = {
                 id: (Date.now() + 1).toString(),
-                content: response.data.response,
+                content: response.data,
                 isUser: false,
             };
 
@@ -192,6 +192,8 @@ const ChatProvider = ({ children }) => {
                         : chat
                 )
             );
+        }finally{
+            setIsTyping(false);
         }
     }
 

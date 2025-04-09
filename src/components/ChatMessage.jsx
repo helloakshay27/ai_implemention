@@ -1,8 +1,53 @@
+import axios from 'axios';
 import { Bot, Copy, Download, Pin, Share2, User, Volume2 } from 'lucide-react'
 import React from 'react'
 import Markdown from 'react-markdown'
+import { toast } from 'react-hot-toast'
 
 const ChatMessage = ({ message }) => {
+    const token=localStorage.getItem('access_token');
+    const [pin,setPinned]=React.useState(false);
+    const[loading,setLoading]=React.useState(false);
+
+    const handlePin=async()=>{
+        setLoading(true);
+        try {
+            const response =await axios.post(`https://ai-implementation.lockated.com/pin-message/?token=${token}`,{
+                message:message.content?.response || message.content,
+            });
+
+            if(response.data.success){
+                setPinned(true);
+                toast.success("Pinned successfully");
+            }
+        } catch (error) {
+            toast.error("Failed to pin message. Please try again.");
+        }finally{
+            setLoading(false);
+        }
+}
+const handleUnpin = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `https://ai-implementation.lockated.com/unpin-message/?token=${token}`,
+        {
+          message: message.content?.response || message.content, 
+        }
+      );
+  
+      if (response.data.success) {
+        setPinned(false);
+        toast.success("Unpinned successfully");
+      }
+    } catch (error) {
+      toast.error("Failed to unpin message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
     return (
         <div>
             <div
@@ -20,7 +65,14 @@ const ChatMessage = ({ message }) => {
                         }`}
                 >
                     {!message.isUser ? (
-                        <Markdown>{message.content}</Markdown>
+                        <Markdown>
+                        {
+                          typeof message.content === 'string'
+                            ? message.content
+                            : message.content?.response || message.content?.warning || ''
+                        }
+                      </Markdown>
+                      
                     ) : (
                         message.content
                     )}
@@ -36,7 +88,7 @@ const ChatMessage = ({ message }) => {
                         <Volume2 size={15} color='#fafafa' className='cursor-pointer' />
                         <Download size={15} color='#fafafa' className='cursor-pointer' />
                         <Share2 size={15} color='#fafafa' className='cursor-pointer' />
-                        <Pin size={15} color='#fafafa' className='cursor-pointer' />
+                        <Pin size={15} color={loading?'#3e3e3e':'#fafafa'} fill={pin?'#fafafa':null} onClick={pin?handleUnpin:handlePin} className='cursor-pointer' />
                     </div>
                 )
             }
