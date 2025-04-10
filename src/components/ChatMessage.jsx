@@ -1,14 +1,44 @@
 import axios from 'axios';
 import { Bot, Copy, Download, Pin, Share2, User, Volume2 } from 'lucide-react'
-import React from 'react'
+import React ,{useState,useRef} from 'react'
 import Markdown from 'react-markdown'
 import { toast } from 'react-hot-toast'
+import { jsPDF } from 'jspdf';
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import DownloadModal from './Download';
+
+
+
 
 const ChatMessage = ({ message }) => {
     const token=localStorage.getItem('access_token');
     const [pin,setPinned]=React.useState(false);
     const[loading,setLoading]=React.useState(false);
+    // const [showDropdown, setShowDropdown] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+     const userEmail=sessionStorage.getItem('email');  
+    
+   
+   const handleShare=()=>{
+      if (!message || !userEmail) return;
+    
+      const subject = encodeURIComponent('Shared Message');
+      const body = encodeURIComponent(message.content?.response || message.content);
+    
+      window.open( `mailto:${userEmail}?subject=${subject}&body=${body}`, '_blank');
 
+                   
+    };
+    
+   
+   
+    const handleCopy=()=>{
+    navigator.clipboard.writeText(message.content?.response || message.content).then(()=>{
+    toast.success("Copied to clipboard");
+    }).catch(err=>{
+        toast.error("Failed to copy to clipboard");
+    })
+   }
     const handlePin=async()=>{
         setLoading(true);
         try {
@@ -49,6 +79,7 @@ const handleUnpin = async () => {
   
 
     return (
+        <>
         <div>
             <div
                 key={message.id}
@@ -83,17 +114,28 @@ const handleUnpin = async () => {
             </div>
             {
                 !message.isUser && (
-                    <div className='d-flex align-items-center gap-3 ms-5 action-btn'>
-                        <Copy size={15} color='#fafafa' className='cursor-pointer' />
+                    <div className='d-flex align-items-center gap-3 ms-5 action-btn relative'>
+                        <Copy onClick={handleCopy} size={15} color='#fafafa' className='cursor-pointer' />
                         <Volume2 size={15} color='#fafafa' className='cursor-pointer' />
-                        <Download size={15} color='#fafafa' className='cursor-pointer' />
-                        <Share2 size={15} color='#fafafa' className='cursor-pointer' />
+                        <Download
+        size={18}
+        color="#fafafa"
+        className="cursor-pointer hover:scale-110 transition-transform"
+        onClick={() => setIsOpen(true)}
+      />
+
+      
+
+                        <Share2 onClick={handleShare} size={15} color='#fafafa' className='cursor-pointer' />
                         <Pin size={15} color={loading?'#3e3e3e':'#fafafa'} fill={pin?'#fafafa':null} onClick={pin?handleUnpin:handlePin} className='cursor-pointer' />
                     </div>
                 )
             }
+           
         </div>
-    )
-}
+        <DownloadModal  isOpen={isOpen} setIsOpen={setIsOpen} message={message.content?.response || message.content}/>
+        </>
+    );
+};
 
 export default ChatMessage

@@ -68,7 +68,7 @@ const Header = () => {
               </div>
               <br />
               <h5 style={{ color: "black" }}>{firstName || "First Name"}</h5>
-              <p style={{ color: "black" }}>{email || "example@example.com"}</p>
+              <p className="text-muted">{email || "example@example.com"}</p>
               <button
                 className="purple-btn2 my-3"
                 aria-label="Close"

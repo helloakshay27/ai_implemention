@@ -167,7 +167,7 @@
 
 .dropdown-header {
     color: #111;
-    padding: 16px 20px;
+    padding: 12px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -184,7 +184,7 @@
 }
 
 .dropdown-body {
-    padding: 10px 12px;
+    padding: 3px;
     display: none;
     opacity: 0;
     transform: translateY(-8px);
@@ -195,10 +195,11 @@
     display: block;
     opacity: 1;
     transform: translateY(0);
+    padding:3px;
 }
 
 .dropdown-item {
-    padding: 10px 12px;
+    padding: 8px;
     color: #333;
     display: flex;
     align-items: center;
@@ -208,6 +209,8 @@
     transition: all 0.2s ease-in-out;
     font-size: 14px;
     margin-bottom: 6px;
+    margin:2px;
+    width:135px;
 }
 
 .dropdown-item:hover {
@@ -215,6 +218,7 @@
     background-color: #f5f7fa;
     border-color: #dcdfe3;
     color: #000;
+
 }
 
 .dropdown-item-dot {
@@ -269,6 +273,10 @@
     border-radius: 12px;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
     padding: 20px;
+
+    p{
+        color:#000;
+    }
 }
 
 /* Modal Header */
@@ -577,4 +585,39 @@ svg {
 
 .bot-message p {
     color: #000 !important;
+}
+
+.download-parent{
+    width:full;
+    position:relative;
+    height:100px;
+}
+.download{
+    width : 100px;
+    height : 20%px;
+    padding:5px;
+    border:1px solid #2f2f2f;
+    border-radius:20px;
+    cursor:pointer;
+    position:relative;
+    left:100px;
+    margin-top: 10px;
+    background-color: #2f2f2f;
+   
+
+    button{
+        display:block;
+        margin:3px;
+        padding:0px;
+        width:80px;
+        height:35px;
+        background-color:#2f2f2f;
+        border:none;
+        color:white;
+    }
+
+    button:hover{
+        background-color:#3e3e3e;
+        border-radius: 10px;
+    }
 }

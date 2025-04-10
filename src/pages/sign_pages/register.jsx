@@ -119,8 +119,8 @@ const handleResendOTP=async(e)=>{
     try {
       const response = await axios.post("https://ai-implementation.lockated.com/signup/", {
         email,
-        firstname,
-        lastname,
+        first_name:firstname,
+        last_name:lastname,
         mobile,
         password,
       });
