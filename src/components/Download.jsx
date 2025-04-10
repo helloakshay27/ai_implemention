@@ -97,11 +97,11 @@ const DownloadModal = ({ isOpen, setIsOpen, message }) => {
               </button>
             ))}
           </div>
-          <button
+          {/* <button
             onClick={() => setIsOpen(false)}
           >
             close
-          </button>
+          </button> */}
         </div>
       </div>
   );
