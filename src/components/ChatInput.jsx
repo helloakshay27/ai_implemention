@@ -1,6 +1,7 @@
-import { Send, Mic, Pin } from 'lucide-react';
+import { Send, Mic, Pin, PinOff } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { useChatContext } from '../contexts/chatContext';
+import axios from 'axios';
 
 const ChatInput = () => {
     const [input, setInput] = useState('');
@@ -8,6 +9,8 @@ const ChatInput = () => {
     const recognitionRef = useRef(null);
     const { sendMessage } = useChatContext();
     const inputRef = useRef(null);
+
+    const token = localStorage.getItem('access_token');
 
     useEffect(() => {
         inputRef.current?.focus();
@@ -31,6 +34,17 @@ const ChatInput = () => {
             console.error("SpeechRecognition API is not supported in this browser.");
         }
     }, []);
+
+    const handleUnpinAll = async () => {
+        try {
+            const response = await axios.post(`https://ai-implementation.lockated.com/unpin-all/?token=${token}`);
+            if (response.data.success) {
+                toast.success("Unpinned all messages successfully");
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,7 +82,7 @@ const ChatInput = () => {
                     aria-label="Chat message input"
                 />
 
-                
+
                 {/* Voice Message Button */}
                 <button
                     type="button"
@@ -77,7 +91,7 @@ const ChatInput = () => {
                     title={isRecording ? "Stop Voice Input" : "Record Voice Message"}
                     aria-label="Record Voice Message"
                     style={{
-                        right: "60px",
+                        right: "100px",
                         top: "50%",
                         transform: "translateY(-50%)",
                         background: isRecording ? "red" : "",
@@ -85,6 +99,21 @@ const ChatInput = () => {
                     }}
                 >
                     <Mic size={20} />
+                </button>
+
+                <button
+                    type="button"
+                    className={`position-absolute p-2 border-0 rounded-1 voice-btn ${isRecording ? 'recording' : ''}`}
+                    onClick={handleUnpinAll}
+                    style={{
+                        right: "60px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        background: isRecording ? "red" : "",
+                        color: isRecording ? "white" : "inherit"
+                    }}
+                >
+                    <PinOff size={20} />
                 </button>
 
                 {/* Send Button */}

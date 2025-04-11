@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { jsPDF } from 'jspdf';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
-import removeMd from 'remove-markdown';
+import { useEffect, useRef } from 'react';
+import { jsPDF } from 'jspdf';
 
 const DownloadModal = ({ isOpen, setIsOpen, message }) => {
   const options = [
-    { id: 0, label:  ".pdf" },
+    { id: 0, label: ".pdf" },
     { id: 1, label: ".docx" }
   ];
 
@@ -30,28 +29,59 @@ const DownloadModal = ({ isOpen, setIsOpen, message }) => {
     }
   };
 
+  // const handlePDFDownload = () => {
+  //   const doc = new jsPDF();
+  //   const margin = 10;
+  //   const pageHeight = doc.internal.pageSize.height;
+  //   const text = `Bot: ${message}`;
+
+  //   const lines = doc.splitTextToSize(text, 180);
+  //   let y = 20;
+
+  //   lines.forEach(line => {
+  //     if (y + 10 > pageHeight) {
+  //       doc.addPage();
+  //       y = 20;
+  //     }
+  //     doc.text(line, margin, y);
+  //     y += 10;
+  //   });
+
+  //   doc.save('bot-response.pdf');
+  //   setIsOpen(false);
+  // };
+
+
   const handlePDFDownload = () => {
     const doc = new jsPDF();
-    const margin = 10;
+    const margin = 20;
     const pageHeight = doc.internal.pageSize.height;
-    const text = `Bot: ${message}`;
-    
-    const lines = doc.splitTextToSize(text, 180); // 180 adjusts to page width
-    let y = 20;
-  
+    const maxLineWidth = doc.internal.pageSize.width - margin * 2;
+
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Bot:", margin, 20);
+
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(12);
+
+    const lines = doc.splitTextToSize(message, maxLineWidth);
+    let y = 30;
+
     lines.forEach(line => {
       if (y + 10 > pageHeight) {
         doc.addPage();
         y = 20;
       }
       doc.text(line, margin, y);
-      y += 10;
+      y += 8;
     });
-  
-    doc.save('bot-response.pdf');
+
+    doc.save("bot-response.pdf");
     setIsOpen(false);
   };
-  
+
+
 
   const handleWordDownload = async () => {
     const plainText = message;
@@ -82,28 +112,23 @@ const DownloadModal = ({ isOpen, setIsOpen, message }) => {
   if (!isOpen) return null;
 
   return (
-     <div className='download-parent' 
-     >
+    <div className='download-parent'
+    >
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 w-[20%] download"
         ref={modalRef}
       >
-          <div className="space-y-2">
-            {options.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleItemClick(item.id)}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-          {/* <button
-            onClick={() => setIsOpen(false)}
-          >
-            close
-          </button> */}
+        <div className="space-y-2">
+          {options.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleItemClick(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       </div>
+    </div>
   );
 };
 
