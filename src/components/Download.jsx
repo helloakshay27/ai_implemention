@@ -29,44 +29,14 @@ const DownloadModal = ({ isOpen, setIsOpen, message }) => {
     }
   };
 
-  // const handlePDFDownload = () => {
-  //   const doc = new jsPDF();
-  //   const margin = 10;
-  //   const pageHeight = doc.internal.pageSize.height;
-  //   const text = `Bot: ${message}`;
-
-  //   const lines = doc.splitTextToSize(text, 180);
-  //   let y = 20;
-
-  //   lines.forEach(line => {
-  //     if (y + 10 > pageHeight) {
-  //       doc.addPage();
-  //       y = 20;
-  //     }
-  //     doc.text(line, margin, y);
-  //     y += 10;
-  //   });
-
-  //   doc.save('bot-response.pdf');
-  //   setIsOpen(false);
-  // };
-
-
   const handlePDFDownload = () => {
     const doc = new jsPDF();
-    const margin = 20;
+    const margin = 10;
     const pageHeight = doc.internal.pageSize.height;
-    const maxLineWidth = doc.internal.pageSize.width - margin * 2;
+    const text = `Bot: ${message}`;
 
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text("Bot:", margin, 20);
-
-    doc.setFont("Helvetica", "normal");
-    doc.setFontSize(12);
-
-    const lines = doc.splitTextToSize(message, maxLineWidth);
-    let y = 30;
+    const lines = doc.splitTextToSize(text, 180);
+    let y = 20;
 
     lines.forEach(line => {
       if (y + 10 > pageHeight) {
@@ -74,14 +44,12 @@ const DownloadModal = ({ isOpen, setIsOpen, message }) => {
         y = 20;
       }
       doc.text(line, margin, y);
-      y += 8;
+      y += 10;
     });
 
-    doc.save("bot-response.pdf");
+    doc.save('bot-response.pdf');
     setIsOpen(false);
   };
-
-
 
   const handleWordDownload = async () => {
     const plainText = message;
