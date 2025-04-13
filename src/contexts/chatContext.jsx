@@ -8,7 +8,7 @@ const ChatContext = createContext(undefined)
 const STORAGE_KEY = 'all_chats';
 const CURRENT_CHAT_KEY = 'current_chat';
 const CURRENT_CHAT_MODE_KEY = 'current_chat_mode';
-const default_id=Date.now().toString();
+const default_id = Date.now().toString();
 
 
 function loadChatsFromStorage() {
@@ -32,10 +32,10 @@ function loadChatsFromStorage() {
         id: default_id,
         title: 'New chat',
         messages: [],
-      }];
-    
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultChat));
-      return defaultChat;
+    }];
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultChat));
+    return defaultChat;
 }
 
 
@@ -43,42 +43,42 @@ function loadCurrentChatFromStorage() {
     const currentChatId = localStorage.getItem(CURRENT_CHAT_KEY);
     if (currentChatId) {
         return currentChatId;
-    }else{
+    } else {
         localStorage.setItem(CURRENT_CHAT_KEY, default_id);
-         return default_id;
-     }
+        return default_id;
+    }
 }
 
-    function loadCurrentModeFromStorage() {
-        const chatModes = localStorage.getItem(CURRENT_CHAT_MODE_KEY);
-        const currentId = loadCurrentChatFromStorage();
-        if (chatModes) {
-          try {
+function loadCurrentModeFromStorage() {
+    const chatModes = localStorage.getItem(CURRENT_CHAT_MODE_KEY);
+    const currentId = loadCurrentChatFromStorage();
+    if (chatModes) {
+        try {
             const parsed = JSON.parse(chatModes);
-      
+
             if (Array.isArray(parsed)) {
-              const match = parsed.find((chat) => chat.id === currentId);
-              return match?.mode;
+                const match = parsed.find((chat) => chat.id === currentId);
+                return match?.mode;
             }
-          } catch (e) {
+        } catch (e) {
             console.error("Error parsing CURRENT_CHAT_MODE:", e);
-          }
         }
-        const default_mode={
-            id: default_id,
-            mode: 0
-        }
-        localStorage.setItem(CURRENT_CHAT_MODE_KEY, JSON.stringify([default_mode]));
-        return 0;
-      }
-      
+    }
+    const default_mode = {
+        id: default_id,
+        mode: 0
+    }
+    localStorage.setItem(CURRENT_CHAT_MODE_KEY, JSON.stringify([default_mode]));
+    return 0;
+}
+
 
 const ChatProvider = ({ children }) => {
     const [chats, setChats] = useState(loadChatsFromStorage);
     const [currentChatId, setCurrentChatId] = useState(loadCurrentChatFromStorage);
     const [mode, setMode] = useState(loadCurrentModeFromStorage);
     const [isTyping, setIsTyping] = useState(false);
-    const token=localStorage.getItem('access_token');
+    const token = localStorage.getItem('access_token');
 
     useEffect(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
@@ -87,20 +87,20 @@ const ChatProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem(CURRENT_CHAT_KEY, currentChatId);
     }, [currentChatId]);
-      
+
 
     useEffect(() => {
         const handleModeChange = () => {
             const newMode = loadCurrentModeFromStorage();
             setMode(newMode);
         };
-    
+
         window.addEventListener('modeChanged', handleModeChange);
         return () => {
             window.removeEventListener('modeChanged', handleModeChange);
         };
     }, [currentChatId, chats]);
-    
+
 
     const createNewChat = () => {
         const newChat = {
@@ -123,7 +123,7 @@ const ChatProvider = ({ children }) => {
             } else {
                 createNewChat();
             }
-            
+
         }
     };
 
@@ -149,7 +149,7 @@ const ChatProvider = ({ children }) => {
         try {
             setIsTyping(true);
             let response;
-             console.log(mode);
+            console.log(mode);
             if (mode == 0) {
                 response = await axios.post(`https://ai-implementation.lockated.com/process_prompt/?token=${token}`, {
                     user_prompt: content,
@@ -159,7 +159,7 @@ const ChatProvider = ({ children }) => {
                     user_input: content,
                 });
             }
-            
+
 
             const aiMessage = {
                 id: (Date.now() + 1).toString(),
@@ -192,7 +192,7 @@ const ChatProvider = ({ children }) => {
                         : chat
                 )
             );
-        }finally{
+        } finally {
             setIsTyping(false);
         }
     }
@@ -207,6 +207,7 @@ const ChatProvider = ({ children }) => {
                 deleteChat,
                 sendMessage,
                 setCurrentChatId,
+                mode
             }}
         >
             {children}

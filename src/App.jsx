@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
@@ -19,8 +19,14 @@ import RootLayout from "./pages/sign_pages/RootLayout";
 import ProtectedRoute from "./pages/sign_pages/ProtectedRoute";
 
 import "./mor.css";
+import { useChatContext } from './contexts/chatContext';
+import PromptModal from './components/PromptModal';
 
 function App() {
+  const { mode } = useChatContext();
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <BrowserRouter>
       <Toaster />
@@ -50,12 +56,24 @@ function App() {
             element={
               <Layout>
                 <ChatArea />
-                <ChatInput />
+                {
+                  mode === 2 ? (
+                    <div className='d-flex align-items-center justify-content-center mt-3'>
+                      <button className='rounded-circle border-0' style={{ height: "50px", width: "50px" }} onClick={() => setIsModalOpen(true)} />
+                    </div>
+                  ) : (
+                    <ChatInput />
+                  )
+                }
               </Layout>
             }
           />
         </Route>
       </Routes>
+
+      {
+        isModalOpen && <PromptModal setIsModalOpen={setIsModalOpen} />
+      }
     </BrowserRouter>
   );
 }
