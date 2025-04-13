@@ -70,15 +70,17 @@ const ChatInput = () => {
     };
 
     return (
-        <div className="border-top p-3">
+    <div className="border-top p-3" style={{
+        background: "linear-gradient(180deg, rgba(196, 184, 157, 0.06), rgba(196, 184, 157, 0.06)",
+    }}>
             <form className="mx-auto position-relative form" onSubmit={handleSubmit}>
                 <input
                     type="text"
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Type your message..."
-                    className="w-100 p-3 input rounded-2 border bg-transparent text-white"
+                    placeholder="Ask Me Anything..."
+                    className="w-100 p-3 input text-black"
                     aria-label="Chat message input"
                 />
 

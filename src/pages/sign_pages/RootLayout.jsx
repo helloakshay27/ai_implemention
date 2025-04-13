@@ -1,8 +1,6 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 
 export default function RootLayout() {
   const location = useLocation();
@@ -16,11 +14,8 @@ export default function RootLayout() {
 
       <div className="main-content">
    
-
-          <Outlet /> {/* Dynamic content rendering */}
-          <footer className="footer">
-            <Footer />
-          </footer>
+      <Outlet />
+        
       </div>
     </main>
   );

@@ -146,44 +146,53 @@ const SignIn = () => {
             <main>
                 <section className="login_module">
                     <div className="container-fluid">
-                        <div className="row align-items-center vh-100 login_bg justify-content-center">
-                            <div className="col-lg-7 col-md-7 vh-50 d-flex align-items-center">
+                        <div className="row align-items-center vh-100 login_bg justify-content-end">
+                            <div className="col-lg-4 col-md-7 vh-50 ">
                                 <div className="login-sec">
-                                    <img
-                                        src="https://lockated.com/assets/logo-87235e425cea36e6c4c9386959ec756051a0331c3a77aa6826425c1d9fabf82e.png"
-                                        alt="Logo"
-                                        style={{ width: "35%", height: "auto", margin: "0 auto" }}
-                                    />
+                                                                <img
+                                src="https://s3-alpha-sig.figma.com/img/fac0/3f4f/1f8a83367d13fa9e1e88aed5b7967bf7?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=rix9zVX3jLBmGWFn5fCH5E0uzEE6JYipa-xNwx3Uc-UdUl2Jvv4riYmB5p~JlvyP5wekeU80EIDL5816BavGoJDfp3Ts~53-qNwmtMPnMil5IHdsIA2kAPSr3s26-EYyU7eShR~iemoGkcLsaHHk-JujvqIU0eva6REiclqoQSTGUmt4brymQhf~KLtU6GDgi3td45QdG8feJAPmm2dS80zUVq1cMnE0ZCdYbk77oBZhZDC00lXSqTHwEinQToz0xB8zIWM1dNN7ibNMW1f9hilA2KJkAM81G03h7SXw6eBKRbK7DFaDCe1XjCpBB3wF5N0DgjCjNEu4dxHC6lMWRw__"
+                                alt="Logo"
+                                style={{
+                                    width: "192px",
+                                    height: "42px",
+                                    margin: "10px auto 100px", // top = 0, horizontal = auto (center), bottom = 100px
+                                    display: "block"
+                                }}
+                                />
 
 
 
                                     {selectedContent === "content1" && (
                                         <div className="mt-2 login-content">
                                             <div className="form-group position-relative">
-                                                <label className="mb-1" htmlFor="email">Email</label>
+                                            <label className="mb-3 label-muted" htmlFor="email" >
+  Email ID
+</label>
+
                                                 <input
                                                     type="email"
                                                     id="email"
-                                                    className="form-control mb-2"
-                                                    placeholder="Enter email"
+                                                    className="form-control custom-input"
+                                                    style={{ color: "#667085" }}
+                                                    placeholder="Enter email Id"
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                     required
                                                 />
                                             </div>
                                             <div className="form-group position-relative">
-                                                <label className="mb-1" htmlFor="password">Password</label>
+                                                <label className="mb-3 label-muted" htmlFor="password">Password</label>
                                                 <input
                                                     type="password"
                                                     id="password"
-                                                    className="form-control"
+                                                    className="form-control custom-input"
                                                     placeholder="Enter password"
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                     required
                                                 />
                                             </div>
-                                            <div className="d-flex justify-content-start mt-2 mb-3 gap-2">
+                                            <div className="d-flex justify-content-end mb-3 ">
                                                 <a className="forget-btn" href="/forgot-password">
                                                     Forgot password?
 
@@ -193,10 +202,10 @@ const SignIn = () => {
 
 
                                             {error && <p className="text-danger">{error}</p>}
-                                            <button onClick={handlePasswordLogin} type="submit" className="btn btn-danger mt-2 purple-btn2">
+                                            <button onClick={handlePasswordLogin} type="submit" className=" purple-btn2 " style={{display:"block"}}>
                                                 {loading ? "Logging in..." : "Login"}
                                             </button>
-                                            <button className="btn purple-btn2 mt-3 " onClick={regiterPage} style={{ width: "100%", background: "white", color: "black" }}>
+                                            <button className=" purple-btn2  " onClick={regiterPage} style={{ opacity:`1`, color: "#C72030" ,border: "1px solid #C72030" ,background: "none" ,display:"block"}}>
                                                 {loading ? "Register in..." : "Register"}
                                             </button>
 

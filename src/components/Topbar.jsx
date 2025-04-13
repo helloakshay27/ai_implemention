@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const CURRENT_CHAT_MODE_KEY = "current_chat_mode";
 const CURRENT_CHAT_KEY = "current_chat";
 
-const Topbar = ({ setIsSidebarOpen }) => {
+const Topbar = () => {
   const data = [
     { id: 0, label: "Personal" },
     { id: 1, label: "Professional" },
@@ -40,16 +40,17 @@ const Topbar = ({ setIsSidebarOpen }) => {
   };
 
   return (
-    <div className="w-100 text-white p-3 topbar">
-      <Menu
-        className="d-md-none menu"
-        size={20}
-        onClick={() => setIsSidebarOpen(true)}
-      />
+    // <div className="w-100 text-white p-3 topbar ">
+    //   <Menu
+    //     className="d-md-none menu"
+    //     size={50}
+    //     onClick={() => setIsSidebarOpen(true)}
+    //   />
       <div className="dropdown">
-        <div className="dropdown-header" onClick={toggleDropdown}>
-          {items.find((item) => item.id == selectedItem)?.label}
-          <i className={`fa fa-chevron-right icon ${isOpen && "open"}`}></i>
+        <div className="dropdown-header " onClick={toggleDropdown}>
+          {items.find((item) => item.id == selectedItem).label}
+          <i className={`fa fa-chevron-right icon ${isOpen && "open"}`}
+          style={{color:'rgba(199, 32, 48, 1)'}}></i>
         </div>
         <div className={`dropdown-body ${isOpen && "open"}`}>
           {items.map((item) => (
@@ -70,7 +71,7 @@ const Topbar = ({ setIsSidebarOpen }) => {
           ))}
         </div>
       </div>
-    </div>
+    // </div> 
   );
 };
 export default Topbar;

@@ -17,7 +17,7 @@ const ChatArea = () => {
     }, [currentChat?.messages]);
 
     return (
-        <div className='w-100 chat-area'>
+        <div className='chat-area'>
             {
                 currentChat?.messages?.map((message) => {
                     return (

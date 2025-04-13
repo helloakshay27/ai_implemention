@@ -11,8 +11,7 @@ const Layout = ({ children }) => {
                 isSidebarOpen={isSidebarOpen}
                 setIsSidebarOpen={setIsSidebarOpen}
             />
-            <main className="w-100 main">
-                <Topbar setIsSidebarOpen={setIsSidebarOpen} />
+            <main className="main">
                 {children}
             </main>
         </div>

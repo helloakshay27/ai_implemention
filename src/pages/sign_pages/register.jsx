@@ -1,5 +1,5 @@
 import React, { useState,useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {toast} from "react-hot-toast";
 
@@ -153,13 +153,16 @@ const handleResendOTP=async(e)=>{
       <main>
         <section className="login_module">
           <div className="container-fluid">
-            <div className="row align-items-center min-vh-100 login_bg justify-content-center">
-              <div className="col-lg-7 col-md-7 vh-50 d-flex align-items-center">
-                <div className="login-sec" style={{  padding: "1% 8%" }}>
+            <div className="row align-items-center min-vh-100 login_bg justify-content-end">
+              <div className="col-lg-4 col-md-7 vh-50 d-flex align-items-center">
+                <div className="login-sec">
                   <img
                     className="logo_img"
-                    style={{ width: 100, height: 85, margin: "auto" }}
-                    src="https://lockated.com/assets/logo-87235e425cea36e6c4c9386959ec756051a0331c3a77aa6826425c1d9fabf82e.png"
+                    style={{  width: "192px",
+                      height: "42px",
+                      margin: "10px auto 100px", // top = 0, horizontal = auto (center), bottom = 100px
+                      display: "block" }}
+                    src="https://s3-alpha-sig.figma.com/img/fac0/3f4f/1f8a83367d13fa9e1e88aed5b7967bf7?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=rix9zVX3jLBmGWFn5fCH5E0uzEE6JYipa-xNwx3Uc-UdUl2Jvv4riYmB5p~JlvyP5wekeU80EIDL5816BavGoJDfp3Ts~53-qNwmtMPnMil5IHdsIA2kAPSr3s26-EYyU7eShR~iemoGkcLsaHHk-JujvqIU0eva6REiclqoQSTGUmt4brymQhf~KLtU6GDgi3td45QdG8feJAPmm2dS80zUVq1cMnE0ZCdYbk77oBZhZDC00lXSqTHwEinQToz0xB8zIWM1dNN7ibNMW1f9hilA2KJkAM81G03h7SXw6eBKRbK7DFaDCe1XjCpBB3wF5N0DgjCjNEu4dxHC6lMWRw__"
                     alt="Logo"
                   />
 
@@ -168,13 +171,13 @@ const handleResendOTP=async(e)=>{
                     
                   >
                     <div className="form-group position-relative">
-                      <label className="mb-1" htmlFor="email">
+                      <label className="label-muted" htmlFor="email">
                         First Name
                       </label>
                       <input
                         type="text"
                         id="email"
-                        className="form-control mb-2"
+                        className="form-control mb-2 custom-input"
                         placeholder="Enter firstname"
                         value={firstname}
                         onChange={(e) => setFirstname(e.target.value)}
@@ -182,13 +185,13 @@ const handleResendOTP=async(e)=>{
                       />
                     </div>
                     <div className="form-group position-relative">
-                      <label className="mb-1" htmlFor="password">
+                      <label className="label-muted" htmlFor="password">
                         Last Name
                       </label>
                       <input
                         type="text"
                         id="password"
-                        className="form-control"
+                        className="form-control custom-input"
                         placeholder="Enter lastname"
                         value={lastname}
                         onChange={(e) => setLastname(e.target.value)}
@@ -196,13 +199,13 @@ const handleResendOTP=async(e)=>{
                       />
                     </div>
                     <div className="form-group position-relative">
-                      <label className="mb-1" htmlFor="Email">
+                      <label className="label-muted" htmlFor="Email">
                         Email
                       </label>
                       <input
                         type="Email"
                         id="password"
-                        className="form-control"
+                        className="form-control custom-input"
                         placeholder="Enter email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -210,13 +213,13 @@ const handleResendOTP=async(e)=>{
                       />
                     </div>
                     <div className="form-group position-relative">
-                      <label className="mb-1" htmlFor="email">
+                      <label className="label-muted" htmlFor="email">
                         Mobile
                       </label>
                       <input
                         type="tel"
                         id="email"
-                        className="form-control mb-2"
+                        className="form-control mb-2 custom-input"
                         placeholder="Enter mobile"
                         value={mobile}
                         onChange={(e) => setMobile(e.target.value)}
@@ -225,11 +228,11 @@ const handleResendOTP=async(e)=>{
                     </div>
 
                     <div className="form-group position-relative">
-                      <label className="mb-1" htmlFor="password">Password</label>
+                      <label className="label-muted" htmlFor="password">Password</label>
                       <input
                         type="password"
                         id="password"
-                        className="form-control"
+                        className="form-control custom-input"
                         placeholder="Enter password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -239,11 +242,11 @@ const handleResendOTP=async(e)=>{
                   {showOtpSection &&(
                     <>
                     <div className="form-group position-relative">
-                      <label className="mb-1" htmlFor="otp">Verify Email</label>
+                      <label className="label-muted" htmlFor="otp">Verify Email</label>
                       <input
                         type="number"
                         id="number"
-                        className="form-control"
+                        className="form-control custom-input"
                         placeholder="Enter OTP"
                         value={OTP}
                         onChange={(e) => SetOTP(e.target.value)}
@@ -268,17 +271,19 @@ const handleResendOTP=async(e)=>{
 
                     {error && <p className="text-danger">{error}</p>}
                     {showOtpSection ? (
-                      <button type="submit" className="btn btn-danger mt-2 purple-btn2" onClick={(e) => handleSubmitOTP(e)}>
+                      <button type="submit" className=" purple-btn2" onClick={(e) => handleSubmitOTP(e)}>
                       {loading ? "Verifying..." : "Verify Email"}
                     </button>
                     ):(
-                    <button type="submit" className="btn btn-danger mt-2 purple-btn2" onClick={(e) => handlePasswordLogin(e)}>
+                    <button type="submit" className=" purple-btn2" onClick={(e) => handlePasswordLogin(e)}>
                       {loading ? "Register in..." : "Register"}
                     </button>
-                    )};
-                    <button className="btn purple-btn2 mt-3 " onClick={redirectPage} style={{ width: "100%", background: "white", color: "black" }}>
-                      {loading ? "Sign..." : "Sign"}
-                    </button>
+                    )}
+
+                    <p className="mt-3 text-center text-muted">
+                      Already have an account?
+                      < Link style={{ color: "#C72030" ,fontWeight:"400px",fontSize:"12px"}} to="/login">LOGIN</Link>
+                    </p>
 
                   </form>
                 </div>

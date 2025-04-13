@@ -133,7 +133,7 @@ const ChatMessage = ({ message }) => {
             }`}
         >
           {!message.isUser && (
-            <Bot className="me-2 mt-3 text-white" size={24} />
+            <Bot className="me-2 mt-3 " style={{ color: 'grey' }} size={24} />
           )}
           <div
             className={`message px-3 py-2 ${message.isUser ? "user-message" : "bot-message"
@@ -150,7 +150,8 @@ const ChatMessage = ({ message }) => {
             )}
           </div>
           {message.isUser && (
-            <User className="ms-2 mt-3 text-primary" size={24} />
+            <User className="ms-2 mt-3" style={{ color: 'grey' }} size={24} />
+
           )}
         </div>
         {!message.isUser && (
@@ -158,35 +159,36 @@ const ChatMessage = ({ message }) => {
             <Copy
               onClick={handleCopy}
               size={15}
-              color="#fafafa"
+              color="black"
               className="cursor-pointer"
             />
             <Volume2
               size={15}
-              color="#fafafa"
               className="cursor-pointer"
-              fill={isSpeaking ? "#fafafa" : null}
+              fill={isSpeaking ? null:"#fafafa"}
               onClick={handleSpeak}
             />
             <Download
               size={18}
-              color="#fafafa"
+              color="black"
               className="cursor-pointer hover:scale-110 transition-transform"
               onClick={() => setIsOpen(!isOpen)}
             />
             <Share2
               onClick={handleShare}
               size={15}
-              color="#fafafa"
+              color="black"
               className="cursor-pointer"
             />
-            <Pin
-              size={15}
-              color={loading ? "#3e3e3e" : "#fafafa"}
-              fill={pin ? "#fafafa" : null}
-              onClick={pin ? handleUnpin : handlePin}
-              className="cursor-pointer"
-            />
+    <Pin
+  size={15}
+  color={loading ? "grey" : "black"}
+  style={{ fill: pin ? 'black' : 'none' }}
+  onClick={pin ? handleUnpin : handlePin}
+  className="cursor-pointer"
+/>
+
+
           </div>
         )}
       </div>
