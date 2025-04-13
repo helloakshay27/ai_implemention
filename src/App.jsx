@@ -13,7 +13,7 @@ import Register from "./pages/sign_pages/register";
 import Forgot from "./pages/sign_pages/Forgot";
 import ForgotOtp from "./pages/sign_pages/ForgotOtp";
 import CreatePassword from "./pages/sign_pages/CreatePassword";
-import ForgotPassword from './pages/sign_pages/ForgotPassword';
+import ForgotPassword from "./pages/sign_pages/ForgotPassword";
 
 import RootLayout from "./pages/sign_pages/RootLayout";
 import ProtectedRoute from "./pages/sign_pages/ProtectedRoute";
