@@ -9,9 +9,7 @@ import App from './App.jsx'
 import ChatProvider from './contexts/chatContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ChatProvider>
-      <App />
-    </ChatProvider>
-  </StrictMode>,
+  <ChatProvider>
+    <App />
+  </ChatProvider>
 )

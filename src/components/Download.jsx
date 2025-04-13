@@ -33,23 +33,40 @@ const DownloadModal = ({ isOpen, setIsOpen, message }) => {
     const doc = new jsPDF();
     const margin = 10;
     const pageHeight = doc.internal.pageSize.height;
-    const text = `Bot: ${message}`;
+    const lines = message.split('\n');
 
-    const lines = doc.splitTextToSize(text, 180);
     let y = 20;
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       if (y + 10 > pageHeight) {
         doc.addPage();
         y = 20;
       }
-      doc.text(line, margin, y);
+
+      // Check if line is a header
+      if (line.startsWith('###')) {
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text(line.replace(/###\s*/, ''), margin, y);
+      }
+      // Check if it's a bullet point
+      else if (line.trim().startsWith('*')) {
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.text('• ' + line.replace(/^\s*\*\s*/, ''), margin + 5, y);
+      } else {
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.text(line, margin, y);
+      }
+
       y += 10;
     });
 
     doc.save('bot-response.pdf');
     setIsOpen(false);
   };
+
 
   const handleWordDownload = async () => {
     const plainText = message;

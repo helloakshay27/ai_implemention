@@ -1,31 +1,58 @@
-import { Bot, Copy, Download, Pin, Share2, User, Volume2 } from 'lucide-react'
-import { useState, useEffect } from 'react'
-import { toast } from 'react-hot-toast'
-import { useSpeechSynthesis } from "react-speech-kit";
-import axios from 'axios';
-import Markdown from 'react-markdown'
-import DownloadModal from './Download';
-import RemoveMarkdown from 'remove-markdown';
+import { Bot, Copy, Download, Pin, Share2, User, Volume2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import Markdown from "react-markdown";
+import DownloadModal from "./Download";
+import RemoveMarkdown from "remove-markdown";
 
 const ChatMessage = ({ message }) => {
   const [pin, setPinned] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { speak, voices } = useSpeechSynthesis();
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voices, setVoices] = useState([]);
 
-  const token = localStorage.getItem('access_token');
-  const userEmail = sessionStorage.getItem('email');
+  const token = localStorage.getItem("access_token");
+  const userEmail = sessionStorage.getItem("email");
 
   const handleShare = () => {
     if (!message || !userEmail) return;
 
-    const subject = encodeURIComponent('Shared Message');
-    const body = encodeURIComponent(message.content?.response || message.content);
+    const subject = encodeURIComponent("Shared Message");
+    const body = encodeURIComponent(
+      message.content?.response || message.content
+    );
 
-    window.open(`mailto:${userEmail}?subject=${subject}&body=${body}`, '_blank');
+    window.open(
+      `mailto:${userEmail}?subject=${subject}&body=${body}`,
+      "_blank"
+    );
   };
 
+  useEffect(() => {
+    const loadVoices = () => {
+      const synthVoices = window.speechSynthesis.getVoices();
+      if (synthVoices.length) {
+        setVoices(synthVoices);
+      }
+    };
+
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
   const handleSpeak = () => {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+
     const raw = message.content?.response || message.content;
     const cleanText = RemoveMarkdown(raw);
 
@@ -33,32 +60,37 @@ const ChatMessage = ({ message }) => {
       toast.error("Voices not loaded yet");
       return;
     }
-    console.log(voices)
-    speak({
-      text: cleanText,
-      voice: voices[0]
-    })
-  }
 
-  useEffect(() => {
-    return () => {
-      window.speechSynthesis.cancel();
-    };
-  }, []);
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.voice = voices[2];
+
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(message.content?.response || message.content).then(() => {
-      toast.success("Copied to clipboard");
-    }).catch(err => {
-      toast.error("Failed to copy to clipboard");
-    })
-  }
+    navigator.clipboard
+      .writeText(message.content?.response || message.content)
+      .then(() => {
+        toast.success("Copied to clipboard");
+      })
+      .catch((err) => {
+        toast.error("Failed to copy to clipboard");
+      });
+  };
+
   const handlePin = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`https://ai-implementation.lockated.com/pin-message/?token=${token}`, {
-        message: message.content?.response || message.content,
-      });
+      const response = await axios.post(
+        `https://ai-implementation.lockated.com/pin-message/?token=${token}`,
+        {
+          message: message.content?.response || message.content,
+        }
+      );
 
       if (response.data.success) {
         setPinned(true);
@@ -69,7 +101,8 @@ const ChatMessage = ({ message }) => {
     } finally {
       setLoading(false);
     }
-  }
+  };
+
   const handleUnpin = async () => {
     setLoading(true);
     try {
@@ -91,15 +124,12 @@ const ChatMessage = ({ message }) => {
     }
   };
 
-
   return (
     <>
       <div>
         <div
           key={message.id}
-          className={`d-flex ${message.isUser
-            ? "justify-content-end"
-            : "justify-content-start"
+          className={`d-flex ${message.isUser ? "justify-content-end" : "justify-content-start"
             }`}
         >
           {!message.isUser && (
@@ -111,13 +141,10 @@ const ChatMessage = ({ message }) => {
           >
             {!message.isUser ? (
               <Markdown>
-                {
-                  typeof message.content === 'string'
-                    ? message.content
-                    : message.content?.response || message.content?.warning || ''
-                }
+                {typeof message.content === "string"
+                  ? message.content
+                  : message.content?.response || message.content?.warning || ""}
               </Markdown>
-
             ) : (
               message.content
             )}
@@ -126,29 +153,50 @@ const ChatMessage = ({ message }) => {
             <User className="ms-2 mt-3 text-primary" size={24} />
           )}
         </div>
-        {
-          !message.isUser && (
-            <div className='d-flex align-items-center gap-3 ms-5 action-btn relative'>
-              <Copy onClick={handleCopy} size={15} color='#fafafa' className='cursor-pointer' />
-              <Volume2 size={15} color='#fafafa' className='cursor-pointer' onClick={handleSpeak} />
-              <Download
-                size={18}
-                color="#fafafa"
-                className="cursor-pointer hover:scale-110 transition-transform"
-                onClick={() => setIsOpen(true)}
-              />
-
-
-
-              <Share2 onClick={handleShare} size={15} color='#fafafa' className='cursor-pointer' />
-              <Pin size={15} color={loading ? '#3e3e3e' : '#fafafa'} fill={pin ? '#fafafa' : null} onClick={pin ? handleUnpin : handlePin} className='cursor-pointer' />
-            </div>
-          )
-        }
+        {!message.isUser && (
+          <div className="d-flex align-items-center gap-3 ms-5 action-btn relative">
+            <Copy
+              onClick={handleCopy}
+              size={15}
+              color="#fafafa"
+              className="cursor-pointer"
+            />
+            <Volume2
+              size={15}
+              color="#fafafa"
+              className="cursor-pointer"
+              fill={isSpeaking ? "#fafafa" : null}
+              onClick={handleSpeak}
+            />
+            <Download
+              size={18}
+              color="#fafafa"
+              className="cursor-pointer hover:scale-110 transition-transform"
+              onClick={() => setIsOpen(!isOpen)}
+            />
+            <Share2
+              onClick={handleShare}
+              size={15}
+              color="#fafafa"
+              className="cursor-pointer"
+            />
+            <Pin
+              size={15}
+              color={loading ? "#3e3e3e" : "#fafafa"}
+              fill={pin ? "#fafafa" : null}
+              onClick={pin ? handleUnpin : handlePin}
+              className="cursor-pointer"
+            />
+          </div>
+        )}
       </div>
-      <DownloadModal isOpen={isOpen} setIsOpen={setIsOpen} message={message.content?.response || message.content} />
+      <DownloadModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        message={message.content?.response || message.content}
+      />
     </>
   );
 };
 
-export default ChatMessage
+export default ChatMessage;

@@ -103,14 +103,13 @@ const ChatInput = () => {
 
                 <button
                     type="button"
-                    className={`position-absolute p-2 border-0 rounded-1 voice-btn ${isRecording ? 'recording' : ''}`}
+                    className={`position-absolute p-2 border-0 rounded-1 voice-btn`}
                     onClick={handleUnpinAll}
                     style={{
                         right: "60px",
                         top: "50%",
                         transform: "translateY(-50%)",
-                        background: isRecording ? "red" : "",
-                        color: isRecording ? "white" : "inherit"
+                        color: "inherit"
                     }}
                 >
                     <PinOff size={20} />
