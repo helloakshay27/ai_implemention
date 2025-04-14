@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feature List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            font-size: 10px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .header h1 {
+            flex: 1;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: left;
+            margin-left: 50px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+            width: 25%;
+        }
+
+        .table td:first-child {
+            width: 20%;
+            background-color: #fff;
+            text-align: left;
+        }
+
+        .table td:first-child button {
+            display: block;
+            width: 100%;
+            padding: 8px 0px;
+            border: 1px solid #f37021 !important;
+            background-color: white;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .custom-btn {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #f37021;
+            background-color: white;
+            color: #f37021 !important;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .custom-btn-green {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid green !important;
+            background-color: white;
+            color: green !important;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .green-text {
+            color: green !important;
+        }
+
+        .table td:nth-child(2) {
+            width: 45%;
+            text-align: left;
+        }
+
+        .table th:nth-child(3),
+        .table td:nth-child(3),
+        .table th:nth-child(4),
+        .table td:nth-child(4),
+        .table th:nth-child(5),
+        .table td:nth-child(5) {
+            width: 10%;
+        }
+
+        .orange-check {
+            color: #f37021;
+            font-size: 24px;
+        }
+
+        .grey-cross {
+            color: #999;
+            font-size: 24px;
+        }
+
+        .feature-title {
+            color: #f37021;
+        }
+
+        .check-img {
+            color: #f37021 !important;
+        }
+
+        .cancel-img {
+            background-color: #999;
+        }
+
+        .td-background {
+            background-color: #f1f1f1 !important;
+        }
+
+
+        @media print {
+            .table button {
+                color: #f37021 !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .orange-check,
+            .grey-cross {
+                -webkit-print-color-adjust: exact;
+            }
+
+            .table td:first-child button,
+            .custom-btn {
+                color: #000 !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .custom-btn {
+                color: #f37021 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .td-background {
+                background-color: #f1f1f1 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="Screenshot 2025-04-07 192424.png" alt="Logo">
+        <h1>FEATURE LIST</h1>
+        <div></div>
+    </div>
+
+
+    <table class="table">
+        <tr>
+            <th><span class="feature-title">Post <span style="color:#999;">Sales</span></span> Feature / Product</th>
+            <th>Feature Description</th>
+            <th style="background-color: #fff;">Rustomjee</th>
+            <th>My Piramal</th>
+            <th style="background-color: #fff;">Godrej Prop</th>
+        </tr>
+
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">My Account</button></td>
+            <td>A personalized section for users to access and manage documents and requests.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+
+        <tr>
+            <td><button>Request For Registration</button></td>
+            <td>Schedule specific services like inspection or appointments. Includes time, location, and service type.
+            </td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="grey-cross"><i class="bi bi-x-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+
+        <tr>
+            <td><button>Allotment Letter</button></td>
+            <td>Formal request for the official allotment letter, detailing post-sale property info.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+
+        <tr>
+            <td><button>Agreement Letter</button></td>
+            <td>Agreement between seller and buyer outlining details of the sale.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+
+        <tr>
+            <td><button>Payment Receipt</button></td>
+            <td>Document from the retailer confirming payment with details like amount and mode.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+
+        <tr>
+            <td><button>Account Statement</button></td>
+            <td>Brief summary of user's transactions and balances over time.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+
+        <tr>
+            <td><button>Architect Certificate</button></td>
+            <td>An Architect s Certificate confirms that a project meets approved plans and codes.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Other documents</button></td>
+            <td>Sales Contract: Agreement outlining sale terms and conditions., Title Deed: Proof of property
+                ownership., Settlement Statement: Detailed,
+                financial transaction summary. Home Inspection Report: Evaluation of property condition. Warranty
+                Documentation: Details of warranties
+                on property features. Property Disclosure Statement: Seller s report on property issues. Final Payment
+                Receipt Proof of final payment.
+
+                Closing Disclosure: Summary of final sale costs and fees.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>TDS Tutorials</button></td>
+            <td>TDS Tutorials are educational materials designed to explain and guide users through the process of Tax
+                Deducted at Source (TDS).</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Sale Agreement</button></td>
+            <td>A sale agreement is a legally binding contract outlining the terms and conditions of a sale</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>My home / My Unit Details</button></td>
+            <td>My Home / My Unit: Refers to the property or unit purchased by the buyer. It encompasses all post-sale
+                details and services related to
+                the property, including documentation, customization options, and any ongoing support or updates.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Raise a request</button></td>
+            <td> The Raise a Request feature in a post-sale application allows homeowners to submit and track requests
+                for various services, support, or
+                issues related to their property.
+
+                ex- request submissions, category selections, status tracking, priority settings</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Add new request</button></td>
+            <td>In short, "Add a Request" refers to a feature that allows users to submit a specific request or ask for
+                assistance within an app or
+                platform. This could involve reporting an issue, asking for a service, or requesting support.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Status- close / in progress /</button></td>
+            <td> In short, "Status" in reference to a request typically shows the current stage or progress of that
+                request. It lets users know whether
+                the request is pending, in process, completed, or needs further action.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Category selection</button></td>
+            <td>Category selection refers to choosing a specific classification or type for a task, request, or item. It
+                helps to organize and group related
+                items, making it easier to manage and process them.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Home loan</button></td>
+            <td>The Home Loan feature in a post-sale application provides homeowners with tools and information related
+                to managing their home loan
+                after purchasing a property. ex- loan management, payment tracking, amortization schedule, Loan
+                Modification Requests, Contact
+                Information.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>My project Details</button></td>
+            <td>This section provides a summary of the project, including key information such as project name,
+                location, development status, and any
+                significant features or amenities</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Unit layout</button></td>
+            <td>Unit Layout: The arrangement of my rooms and spaces in a unit.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Demand Letter</button></td>
+            <td>A demand letter is a formal written document sent by one party to another, typically in legal or
+                business matters, requesting specific
+                action or payment. It is often used as a precursor to legal action and serves as a formal request for
+                resolving a dispute or fulfilling an
+                obligation without going to court.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Booking details</button></td>
+            <td>Booking Referenc, Guest Name,Check-In Date: [Date]Check-Out Date: [Date]Room Type: [Type]Number of
+                Guests, [Number] Total Amount:
+                [Amount],Payment Status: [Paid/Outstanding]</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Construction updates</button></td>
+            <td>Construction details refer to the specific technical and design information about a building project,
+                including materials, dimensions,
+                methods, and structural elements. These details ensure that construction is carried out according to
+                plans and standard</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Refferal</button></td>
+            <td>In short, "Refer" typically means recommending someone to a service, product, or platform. It often
+                involves sharing a referral link or
+                code, allowing the referrer to earn rewards or benefits if the referred person signs up or makes a
+                purchase.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>My referral</button></td>
+            <td>"My Referral" typically refers to a section in an app or platform where users can view and manage
+                referrals they ve made. It allows them
+                to track the people they ve referred to the service, any rewards or benefits earned, and the status of
+                those referrals</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Profile</button></td>
+            <td>The My Profile feature in a post-sale application provides users with a centralized view and management
+                of their personal and account
+                information. ex- Personal Details, Account Settings, Profile Picture, Activity Overview, Security
+                Settings, Contact Information.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Switch project</button></td>
+            <td>The Switch Project feature in a post-sale app allows homeowners to transfer their property interests or
+                commitments from one project
+                to another within the same developer’s portfolio or across different projects.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Notification preference</button></td>
+            <td>Notification preference refers to a setting that allows users to customize how and when they receive
+                notifications from an app or
+                platform. Users can choose the types of alerts they want to get, such as push notifications, emails, or
+                SMS, and can often adjust the
+                frequency or turn off certain notifications altogether.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Theme</button></td>
+            <td>In short, "Theme" refers to the overall design, color scheme, and appearance of an app or platform. It
+                affects how the interface looks
+                and feels to the user, often with options for light or dark modes and custom colors</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Change password</button></td>
+            <td>"Change Password" is a feature that allows users to update their current password with a new one. It
+                helps maintain account security by
+                enabling users to reset their credentials if needed.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Rate this app</button></td>
+            <td>In short, "Rate This App" is a feature that prompts users to provide feedback or a rating for the app,
+                usually through a star system or a
+                review. It helps the app developers gather user opinions and improve the app based on the feedback
+                received.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Value added service</button></td>
+            <td>Value-Added Service" refers to extra features or benefits that enhance the primary service, providing
+                additional value to users beyond
+                the basic offering.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Interior design</button></td>
+            <td>Interior Design" refers to services or features related to customizing and decorating the interior of a
+                home after the purchase.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Event</button></td>
+            <td> The Event feature in a post-sale application allows homeowners to view, manage, and engage with
+                community or property-related
+                events. ex-event listings, events detailing, event reminder, registration & tickets, events updates.
+            </td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">My wallet</button></td>
+            <td>The My Wallet feature in a post-sale application allows users to manage and track their digital
+                financial resources and transactions
+                related to their property. ex- balance overview, transaction history, payment management, top-up option
+                , security feature </td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Brochure</button></td>
+            <td>brochure" is a printed or digital document that provides detailed information about products, services,
+                or events. It is often used for
+                marketing purposes and includes images, descriptions, and contact details to inform and attract
+                potential customers.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td>"lifestyle booklet" is a publication that highlights various aspects of a lifestyle, such as fashion,
+                home design, travel, or wellness. It
+                typically includes tips, trends, and recommendations to inspire and guide readers in enhancing their
+                lifestyle.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Home customization & upgrades</button></td>
+            <td>Home Customization & Upgrades allow homeowners to personalize their property with choices in design,
+                layout, and enhancements,
+                including structural changes and premium features, often with expert consultation and cost estimates.
+                ex- Interior Design Choices,
+                Structural Changes, Consultation Services, Cost Estimates</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Environment clearence</button></td>
+            <td>Environmental Clearance" is the approval required from regulatory authorities to ensure that a project
+                or development complies with
+                environmental regulations and standards. It assesses the potential impact on the environment and
+                requires measures to mitigate any
+                adverse effects.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>My wishlist</button></td>
+            <td>"My Wishlist" is a feature or list where users can save and track items, services, or goals they are
+                interested in or plan to acquire in the
+                future. It helps users organize and prioritize their desired purchases or objectives.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>New booking</button></td>
+            <td> "New Booking" refers to the process of reserving or scheduling a service, such as a hotel room or a
+                rental, for the first time. It
+                involves selecting dates, providing necessary details, and confirming the reservation</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Project Portfolio/Other Projects</button></td>
+            <td>Project Portfolio" is a collection of projects or initiatives managed and presented together. It
+                showcases the scope, status, and outcomes
+                of multiple projects, often used to track progress, allocate resources, and assess overall performance.
+            </td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Testimonials-Video / quotes</button></td>
+            <td>"testimonial" is a statement or endorsement from a customer or client that reflects their positive
+                experience with a product, service, or
+                company. It is often used in marketing to build credibility and attract new customers.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Contact Us</button></td>
+            <td> "Contact Us" is a section or feature that provides users with information on how to get in touch with a
+                company or organization. It
+                typically includes methods like email addresses, phone numbers, contact forms, or physical addresses for
+                customer inquiries or support.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>What s new-roadblock/camping/
+                    latest launch project</button></td>
+            <td>What s new in property" covers recent property listings, market trends, new real estate projects,
+                regulatory changes, and innovations
+                like smart homes or virtual tours</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>Pay now/ online payment</button></td>
+            <td>Pay Now" is a feature or button that allows users to make immediate payments for goods, services, or
+                bills. It initiates the payment
+                process, enabling users to complete transactions quickly and securely.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Property Valuation and Market
+                    Insights</button></td>
+            <td> Property Valuation and Market Insights" involves assessing the worth of a property and analyzing
+                current market trends. Property
+                valuation determines its financial value, while market insights provide information on trends, prices,
+                and conditions in the real estate
+                market to inform buying, selling, or investment decisions.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Post sales surveys and generic
+                    feedback</button></td>
+            <td>Post-Sales Surveys and Feedback" are tools used to collect opinions and experiences from customers after
+                a purchase or service.
+                Surveys gather structured responses on satisfaction, while feedback allows for open-ended comments,
+                helping businesses improve
+                their offerings and address any issues</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Smart homes Intregration</button></td>
+            <td> "Smart Home Integration" refers to connecting and managing various smart devices within a home through
+                a unified system. It allows
+                users to control things like lighting, security, and temperature from a central interface, often using a
+                smartphone or voice commands.
+
+                4o mini</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">In App Video Tutorials</button></td>
+            <td>=</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Project timeline</button></td>
+            <td>he Project Timeline feature provides real-time updates and a visual timeline of key construction
+                milestones, keeping homeowners
+                informed and engaged with their property’s progress.
+
+                ex- visual timeline, progress photo/videos, delay updates, estimates completion dates.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">In house & partnership- Value
+                    Added Service</button></td>
+            <td>In-house: Tasks or services done within the company by its own employees, without external help.
+
+                Partnership: A formal cooperation between two or more parties to achieve common goals, often sharing
+                risks and benefits.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">Lease</button></td>
+            <td>A lease is a legal agreement between two parties, typically a landlord (the property owner) and a tenant
+                (the renter), in which the
+                landlord allows the tenant to use or occupy a property for a specified period in exchange for regular
+                payments, usually referred to as
+                rent.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn" style="color: #f37021;">International project login</button></td>
+            <td>An international project login is a secure access point for global teams to collaborate on shared
+                platforms. It verifies users, controls
+                permissions, supports multiple languages, and ensures data security while complying with international
+                regulations.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button>App support</button></td>
+            <td>App support refers to assistance provided to users for troubleshooting, resolving issues, and optimizing
+                the performance of a mobile or
+                software application. It includes help with installation, usage, bug fixes, updates, and technical
+                problems.</td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn-green" style="color: green;">Legal documents</button></td>
+            <td class="green-text">WE SHOULD INCLUDE AN OPTION FOR LEGAL DOCUMENTS , ALLOWING USERS WHO ARE NOT OPTING
+                FOR OUR PARTERENED BANKS TO
+                DIRECTLLY DOWNLOAD ALL THE NECCESSARY BANK RELATED DCOUEMNTS . THIS WILL MAKE THE PROCESS SMOOTHER AND
+                MORE
+                CONVENIENT FOR THEM.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn-green" style="color: green;">Share app option</button></td>
+            <td class="green-text">FOR ALLOWING USERS TO SHARE IT WITH MUTLTIPLE PEOPLE IN JUST ONE CLICK,THIS WILL
+                STREAMLINE THE PROCESS AS OTHEWISE
+                ,USER WOULD NEED TO VISIT THE PLAYSTORE & SEARCH MANUALLY SEARCH FOR THE APP ON THE PLAYSTORE , WHICH
+                CAN SOMETIMES
+                DETER POTENTIAL BUYER .</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn-green" style="color: green;">Resident s satisfaction survey</button></td>
+            <td class="green-text">FIRST IMPRESSION POST POSSESSION - FIRST IMPRESSION OF THE SOCIETY</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn-green" style="color: green;">Rating (1 5)</button></td>
+            <td class="green-text">SUCH AS, DRIVEWAY AND PORCH, CAR PARKING FACILITY, ENTERANCE LOBBY, FRIENDLINESS AND
+                HELPFULNESS OF THE LOBBY ASSISTANT,
+                CLEANLINESS OF THE LOBBY, AIRCONDITIONING OF THE LOBBY</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn-green" style="color: green;">Phone directory</button></td>
+            <td class="green-text">TO ALLOW RESIDENTS TO ENQUIRE FOR FACILITY BOOKINGS AND ACT AS A QUICK DIRECTORY TO
+                CONNECT WITH KEY MEMBERS OF THE
+                CLIENT FACILITY/MANAGMENT TEAM.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn-green" style="color: green;">Live view</button></td>
+            <td class="green-text">WHERE CLIENTS CAN SEEE THE LIVE CONSTRUCTION AND WILL BE UPTO DATE ABOUT CONSTRUCTION
+            </td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+        <tr>
+            <td><button class="custom-btn-green" style="color: green;">Capital appreciation chart</button></td>
+            <td class="green-text">SPECIFING HOW OUR PAST PROJECTS HAVE APPRECIATED OVER THE TIME. EXAMPLE - CLIENT
+                TOWERS, WATERFRONT KALYANI ETC.</td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+            <td class="td-background"><span class="orange-check check-img"><i
+                        class="bi bi-check-circle-fill"></i></span></td>
+            <td><span class="orange-check check-img"><i class="bi bi-check-circle-fill"></i></span></td>
+        </tr>
+
+
+        <!-- You can continue adding rows following the same pattern -->
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
