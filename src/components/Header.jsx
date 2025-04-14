@@ -40,6 +40,7 @@ const Header = () => {
 
   const email = sessionStorage.getItem("email");
   const firstName = sessionStorage.getItem("firstname");
+  const lastName= sessionStorage.getItem("lastname");
   const avatarLetter = firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() || "U";
 
 
@@ -68,7 +69,8 @@ const Header = () => {
                 <div className="avatar__letters2">{avatarLetter}</div>
               </div>
               <br />
-              <h5 style={{ color: "black" }}>{firstName || "First Name"}</h5>
+              <h5 style={{ color: "black" ,display:"inline", marginRight:"5px"}}>{firstName || "FirstName"}</h5>
+              <h5 style={{ color: "black" ,display:"inline"}}>{lastName || "LastName"}</h5>
               <p className="text-muted">{email || "example@example.com"}</p>
               <button
                 className="purple-btn2 my-3"

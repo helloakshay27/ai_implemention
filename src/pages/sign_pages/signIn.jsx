@@ -47,6 +47,7 @@ const SignIn = () => {
                 localStorage.setItem("access_token", user.api_key);
                 sessionStorage.setItem("email", user.email);
                 sessionStorage.setItem("firstname", user.first_name || "");
+                sessionStorage.setItem("lastname", user.last_name || "");
     
                 navigate("/");
             } else {
