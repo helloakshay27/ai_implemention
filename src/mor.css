@@ -1,26 +1,30 @@
 .custom-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: calc(100% - 250px); /* Adjust this as per your needs */
-    height: 64px; /* Adjust the height as required */
-    background-color: #fff; /* Or your preferred background color */
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for the right edge */
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* padding: 0; */
-  }
-  
-  .custom-header .navbar-toggler {
-    border: none;
-  }
-  
-  .custom-header .header-icons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 15px; /* Adjust the gap as needed */
-  }
-  
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: calc(100% - 255px);
+  /* Adjust this as per your needs */
+  height: 64px;
+  /* Adjust the height as required */
+  background-color: #fff;
+  /* Or your preferred background color */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  /* Optional: add a shadow for the right edge */
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 0; */
+}
+
+.custom-header .navbar-toggler {
+  border: none;
+}
+
+.custom-header .header-icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  /* Adjust the gap as needed */
+}

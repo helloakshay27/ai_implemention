@@ -72,7 +72,7 @@ const Header = () => {
               <p className="text-muted">{email || "example@example.com"}</p>
               <button
                 className="purple-btn2 my-3"
-                style={{ width: "75%" ,backgroundColor:"rgba(196, 184, 157, 0.35)",color:"rgba(199, 32, 48, 1)"}}
+                style={{ width: "75%", backgroundColor: "rgba(196, 184, 157, 0.35)", color: "rgba(199, 32, 48, 1)" }}
                 aria-label="Close"
                 onClick={signout}
               >
@@ -83,23 +83,23 @@ const Header = () => {
         </div>
       </div>
       <nav className="custom-header ">
-      <div className="container-fluid ">
-  {/* Left-aligned content */}
-  <Topbar/>
+        <div className="container-fluid ">
+          {/* Left-aligned content */}
+          <Topbar />
 
-  {/* Right-aligned avatar */}
-  <div className="header-icons me-5">
-    <ul className="d-flex gap-4 m-0">
-      <li>
-        <a className=" " onClick={handleOpen}>
-          <div className="avatar2" style={{ height: "32px", width: "32px", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0", borderRadius: "50%" }}>
-            <div style={{ fontSize: "18px" }}>{avatarLetter}</div>
+          {/* Right-aligned avatar */}
+          <div className="header-icons me-5">
+            <ul className="d-flex gap-4 m-0">
+              <li>
+                <a className=" " onClick={handleOpen}>
+                  <div className="avatar2" style={{ height: "32px", width: "32px", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0", borderRadius: "50%" }}>
+                    <div style={{ fontSize: "18px" }}>{avatarLetter}</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
           </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
+        </div>
 
       </nav>
     </>

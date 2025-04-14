@@ -1,10 +1,12 @@
-import { Bot, Copy, Download, Pin, Share2, User, Volume2 } from "lucide-react";
+import { Bot, Copy, Download, LayoutTemplate, Pin, Share2, User, Volume2 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import Markdown from "react-markdown";
 import DownloadModal from "./Download";
 import RemoveMarkdown from "remove-markdown";
+import Presale from "../templates/presale";
 
 const ChatMessage = ({ message }) => {
   const [pin, setPinned] = useState(false);
@@ -124,6 +126,30 @@ const ChatMessage = ({ message }) => {
     }
   };
 
+  const handleTemplateDownload = () => {
+    console.log('clicked')
+    const raw = message.content?.response || message.content;
+    const cleanText = RemoveMarkdown(raw);
+
+    const htmlString = renderToStaticMarkup(<Presale />);
+
+    const element = document.createElement("div");
+    element.innerHTML = htmlString;
+
+    import("html2pdf.js").then((html2pdf) => {
+      html2pdf.default()
+        .set({
+          margin: 10,
+          filename: "response.pdf",
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        })
+        .from(element)
+        .save();
+    });
+  };
+
+
   return (
     <>
       <div>
@@ -165,7 +191,7 @@ const ChatMessage = ({ message }) => {
             <Volume2
               size={15}
               className="cursor-pointer"
-              fill={isSpeaking ? null:"#fafafa"}
+              fill={isSpeaking ? null : "#fafafa"}
               onClick={handleSpeak}
             />
             <Download
@@ -180,15 +206,18 @@ const ChatMessage = ({ message }) => {
               color="black"
               className="cursor-pointer"
             />
-    <Pin
-  size={15}
-  color={loading ? "grey" : "black"}
-  style={{ fill: pin ? 'black' : 'none' }}
-  onClick={pin ? handleUnpin : handlePin}
-  className="cursor-pointer"
-/>
-
-
+            <Pin
+              size={15}
+              color={loading ? "grey" : "black"}
+              style={{ fill: pin ? 'black' : 'none' }}
+              onClick={pin ? handleUnpin : handlePin}
+              className="cursor-pointer"
+            />
+            <LayoutTemplate
+              size={15}
+              className="cursor-pointer"
+              onClick={handleTemplateDownload}
+            />
           </div>
         )}
       </div>

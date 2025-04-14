@@ -38,8 +38,10 @@ const PromptModal = ({ setIsModalOpen }) => {
             }}
         >
             <div
-                className="modal-content p-4 bg-white rounded shadow overflow-y-auto"
-                style={{ width: "70%", height: "90%" }}
+                className="modal-content p-4 rounded shadow overflow-y-auto"
+                style={{
+                    width: "70%", height: "90%",
+                }}
             >
                 <div className="d-flex align-items-center justify-content-end">
                     <button onClick={onClose} className="btn-close" />
@@ -81,16 +83,6 @@ const PromptModal = ({ setIsModalOpen }) => {
                                 <input type="text" className="modal-input" placeholder="Website 2" />
                                 <input type="text" className="modal-input" placeholder="Website 3" />
                             </div>
-                            <div className="benchmark-col">
-                                <input type="text" className="modal-input" placeholder="User ID 1" />
-                                <input type="text" className="modal-input" placeholder="User ID 2" />
-                                <input type="text" className="modal-input" placeholder="User ID 3" />
-                            </div>
-                            <div className="benchmark-col">
-                                <input type="text" className="modal-input" placeholder="Password 1" />
-                                <input type="text" className="modal-input" placeholder="Password 2" />
-                                <input type="text" className="modal-input" placeholder="Password 3" />
-                            </div>
                         </div>
 
                         <div className="benchmark-row">
@@ -108,11 +100,6 @@ const PromptModal = ({ setIsModalOpen }) => {
                                 <input type="text" className="modal-input" placeholder="Competitor 3" />
                             </div>
                             <div className="benchmark-col">
-                                <input type="text" className="modal-input" placeholder="Purpose/ Feature you want us to study" />
-                                <input type="text" className="modal-input" placeholder="Purpose/ Feature you want us to study" />
-                                <input type="text" className="modal-input" placeholder="Purpose/ Feature you want us to study" />
-                            </div>
-                            <div className="benchmark-col">
                                 <input type="text" className="modal-input" placeholder="Video Link" />
                                 <input type="text" className="modal-input" placeholder="Video Link" />
                                 <input type="text" className="modal-input" placeholder="Video Link" />
@@ -124,7 +111,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                     <button className="custom-submit-btn">Submit</button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
