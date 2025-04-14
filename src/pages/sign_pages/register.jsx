@@ -160,7 +160,7 @@ const handleResendOTP=async(e)=>{
                     className="logo_img"
                     style={{  width: "192px",
                       height: "42px",
-                      margin: "10px auto 100px", // top = 0, horizontal = auto (center), bottom = 100px
+                      margin: "10px auto 20px", // top = 0, horizontal = auto (center), bottom = 100px
                       display: "block" }}
                     src="https://s3-alpha-sig.figma.com/img/fac0/3f4f/1f8a83367d13fa9e1e88aed5b7967bf7?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=rix9zVX3jLBmGWFn5fCH5E0uzEE6JYipa-xNwx3Uc-UdUl2Jvv4riYmB5p~JlvyP5wekeU80EIDL5816BavGoJDfp3Ts~53-qNwmtMPnMil5IHdsIA2kAPSr3s26-EYyU7eShR~iemoGkcLsaHHk-JujvqIU0eva6REiclqoQSTGUmt4brymQhf~KLtU6GDgi3td45QdG8feJAPmm2dS80zUVq1cMnE0ZCdYbk77oBZhZDC00lXSqTHwEinQToz0xB8zIWM1dNN7ibNMW1f9hilA2KJkAM81G03h7SXw6eBKRbK7DFaDCe1XjCpBB3wF5N0DgjCjNEu4dxHC6lMWRw__"
                     alt="Logo"

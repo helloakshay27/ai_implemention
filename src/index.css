@@ -522,6 +522,39 @@ p {
     align-items: center;
 }
 
+.bot-thinking {
+    height: 25px;
+    width: 80px;
+    border-radius: 8px;
+    background: #e0e0e0;
+    color:#555;
+    position: relative;
+    overflow: hidden;
+    margin: 14px 0;
+    font-size:14px;
+    text-align:center;
+    padding:3px;
+  }
+  
+  .bot-thinking::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(to right, transparent, #f0f0f0, transparent);
+    animation: shimmer 1.2s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      left: -50%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+  
+
 /* Profile Link */
 .header-icons ul {
     display: flex;

@@ -29,9 +29,10 @@ const ChatArea = () => {
             {
                 isTyping && (
                     <div className='d-flex'>
-                        <Bot className="me-2 mt-3 text-primary" size={24} />
-                        <div className="d-flex justify-content-start">
-                            <img src='/typing.svg' alt="Thinking..." style={{ width: '3rem' }} />
+            <Bot className="me-2 mt-3 " style={{ color: 'grey' }} size={24} />
+
+                        <div className=" bot-thinking">
+                            {/* <img src='/typing.svg' alt="Thinking..." style={{ width: '3rem',color: 'grey' }} /> */}
                         </div>
                     </div>
                 )
