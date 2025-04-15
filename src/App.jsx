@@ -22,7 +22,6 @@ import "./mor.css";
 import { useChatContext } from './contexts/chatContext';
 import PromptModal from './components/PromptModal';
 import { Circle, Command } from 'lucide-react';
-import PromptModal2 from './components/PromptModal2';
 
 function App() {
   const { mode } = useChatContext();
