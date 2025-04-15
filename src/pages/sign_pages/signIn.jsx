@@ -196,7 +196,6 @@ const SignIn = () => {
                                             <div className="d-flex justify-content-end mb-3 ">
                                                 <a className="forget-btn" href="/forgot-password">
                                                     Forgot password?
-
                                                 </a>
                                                 <br />
                                             </div>

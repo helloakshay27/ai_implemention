@@ -107,6 +107,7 @@ const DownloadModal = ({ isOpen, setIsOpen, message }) => {
             <button
               key={item.id}
               onClick={() => handleItemClick(item.id)}
+              style={{fontSize:"15px"}}
             >
               {item.label}
             </button>

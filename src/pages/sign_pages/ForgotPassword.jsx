@@ -10,7 +10,15 @@ const ForgotPassword = () => {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [toggle,setToggle]=useState(false);
 
+
+
+  const handleClick=(s)=>{
+    setToggle(!toggle);
+    setConfirm(s);
+  }
+  console.log(toggle);
   const handleReset = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -94,8 +102,17 @@ const ForgotPassword = () => {
                 {message && (
                   <>
                   <div className="confirm-box my-3" >
-                    <p className="mb-1 " style={{textAlign: "left", marginLeft: "10px", color:"#323232"}}>{message}</p>
-                    <select
+                    <p className="mb-1 " style={{textAlign: "left", marginLeft: "10px", color:"#323232",display:"inline"}}>{message}</p>
+                    <div>
+                      <input placeholder="Choose" className="form-control custom-select" value={confirm} style={{height:"30px"}} onClick={()=>{setToggle(!toggle)}}/>
+                        {toggle && (
+                          <div className="custom-select">
+                              <button type="button" className="option" onClick={()=>{handleClick("yes")}}>Yes</button>
+                              <button type="button" className="option" onClick={()=>{handleClick("no")}}>No</button>
+                          </div>
+                        )}
+                    </div>
+                    {/* <select
                       value={confirm}
                       onChange={(e) =>{ setConfirm(e.target.value)
                         if(e.target.value === "no")
@@ -110,9 +127,9 @@ const ForgotPassword = () => {
                       <option value="" disabled>
                         Choose
                       </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
+                      <option className="option" value="yes">Yes</option>
+                      <option className="option" value="no">No</option>
+                    </select> */}
                   </div>
                   
                   {confirm === "no" &&
