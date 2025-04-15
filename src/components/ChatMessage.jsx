@@ -7,6 +7,7 @@ import Markdown from "react-markdown";
 import DownloadModal from "./Download";
 import RemoveMarkdown from "remove-markdown";
 import Presale from "../templates/presale";
+import { marked } from "marked";
 
 const ChatMessage = ({ message }) => {
   const [pin, setPinned] = useState(false);
@@ -127,11 +128,11 @@ const ChatMessage = ({ message }) => {
   };
 
   const handleTemplateDownload = () => {
-    console.log('clicked')
     const raw = message.content?.response || message.content;
     const cleanText = RemoveMarkdown(raw);
+    // const htmlFromMarkdown = marked.parse(raw);
 
-    const htmlString = renderToStaticMarkup(<Presale />);
+    const htmlString = renderToStaticMarkup(<Presale content={cleanText} />);
 
     const element = document.createElement("div");
     element.innerHTML = htmlString;

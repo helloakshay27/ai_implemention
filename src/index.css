@@ -62,7 +62,7 @@
 }
 
 .main {
-    height: 115%;
+    height: 100vh;
     width: 100vw;
     background: #FFFFFF;
 }
@@ -115,9 +115,15 @@ select.custom-select option:hover {
     }
 }
 
+.chat-input {
+    position: absolute;
+    width: calc(100% - 255px) !important;
+    bottom: 0;
+}
+
 .chat-area {
     padding: 10%;
-    height: calc(100vh - 98px);
+    height: 100vh;
     overflow-y: auto;
     background-color: #FFFFFF;
     width: calc(100vw-200px);
@@ -152,14 +158,14 @@ select.custom-select option:hover {
 .user-message {
     background-color: rgba(213, 219, 219, 0.47);
     color: rgba(50, 50, 50, 1);
-    font-size: 14px;
+    font-size: medium;
 }
 
 .bot-message {
     background-color: #f8f9fa;
     border: 1px solid #dee2e6;
     border-radius: 15px;
-    font-size: 15px;
+    font-size: small;
 }
 
 .benchmark-section {
@@ -188,7 +194,7 @@ select.custom-select option:hover {
     border: 1px solid #ccc;
     font-size: 0.9rem;
     width: 100%;
-    background-color: #fff !important;
+    background-color: #fff;
     transition: border-color 0.2s;
 }
 
@@ -524,33 +530,34 @@ p {
     width: 80px;
     border-radius: 8px;
     background: #e0e0e0;
-    color:#555;
+    color: #555;
     position: relative;
     overflow: hidden;
     margin: 14px 0;
-    font-size:14px;
-    text-align:center;
-    padding:3px;
-  }
-  
-  .bot-thinking::before {
+    font-size: 14px;
+    text-align: center;
+    padding: 3px;
+}
+
+.bot-thinking::before {
     content: "";
     position: absolute;
     height: 100%;
     width: 50%;
     background: linear-gradient(to right, transparent, #f0f0f0, transparent);
     animation: shimmer 1.2s infinite;
-  }
-  
-  @keyframes shimmer {
+}
+
+@keyframes shimmer {
     0% {
-      left: -50%;
+        left: -50%;
     }
+
     100% {
-      left: 100%;
+        left: 100%;
     }
-  }
-  
+}
+
 
 /* Profile Link */
 .header-icons ul {
@@ -721,7 +728,7 @@ svg {
 
 .bot-message p {
     color: #000 !important;
-    font-size:15px;
+    font-size: 15px;
 }
 
 .download-parent {

@@ -1,6 +1,6 @@
 import './presale.css'
 
-const Presale = () => {
+const Presale = ({ content }) => {
     return (
         <>
             <div className="header">
@@ -19,7 +19,9 @@ const Presale = () => {
 
             <div className="content">
 
-                <div className="rows">
+                {content}
+
+                {/* <div className="rows">
                     <div className="label-dark">Splash Screen</div>
                     <div className="description">
                         A Splash Screen Is An Initial Screen That Shows An App’s Logo Or Branding While The App Launches,
@@ -394,7 +396,7 @@ const Presale = () => {
                         such as product
                         launches, events, or updates.
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </>

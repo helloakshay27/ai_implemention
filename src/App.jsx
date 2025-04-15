@@ -22,6 +22,7 @@ import "./mor.css";
 import { useChatContext } from './contexts/chatContext';
 import PromptModal from './components/PromptModal';
 import { Circle, Command } from 'lucide-react';
+import PromptModal2 from './components/PromptModal2';
 
 function App() {
   const { mode } = useChatContext();
@@ -60,7 +61,7 @@ function App() {
                 {
                   mode === 2 ? (
                     <div className='d-flex align-items-center justify-content-center mt-3'>
-                      <button className='rounded-circle border-0 d-flex align-items-center justify-content-center' style={{ height: "50px", width: "50px", backgroundColor: "#E2DED5" }} onClick={() => setIsModalOpen(true)} >
+                      <button className='rounded-circle border-0 d-flex align-items-center justify-content-center position-absolute bottom-0 mb-3' style={{ height: "50px", width: "50px", backgroundColor: "#E2DED5" }} onClick={() => setIsModalOpen(true)} >
                         <Circle fill='#C72030' color='#C72030' />
                       </button>
                     </div>

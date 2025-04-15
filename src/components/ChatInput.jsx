@@ -1,4 +1,4 @@
-import { Send, Mic, Pin, PinOff } from 'lucide-react';
+import { Send, Mic, Pin, PinOff, Paperclip } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { useChatContext } from '../contexts/chatContext';
 import axios from 'axios';
@@ -6,9 +6,11 @@ import axios from 'axios';
 const ChatInput = () => {
     const [input, setInput] = useState('');
     const [isRecording, setIsRecording] = useState(false);
+    const [attachments, setAttachments] = useState([]);
     const recognitionRef = useRef(null);
     const { sendMessage } = useChatContext();
     const inputRef = useRef(null);
+    const fileInputRef = useRef();
 
     const token = localStorage.getItem('access_token');
 
@@ -69,20 +71,84 @@ const ChatInput = () => {
         }
     };
 
+    const handleFileChange = async (event) => {
+        const files = event.target.files;
+
+        if (!files.length) return;
+
+        const formData = new FormData();
+
+        Array.from(files).forEach(file => {
+            formData.append('files', file);
+        });
+
+        try {
+            const response = await axios.post(`https://ai-implementation.lockated.com/upload/?token=${token}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    const handleUploadFile = () => {
+        fileInputRef.current?.click();
+    }
+
     return (
-        <div className="border-top p-3" style={{
-            background: "linear-gradient(180deg, rgba(196, 184, 157, 0.06), rgba(196, 184, 157, 0.06)",
+        <div className="border-top p-3 chat-input" style={{
+            background: "#FCFBF9",
         }}>
             <form className="mx-auto position-relative form" onSubmit={handleSubmit}>
+                <Paperclip
+                    className='position-absolute cursor-pointer'
+                    style={{
+                        left: "15px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "inherit"
+                    }}
+                    onClick={handleUploadFile}
+                    size={20}
+                />
+
+                {/* Hidden file input */}
                 <input
-                    type="text"
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                    multiple
+                />
+
+                <textarea
                     ref={inputRef}
+                    rows={1}
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                        setInput(e.target.value);
+
+                        const textarea = e.target;
+                        textarea.style.height = "auto"; // Reset height
+                        const maxHeight = 5 * 24; // Assuming approx 24px per line
+                        textarea.style.height = Math.min(textarea.scrollHeight, maxHeight) + "px";
+                    }}
                     placeholder="Ask Me Anything..."
-                    className="w-100 p-3 input text-black"
+                    className="w-100 py-3 input text-black"
+                    style={{
+                        paddingLeft: "3rem",
+                        paddingRight: "10rem",
+                        overflow: 'hidden',
+                        resize: 'none',
+                        lineHeight: "24px",
+                        outline: "none"
+                    }}
                     aria-label="Chat message input"
                 />
+
 
 
                 {/* Voice Message Button */}
