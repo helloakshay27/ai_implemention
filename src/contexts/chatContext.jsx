@@ -127,7 +127,7 @@ const ChatProvider = ({ children }) => {
         }
     };
 
-    const sendMessage = async (content) => {
+    const sendMessage = async (content, compitator = [], video = []) => {
         const userMessage = {
             id: Date.now().toString(),
             content,
@@ -149,16 +149,27 @@ const ChatProvider = ({ children }) => {
         try {
             setIsTyping(true);
             let response;
-            console.log(mode);
-            if (mode == 0) {
-                response = await axios.post(`https://ai-implementation.lockated.com/process_prompt/?token=${token}`, {
-                    user_prompt: content,
-                });
-            } else {
-                response = await axios.post(`https://ai-implementation.lockated.com/process_prompt/?token=${token}`, {
-                    user_input: content,
-                });
-            }
+
+            const requestData = mode === 0
+                ? { user_prompt: content }
+                : { user_input: content };
+
+            // Add competitors as dynamic fields
+            compitator.forEach((comp, index) => {
+                requestData[`competitor_${index + 1}`] = comp.website || comp.name || "";
+            });
+
+            // Add videoBenchmarks as dynamic fields
+            video.forEach((video, index) => {
+                requestData[`video_link_${index + 1}`] = video.videoLink || "";
+                requestData[`purpose_${index + 1}`] = video.feature || "";
+            });
+
+            // Make the API call
+            response = await axios.post(
+                `https://ai-implementation.lockated.com/process_prompt/?token=${token}`,
+                requestData
+            );
 
 
             const aiMessage = {
@@ -166,8 +177,6 @@ const ChatProvider = ({ children }) => {
                 content: response.data,
                 isUser: false,
             };
-
-            console.log(aiMessage);
 
             setChats((prev) =>
                 prev.map((chat) =>
