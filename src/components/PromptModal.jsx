@@ -1,20 +1,17 @@
 import { useState } from "react";
+import { useChatContext } from "../contexts/chatContext";
 
 const PromptModal = ({ setIsModalOpen }) => {
+    const { sendMessage } = useChatContext();
     const [formData, setFormData] = useState({
         prompt: "",
         businessObjective: "",
         problemStatement: "",
         userRoles: "",
         features: "",
-        competitors: [
-            { name: "", website: "", userId: "", password: "" },
-        ],
-        videoBenchmarks: [
-            { competitor: "", feature: "", videoLink: "" },
-        ],
+        competitors: [{ name: "", website: "" }],
+        videoBenchmarks: [{ competitor: "", feature: "", videoLink: "" }],
     });
-
 
     const onClose = () => {
         setIsModalOpen(false);
@@ -32,9 +29,29 @@ const PromptModal = ({ setIsModalOpen }) => {
         setFormData({ ...formData, videoBenchmarks: updated });
     };
 
-    const addCompetitor = async () => {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
+    const handleCompetitorChange = (index, field, value) => {
+        const updated = [...formData.competitors];
+        updated[index][field] = value;
+        setFormData({ ...formData, competitors: updated });
+    };
+
+    const handleVideoChange = (index, field, value) => {
+        const updated = [...formData.videoBenchmarks];
+        updated[index][field] = value;
+        setFormData({ ...formData, videoBenchmarks: updated });
+    };
+
+    const handleSubmit = async () => {
+        const message = `${formData.prompt}. ${formData.businessObjective}. ${formData.problemStatement}. ${formData.userRoles}. ${formData.features}`;
+        sendMessage(message, formData.competitors, formData.videoBenchmarks);
+        console.log(formData)
     }
+
 
     return (
         <div
@@ -52,7 +69,8 @@ const PromptModal = ({ setIsModalOpen }) => {
             <div
                 className="modal-content p-4 rounded shadow overflow-y-auto"
                 style={{
-                    width: "70%", height: "90%",
+                    width: "70%",
+                    height: "90%",
                 }}
             >
                 <div className="d-flex align-items-center justify-content-end">
@@ -61,18 +79,45 @@ const PromptModal = ({ setIsModalOpen }) => {
                 <div className="modal-body mt-4">
                     <input
                         type="text"
+                        name="prompt"
+                        value={formData.prompt}
+                        onChange={handleChange}
                         placeholder="Insert your propmt, for what are you trying to build the BRD"
                         className="w-100 modal-input"
                     />
                     <div className="d-flex align-items-center justify-content-between gap-1">
-                        <input type="text" placeholder="Business Objective" className="modal-input w-100" />
-                        <input type="text" placeholder="What problem are you solving for?" className="modal-input w-100" />
-                        <input type="text" placeholder="List of User Roles" className="modal-input w-100" />
+                        <input
+                            type="text"
+                            placeholder="Business Objective"
+                            className="modal-input w-100"
+                            name="businessObjective"
+                            value={formData.businessObjective}
+                            onChange={handleChange}
+                        />
+                        <input
+                            type="text"
+                            placeholder="What problem are you solving for?"
+                            className="modal-input w-100"
+                            name="problemStatement"
+                            value={formData.problemStatement}
+                            onChange={handleChange}
+                        />
+                        <input
+                            type="text"
+                            placeholder="List of User Roles"
+                            className="modal-input w-100"
+                            name="userRoles"
+                            value={formData.userRoles}
+                            onChange={handleChange}
+                        />
                     </div>
                     <input
                         type="text"
                         placeholder="List of features"
                         className="w-100 modal-input"
+                        name="features"
+                        value={formData.features}
+                        onChange={handleChange}
                     />
 
                     <div className="benchmark-section mt-1">
@@ -84,7 +129,10 @@ const PromptModal = ({ setIsModalOpen }) => {
                                     if (formData.competitors.length < 3) {
                                         setFormData((prev) => ({
                                             ...prev,
-                                            competitors: [...prev.competitors, { name: "", website: "", userId: "", password: "" }]
+                                            competitors: [
+                                                ...prev.competitors,
+                                                { name: "", website: "", userId: "", password: "" },
+                                            ],
                                         }));
                                     }
                                 }}
@@ -103,32 +151,48 @@ const PromptModal = ({ setIsModalOpen }) => {
                                 />
                             </div>
                             <div className="benchmark-col">
-                                {
-                                    formData.competitors.map((competitor, index) => (
-                                        <input key={index} type="text" className="modal-input" placeholder={`Competitor ${index + 1}`} />
-                                    ))
-                                }
+                                {formData.competitors.map((competitor, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        className="modal-input"
+                                        placeholder={`Competitor ${index + 1}`}
+                                        value={competitor.name}
+                                        onChange={(e) =>
+                                            handleCompetitorChange(index, "name", e.target.value)
+                                        }
+                                    />
+                                ))}
                             </div>
                             <div className="benchmark-col">
-                                {
-                                    formData.competitors.map((competitor, index) => (
-                                        <input key={index} type="text" className="modal-input" placeholder={`Website ${index + 1}`} />
-                                    ))
-                                }
+                                {formData.competitors.map((competitor, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        className="modal-input"
+                                        placeholder={`Website ${index + 1}`}
+                                        value={competitor.website}
+                                        onChange={(e) =>
+                                            handleCompetitorChange(index, "website", e.target.value)
+                                        }
+                                    />
+                                ))}
                             </div>
                             <div className="d-flex flex-column">
-                                {
-                                    formData.competitors.map((competitor, index) => (
-                                        <button
-                                            className="border px-3 py-2 text-white modal-input"
-                                            style={{ fontSize: "20px", backgroundColor: "#C72030", width: "50px" }}
-                                            onClick={() => removeCompetitor(index)}
-                                            title="Remove competitor"
-                                        >
-                                            ×
-                                        </button>
-                                    ))
-                                }
+                                {formData.competitors.map((competitor, index) => (
+                                    <button
+                                        className="border px-3 py-2 text-white modal-input"
+                                        style={{
+                                            fontSize: "20px",
+                                            backgroundColor: "#C72030",
+                                            width: "50px",
+                                        }}
+                                        onClick={() => removeCompetitor(index)}
+                                        title="Remove competitor"
+                                    >
+                                        ×
+                                    </button>
+                                ))}
                             </div>
                         </div>
 
@@ -140,7 +204,10 @@ const PromptModal = ({ setIsModalOpen }) => {
                                     if (formData.videoBenchmarks.length < 3) {
                                         setFormData((prev) => ({
                                             ...prev,
-                                            videoBenchmarks: [...prev.videoBenchmarks, { competitor: "", feature: "", videoLink: "" }]
+                                            videoBenchmarks: [
+                                                ...prev.videoBenchmarks,
+                                                { competitor: "", feature: "", videoLink: "" },
+                                            ],
                                         }));
                                     }
                                 }}
@@ -159,48 +226,71 @@ const PromptModal = ({ setIsModalOpen }) => {
                                 />
                             </div>
                             <div className="benchmark-col">
-                                {
-                                    formData.videoBenchmarks.map((video, index) => (
-                                        <input key={index} type="text" className="modal-input" placeholder={`Compitator ${index + 1}`} />
-                                    ))
-                                }
+                                {formData.videoBenchmarks.map((video, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        className="modal-input"
+                                        placeholder={`Compitator ${index + 1}`}
+                                        value={video.competitor}
+                                        onChange={(e) =>
+                                            handleVideoChange(index, "competitor", e.target.value)
+                                        }
+                                    />
+                                ))}
                             </div>
                             <div className="benchmark-col">
-                                {
-                                    formData.videoBenchmarks.map((video, index) => (
-                                        <input key={index} type="text" className="modal-input" placeholder={`Purpose ${index + 1}`} />
-                                    ))
-                                }
+                                {formData.videoBenchmarks.map((video, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        className="modal-input"
+                                        placeholder={`Purpose ${index + 1}`}
+                                        value={video.feature}
+                                        onChange={(e) =>
+                                            handleVideoChange(index, "feature", e.target.value)
+                                        }
+                                    />
+                                ))}
                             </div>
                             <div className="benchmark-col">
-                                {
-                                    formData.videoBenchmarks.map((video, index) => (
-                                        <input key={index} type="text" className="modal-input" placeholder={`Video Link ${index + 1}`} />
-                                    ))
-                                }
+                                {formData.videoBenchmarks.map((video, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        className="modal-input"
+                                        placeholder={`Video Link ${index + 1}`}
+                                        value={video.videoLink}
+                                        onChange={(e) =>
+                                            handleVideoChange(index, "videoLink", e.target.value)
+                                        }
+                                    />
+                                ))}
                             </div>
                             <div className="d-flex flex-column">
-                                {
-                                    formData.videoBenchmarks.map((video, index) => (
-                                        <button
-                                            className="border px-3 py-2 text-white modal-input"
-                                            style={{ fontSize: "20px", backgroundColor: "#C72030", width: "50px" }}
-                                            onClick={() => removeVideo(index)}
-                                            title="Remove video row"
-                                        >
-                                            ×
-                                        </button>
-                                    ))
-                                }
+                                {formData.videoBenchmarks.map((video, index) => (
+                                    <button
+                                        className="border px-3 py-2 text-white modal-input"
+                                        style={{
+                                            fontSize: "20px",
+                                            backgroundColor: "#C72030",
+                                            width: "50px",
+                                        }}
+                                        onClick={() => removeVideo(index)}
+                                        title="Remove video row"
+                                    >
+                                        ×
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="d-flex align-items-center justify-content-center mt-3">
-                    <button className="custom-submit-btn">Submit</button>
+                    <button className="custom-submit-btn" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 
