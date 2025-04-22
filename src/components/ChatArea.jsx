@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useChatContext } from '../contexts/chatContext';
 import ChatMessage from './ChatMessage';
 import { Bot } from 'lucide-react';
+import InputBox from './InputBox';
 
 const ChatArea = () => {
     const { chats, currentChatId, isTyping } = useChatContext();
@@ -18,6 +19,11 @@ const ChatArea = () => {
 
     return (
         <div className='chat-area'>
+            {currentChat?.messages?.length === 0 && (
+                <div className='w-100 d-flex flex-row align-items-center justify-content-center' style={{height: '100%',width: '100%'}}   >
+                <InputBox />
+                </div>
+            )}
             {
                 currentChat?.messages?.map((message) => {
                     return (
