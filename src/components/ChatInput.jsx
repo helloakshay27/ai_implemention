@@ -5,19 +5,19 @@ import axios from 'axios';
 import InputBox from './InputBox';
 
 const ChatInput = () => {
-   const { chats, currentChatId, isTyping } = useChatContext();
-       const currentChat = chats.find((chat) => chat.id === currentChatId);
-       const messagesEndRef = useRef(null);
+    const { chats, currentChatId, isTyping } = useChatContext();
+    const currentChat = chats.find((chat) => chat.id === currentChatId);
+    const messagesEndRef = useRef(null);
 
 
     return (
         <>
-        {currentChat?.messages?.length>0 && (
-        <div className="border-top p-3 chat-input" style={{
-            background: "#FCFBF9",
-        }}>
-            <InputBox />
-            {/* Recording Overlay
+            {currentChat?.messages?.length > 0 && (
+                <div className="border-top p-3 chat-input" style={{
+                    background: "#FCFBF9",
+                }}>
+                    <InputBox />
+                    {/* Recording Overlay
             {isRecording && (
                 <div className="recording-overlay">
                     <div className="recording-indicator">
@@ -26,10 +26,10 @@ const ChatInput = () => {
                     </div>
                 </div>
             )} */}
-        </div>
-        )
-    }
-    </>
+                </div>
+            )
+            }
+        </>
     );
 };
 
