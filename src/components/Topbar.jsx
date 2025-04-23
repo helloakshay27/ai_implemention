@@ -1,4 +1,3 @@
-import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const CURRENT_CHAT_MODE_KEY = "current_chat_mode";
@@ -8,7 +7,7 @@ const Topbar = () => {
   const data = [
     { id: 0, label: "Personal" },
     { id: 1, label: "Professional" },
-    { id: 2, label: "2.0", parentId: 1 }, // Sub-option under Professional
+    // { id: 2, label: "2.0", parentId: 1 }, // Sub-option under Professional
   ];
 
   const Chat_id = localStorage.getItem(CURRENT_CHAT_KEY);
@@ -46,31 +45,31 @@ const Topbar = () => {
     //     size={50}
     //     onClick={() => setIsSidebarOpen(true)}
     //   />
-      <div className="dropdown">
-        <div className="dropdown-header " onClick={toggleDropdown}>
-          {items.find((item) => item.id == selectedItem).label}
-          <i className={`fa fa-chevron-right icon ${isOpen && "open"}`}
-          style={{color:'rgba(199, 32, 48, 1)'}}></i>
-        </div>
-        <div className={`dropdown-body ${isOpen && "open"}`}>
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="dropdown-item"
-              onClick={() => handleItemClick(item.id)}
-              style={{ paddingLeft: item.parentId ? "2.5rem" : "1rem" }}
-            >
-              <span
-                className={`dropdown-item-dot ${item.id == selectedItem ? "selected" : ""
-                  }`}
-              >
-                •
-              </span>
-              {item.label}
-            </div>
-          ))}
-        </div>
+    <div className="dropdown">
+      <div className="dropdown-header " onClick={toggleDropdown}>
+        {items.find((item) => item.id == selectedItem).label}
+        <i className={`fa fa-chevron-right icon ${isOpen && "open"}`}
+          style={{ color: 'rgba(199, 32, 48, 1)' }}></i>
       </div>
+      <div className={`dropdown-body ${isOpen && "open"}`}>
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="dropdown-item"
+            onClick={() => handleItemClick(item.id)}
+            style={{ paddingLeft: item.parentId ? "2.5rem" : "1rem" }}
+          >
+            <span
+              className={`dropdown-item-dot ${item.id == selectedItem ? "selected" : ""
+                }`}
+            >
+              •
+            </span>
+            {item.label}
+          </div>
+        ))}
+      </div>
+    </div>
     // </div> 
   );
 };

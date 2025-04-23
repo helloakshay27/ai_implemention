@@ -19,15 +19,8 @@ import RootLayout from "./pages/sign_pages/RootLayout";
 import ProtectedRoute from "./pages/sign_pages/ProtectedRoute";
 
 import "./mor.css";
-import { useChatContext } from './contexts/chatContext';
-import PromptModal from './components/PromptModal';
-import { Circle, Command } from 'lucide-react';
 
 function App() {
-  const { mode } = useChatContext();
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
   return (
     <BrowserRouter>
       <Toaster />
@@ -57,26 +50,12 @@ function App() {
             element={
               <Layout>
                 <ChatArea />
-                {
-                  mode === 2 ? (
-                    <div className='d-flex align-items-center justify-content-center mt-3'>
-                      <button className='rounded-circle border-0 d-flex align-items-center justify-content-center position-absolute bottom-0 mb-3' style={{ height: "50px", width: "50px", backgroundColor: "#E2DED5" }} onClick={() => setIsModalOpen(true)} >
-                        <Circle fill='#C72030' color='#C72030' />
-                      </button>
-                    </div>
-                  ) : (
-                    <ChatInput />
-                  )
-                }
+                <ChatInput />
               </Layout>
             }
           />
         </Route>
       </Routes>
-
-      {
-        isModalOpen && <PromptModal setIsModalOpen={setIsModalOpen} />
-      }
     </BrowserRouter>
   );
 }

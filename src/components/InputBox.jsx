@@ -1,15 +1,16 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react';
-import { Send, Mic, Pin, PinOff, Paperclip } from 'lucide-react';
+import { Send, Mic, Pin, PinOff, Paperclip, Circle } from 'lucide-react';
 import axios from 'axios';
 import { useChatContext } from "../contexts/chatContext";
 import { toast } from 'react-hot-toast';
+import PromptModal from './PromptModal';
 
 const InputBox = () => {
-
+    const { mode } = useChatContext();
     const [input, setInput] = useState('');
     const [isRecording, setIsRecording] = useState(false);
-    const [attachments, setAttachments] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const recognitionRef = useRef(null);
     const { sendMessage } = useChatContext();
     const inputRef = useRef(null);
@@ -101,8 +102,16 @@ const InputBox = () => {
     const handleUploadFile = () => {
         fileInputRef.current?.click();
     }
-  return (
-    <form className="mx-auto w-full position-relative form" onSubmit={handleSubmit}>
+    return (
+        <div className='d-flex w-100 align-items-center gap-4 justify-content-center'>
+            {
+                mode === 1 && (
+                    <button className='rounded-circle border-0 d-flex align-items-center justify-content-center' style={{ height: "50px", width: "50px", backgroundColor: "#E2DED5" }} onClick={() => setIsModalOpen(true)} >
+                        <Circle fill='#C72030' color='#C72030' />
+                    </button>
+                )
+            }
+            <form className="w-100 position-relative form" onSubmit={handleSubmit}>
                 <Paperclip
                     className='position-absolute cursor-pointer'
                     style={{
@@ -135,6 +144,12 @@ const InputBox = () => {
                         textarea.style.height = "auto"; // Reset height
                         const maxHeight = 5 * 24; // Assuming approx 24px per line
                         textarea.style.height = Math.min(textarea.scrollHeight, maxHeight) + "px";
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSubmit(e);
+                        }
                     }}
                     placeholder="Ask Me Anything..."
                     className="w-100 py-3 input text-black"
@@ -195,7 +210,20 @@ const InputBox = () => {
                 </button>
             </form>
 
-  )
+            {isRecording && (
+                <div className="recording-overlay">
+                    <div className="recording-indicator">
+                        <span className="recording-dot"></span>
+                        <span>Voice in progress...</span>
+                    </div>
+                </div>
+            )}
+
+            {
+                isModalOpen && <PromptModal setIsModalOpen={setIsModalOpen} />
+            }
+        </div>
+    )
 }
 
 export default InputBox

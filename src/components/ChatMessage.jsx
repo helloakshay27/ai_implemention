@@ -127,12 +127,69 @@ const ChatMessage = ({ message }) => {
     }
   };
 
-  const handleTemplateDownload = () => {
-    const raw = message.content?.response || message.content;
-    const cleanText = RemoveMarkdown(raw);
-    // const htmlFromMarkdown = marked.parse(raw);
+  const parseOutline = (text) => {
+    // Start from "1. " — trim intro
+    const startIndex = text.search(/^\s*1\.\s+/m);
+    if (startIndex === -1) return []; // fallback
 
-    const htmlString = renderToStaticMarkup(<Presale content={cleanText} />);
+    // Extract only the portion starting from "1."
+    const trimmed = text.slice(startIndex);
+
+    // Match all lines that look like bullet/numbered points or subpoints
+    const lines = trimmed
+      .split('\n')
+      .filter(line => line.trim().match(/^(\s*[\*\-\d\.]+\s+)/)); // include only points
+
+    const stack = [];
+    const root = [];
+
+    const getLevel = (line) => {
+      const spaces = line.match(/^\s*/)[0].length;
+      return Math.floor(spaces / 2); // tune if needed
+    };
+
+    for (const line of lines) {
+      const level = getLevel(line);
+      const title = line.replace(/^\s*[\*\-\d\.]+\s*/, '').trim();
+      const node = { title, children: [], level };
+
+      while (stack.length && stack[stack.length - 1].level >= level) {
+        stack.pop();
+      }
+
+      if (stack.length === 0) {
+        root.push(node);
+      } else {
+        stack[stack.length - 1].children.push(node);
+      }
+
+      stack.push(node);
+    }
+
+    const cleanLevels = (arr) =>
+      arr.map(({ level, ...rest }) => ({
+        ...rest,
+        children: cleanLevels(rest.children || [])
+      }));
+
+    return cleanLevels(root);
+  };
+
+
+
+  const cleanOutline = (outline) => {
+    return outline.map((item) => ({
+      title: RemoveMarkdown(item.title),
+      children: item.children ? cleanOutline(item.children) : []
+    }));
+  };
+
+  const handleTemplateDownload = () => {
+    const outline = parseOutline(message.content?.response || message.content)
+    const cleaned = cleanOutline(outline)
+    console.log(cleaned)
+
+    const htmlString = renderToStaticMarkup(<Presale content={cleaned} />);
 
     const element = document.createElement("div");
     element.innerHTML = htmlString;
@@ -173,7 +230,9 @@ const ChatMessage = ({ message }) => {
                   : message.content?.response || message.content?.warning || ""}
               </Markdown>
             ) : (
-              message.content
+              <div style={{ whiteSpace: "pre-wrap" }}>
+                {message.content}
+              </div>
             )}
           </div>
           {message.isUser && (
