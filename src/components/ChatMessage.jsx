@@ -227,9 +227,9 @@ const ChatMessage = ({ message }) => {
         <div className="d-flex align-items-start justify-content-start">
           <Bot className="me-2 mt-3 " style={{ color: 'grey' }} size={24} />
           <div
-            className={`message px-3 py-2 bot-message d-flex align-items-center`}
+            className={`message px-3 py-2 bot-message  align-items-center`}
           >
-            <div style={{ whiteSpace: "pre-wrap" }}>
+            <div >
               <Markdown>
                 {message?.response?.response}
               </Markdown>
