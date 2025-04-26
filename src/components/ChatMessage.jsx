@@ -230,9 +230,9 @@ const ChatMessage = ({ message }) => {
             className={`message px-3 py-2 bot-message d-flex align-items-center`}
           >
             <div style={{ whiteSpace: "pre-wrap" }}>
-              <Markdown>
-                {message?.response?.response}
-              </Markdown>
+              {/* <Markdown> */}
+              {message?.response?.response}
+              {/* </Markdown> */}
             </div>
           </div>
         </div>

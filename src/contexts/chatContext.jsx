@@ -109,7 +109,7 @@ const ChatProvider = ({ children }) => {
         const userMessage = {
             message_id: userQuery.id,
             query: userQuery,
-            response: null, // No response yet
+            response: "", // No response yet
         };
 
         // Immediately show user message
@@ -147,7 +147,7 @@ const ChatProvider = ({ children }) => {
                 requestData
             );
 
-            fetchConversations(currentChatId); 
+            fetchConversations(currentChatId);
 
             // Save chat if new
             setChats((prevChats) => {
