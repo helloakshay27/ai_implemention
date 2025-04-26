@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import { Toaster } from "react-hot-toast";
 
@@ -19,10 +19,11 @@ import RootLayout from "./pages/sign_pages/RootLayout";
 import ProtectedRoute from "./pages/sign_pages/ProtectedRoute";
 
 import "./mor.css";
+import OptionModal from './components/OptionModal';
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Toaster />
       <Routes>
         {/* Public Routes */}
@@ -45,8 +46,9 @@ function App() {
           <Route index element={<Navigate to="/ai-lockated" />} />
 
           {/* Main Chat Route */}
+          <Route path='/ai-lockated' element={<OptionModal />} />
           <Route
-            path="/ai-lockated"
+            path="/ai-lockated/:id"
             element={
               <Layout>
                 <ChatArea />
@@ -56,7 +58,7 @@ function App() {
           />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 

@@ -1,18 +1,19 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react';
-import { Send, Mic, Pin, PinOff, Paperclip, Circle } from 'lucide-react';
+import { Send, Mic, PinOff, Paperclip, SendHorizonal } from 'lucide-react';
 import axios from 'axios';
 import { useChatContext } from "../contexts/chatContext";
 import { toast } from 'react-hot-toast';
-import PromptModal from './PromptModal';
 
-const InputBox = () => {
-    const { mode } = useChatContext();
+const InputBox = ({ id }) => {
+    const { sendMessage, mode } = useChatContext();
+
     const [input, setInput] = useState('');
     const [isRecording, setIsRecording] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false)
+
+
+
     const recognitionRef = useRef(null);
-    const { sendMessage } = useChatContext();
     const inputRef = useRef(null);
     const fileInputRef = useRef();
 
@@ -56,7 +57,7 @@ const InputBox = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
-        sendMessage(input);
+        sendMessage(input, [], [], id);
         setInput('');
         inputRef.current?.focus();
     };
@@ -104,13 +105,6 @@ const InputBox = () => {
     }
     return (
         <div className='d-flex w-100 align-items-center gap-4 justify-content-center'>
-            {
-                mode === 1 && (
-                    <button className='rounded-circle border-0 d-flex align-items-center justify-content-center' style={{ height: "50px", width: "50px", backgroundColor: "#E2DED5" }} onClick={() => setIsModalOpen(true)} >
-                        <Circle fill='#C72030' color='#C72030' />
-                    </button>
-                )
-            }
             <form className="w-100 position-relative form" onSubmit={handleSubmit}>
                 <Paperclip
                     className='position-absolute cursor-pointer'
@@ -122,6 +116,7 @@ const InputBox = () => {
                     }}
                     onClick={handleUploadFile}
                     size={20}
+                    color='#C72030'
                 />
 
                 {/* Hidden file input */}
@@ -181,7 +176,7 @@ const InputBox = () => {
                         color: isRecording ? "white" : "inherit"
                     }}
                 >
-                    <Mic size={20} />
+                    <Mic size={20} color='#C72030' />
                 </button>
 
                 <button
@@ -195,7 +190,7 @@ const InputBox = () => {
                         color: "inherit"
                     }}
                 >
-                    <PinOff size={20} />
+                    <PinOff size={20} color='#C72030' />
                 </button>
 
                 {/* Send Button */}
@@ -206,7 +201,7 @@ const InputBox = () => {
                     aria-label="Send message"
                     style={{ right: "20px", top: "50%", transform: "translateY(-50%)" }}
                 >
-                    <Send size={20} />
+                    <SendHorizonal size={20} color='#C72030' />
                 </button>
             </form>
 
@@ -218,10 +213,6 @@ const InputBox = () => {
                     </div>
                 </div>
             )}
-
-            {
-                isModalOpen && <PromptModal setIsModalOpen={setIsModalOpen} />
-            }
         </div>
     )
 }

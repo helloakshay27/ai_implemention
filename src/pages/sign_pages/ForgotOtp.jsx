@@ -12,7 +12,7 @@ const ForgotOtp = () => {
     const queryParams = new URLSearchParams(location.search);
     const email = queryParams.get("email"); // Get email from URL
     const mobile = queryParams.get("mobile"); // Get mobile from URL
-    
+
     const navigate = useNavigate();
 
     const handleOtpChange = (e) => {
@@ -57,7 +57,7 @@ const ForgotOtp = () => {
                 <section className="login_module">
                     <div className="container-fluid">
                         <div className="row align-items-center vh-100 login_bg justify-content-center">
-                            <div className="col-lg-7 col-md-7 vh-50 d-flex align-items-center">
+                            <div className="col-lg-7 col-md-7 h-100 d-flex align-items-center p-0">
                                 <div className="login-sec" id="forgetPasswordContainer">
                                     <form className="otp-content" id="otpForm" onSubmit={handleOtpSubmit}>
                                         <div className="paganation-sec d-flex">

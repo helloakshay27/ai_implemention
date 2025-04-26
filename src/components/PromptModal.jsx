@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useChatContext } from "../contexts/chatContext";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const PromptModal = ({ setIsModalOpen }) => {
+    const { id } = useParams()
     const { sendMessage } = useChatContext();
     const [formData, setFormData] = useState({
         prompt: "",
@@ -12,6 +15,20 @@ const PromptModal = ({ setIsModalOpen }) => {
         competitors: [{ name: "", website: "" }],
         videoBenchmarks: [{ competitor: "", feature: "", videoLink: "" }],
     });
+
+    const token = localStorage.getItem('access_token');
+
+    const [fileName1, setFileName1] = useState("");
+    const [fileName2, setFileName2] = useState("");
+    const [fileName3, setFileName3] = useState("");
+
+    const fileInput1 = useRef(null);
+    const fileInput2 = useRef(null);
+    const fileInput3 = useRef(null);
+
+    const handleClick = (ref) => {
+        ref.current.click();
+    };
 
     const onClose = () => {
         setIsModalOpen(false);
@@ -48,10 +65,9 @@ const PromptModal = ({ setIsModalOpen }) => {
 
     const handleSubmit = async () => {
         const message = `${formData.prompt}. ${formData.businessObjective}. ${formData.problemStatement}. ${formData.userRoles}. ${formData.features}`;
-        sendMessage(message, formData.competitors, formData.videoBenchmarks);
-        console.log(formData)
-    }
-
+        sendMessage(message, formData.competitors, formData.videoBenchmarks, id);
+        console.log(formData);
+    };
 
     return (
         <div
@@ -142,14 +158,14 @@ const PromptModal = ({ setIsModalOpen }) => {
                             </button>
                         </div>
                         <div className="benchmark-row mb-2">
-                            <div className="benchmark-col flex-grow-1">
+                            {/* <div className="benchmark-col flex-grow-1">
                                 <input
                                     type="text"
                                     className="modal-input h-100"
                                     placeholder="Insert three competitors to benchmark"
                                     readOnly
                                 />
-                            </div>
+                            </div> */}
                             <div className="benchmark-col">
                                 {formData.competitors.map((competitor, index) => (
                                     <input
@@ -217,14 +233,14 @@ const PromptModal = ({ setIsModalOpen }) => {
                             </button>
                         </div>
                         <div className="benchmark-row">
-                            <div className="benchmark-col flex-grow-1">
+                            {/* <div className="benchmark-col flex-grow-1">
                                 <input
                                     type="text"
                                     className="modal-input h-100"
                                     placeholder="Insert videos for inspiration e.g. Training, Demo Videos"
                                     readOnly
                                 />
-                            </div>
+                            </div> */}
                             <div className="benchmark-col">
                                 {formData.videoBenchmarks.map((video, index) => (
                                     <input
@@ -285,9 +301,123 @@ const PromptModal = ({ setIsModalOpen }) => {
                             </div>
                         </div>
                     </div>
+
+                    <div className="benchmark-row my-3">
+                        <div className="benchmark-col flex-grow-1">
+                            <div
+                                className="modal-input h-100 p-3"
+                                style={{ color: "#afafaf", cursor: "pointer" }}
+                                onClick={() => handleClick(fileInput1)}
+                            >
+                                {fileName1 || "+ Add File One"}
+                                <input
+                                    type="file"
+                                    ref={fileInput1}
+                                    style={{ display: "none" }}
+                                    onChange={async (e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            setFileName1(file.name);
+                                            const formData = new FormData();
+                                            formData.append("files", file);
+                                            try {
+                                                const response = await axios.post(
+                                                    `https://ai-implementation.lockated.com/upload/?token=${token}`,
+                                                    formData,
+                                                    {
+                                                        headers: { "Content-Type": "multipart/form-data" },
+                                                    }
+                                                );
+                                                console.log(response);
+                                            } catch (error) {
+                                                console.error(error);
+                                            }
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="benchmark-col flex-grow-1">
+                            <div
+                                className="modal-input h-100 p-3"
+                                style={{ color: "#afafaf", cursor: "pointer" }}
+                                onClick={() => handleClick(fileInput2)}
+                            >
+                                {fileName2 || "+ Add File 2"}
+                                <input
+                                    type="file"
+                                    ref={fileInput2}
+                                    style={{ display: "none" }}
+                                    onChange={async (e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            setFileName2(file.name);
+                                            const formData = new FormData();
+                                            formData.append("files", file);
+                                            try {
+                                                const response = await axios.post(
+                                                    `https://ai-implementation.lockated.com/upload/?token=${token}`,
+                                                    formData,
+                                                    {
+                                                        headers: { "Content-Type": "multipart/form-data" },
+                                                    }
+                                                );
+                                                console.log(response);
+                                            } catch (error) {
+                                                console.error(error);
+                                            }
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="benchmark-col flex-grow-1">
+                            <div
+                                className="modal-input h-100 p-3"
+                                style={{ color: "#afafaf", cursor: "pointer" }}
+                                onClick={() => handleClick(fileInput3)}
+                            >
+                                {fileName3 || "+ Add File 3"}
+                                <input
+                                    type="file"
+                                    ref={fileInput3}
+                                    style={{ display: "none" }}
+                                    onChange={async (e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            setFileName3(file.name);
+                                            const formData = new FormData();
+                                            formData.append("files", file);
+                                            try {
+                                                const response = await axios.post(
+                                                    `https://ai-implementation.lockated.com/upload/?token=${token}`,
+                                                    formData,
+                                                    {
+                                                        headers: { "Content-Type": "multipart/form-data" },
+                                                    }
+                                                );
+                                                console.log(response);
+                                            } catch (error) {
+                                                console.error(error);
+                                            }
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div className="d-flex align-items-center justify-content-center mt-3">
-                    <button className="custom-submit-btn" onClick={handleSubmit}>Submit</button>
+                    <button
+                        className="custom-submit-btn"
+                        onClick={() => {
+                            handleSubmit();
+                            setIsModalOpen(false);
+                        }}
+                    >
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>

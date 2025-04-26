@@ -8,8 +8,10 @@ import DownloadModal from "./Download";
 import RemoveMarkdown from "remove-markdown";
 import Presale from "../templates/presale";
 import { marked } from "marked";
+import { useParams } from "react-router-dom";
 
 const ChatMessage = ({ message }) => {
+  const { id } = useParams();
   const [pin, setPinned] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +58,7 @@ const ChatMessage = ({ message }) => {
       return;
     }
 
-    const raw = message.content?.response || message.content;
+    const raw = message?.response?.response;
     const cleanText = RemoveMarkdown(raw);
 
     if (!voices.length) {
@@ -76,7 +78,7 @@ const ChatMessage = ({ message }) => {
 
   const handleCopy = () => {
     navigator.clipboard
-      .writeText(message.content?.response || message.content)
+      .writeText(message?.response?.response)
       .then(() => {
         toast.success("Copied to clipboard");
       })
@@ -91,7 +93,8 @@ const ChatMessage = ({ message }) => {
       const response = await axios.post(
         `https://ai-implementation.lockated.com/pin-message/?token=${token}`,
         {
-          message: message.content?.response || message.content,
+          message: message?.response?.response,
+          conversation_token: id,
         }
       );
 
@@ -112,7 +115,8 @@ const ChatMessage = ({ message }) => {
       const response = await axios.post(
         `https://ai-implementation.lockated.com/unpin-message/?token=${token}`,
         {
-          message: message.content?.response || message.content,
+          message: message?.response?.response,
+          conversation_token: id,
         }
       );
 
@@ -185,9 +189,8 @@ const ChatMessage = ({ message }) => {
   };
 
   const handleTemplateDownload = () => {
-    const outline = parseOutline(message.content?.response || message.content)
+    const outline = parseOutline(message.response.response)
     const cleaned = cleanOutline(outline)
-    console.log(cleaned)
 
     const htmlString = renderToStaticMarkup(<Presale content={cleaned} />);
 
@@ -211,80 +214,71 @@ const ChatMessage = ({ message }) => {
   return (
     <>
       <div>
-        <div
-          key={message.id}
-          className={`d-flex ${message.isUser ? "justify-content-end" : "justify-content-start"
-            }`}
-        >
-          {!message.isUser && (
-            <Bot className="me-2 mt-3 " style={{ color: 'grey' }} size={24} />
-          )}
+        <div className="d-flex align-items-start justify-content-end">
           <div
-            className={`message px-3 py-2 ${message.isUser ? "user-message" : "bot-message"
-              }`}
+            className={`message px-3 py-2 user-message d-flex align-items-center`}
           >
-            {!message.isUser ? (
-              <Markdown>
-                {typeof message.content === "string"
-                  ? message.content
-                  : message.content?.response || message.content?.warning || ""}
-              </Markdown>
-            ) : (
-              <div style={{ whiteSpace: "pre-wrap" }}>
-                {message.content}
-              </div>
-            )}
+            <div style={{ whiteSpace: "pre-wrap" }}>
+              {message?.query?.user_prompt}
+            </div>
           </div>
-          {message.isUser && (
-            <User className="ms-2 mt-3" style={{ color: 'grey' }} size={24} />
-
-          )}
+          <User className="ms-2 mt-3" style={{ color: 'grey' }} size={24} />
         </div>
-        {!message.isUser && (
-          <div className="d-flex align-items-center gap-3 ms-5 action-btn relative">
-            <Copy
-              onClick={handleCopy}
-              size={15}
-              color="black"
-              className="cursor-pointer"
-            />
-            <Volume2
-              size={15}
-              className="cursor-pointer"
-              fill={isSpeaking ? null : "#fafafa"}
-              onClick={handleSpeak}
-            />
-            <Download
-              size={18}
-              color="black"
-              className="cursor-pointer hover:scale-110 transition-transform"
-              onClick={() => setIsOpen(!isOpen)}
-            />
-            <Share2
-              onClick={handleShare}
-              size={15}
-              color="black"
-              className="cursor-pointer"
-            />
-            <Pin
-              size={15}
-              color={loading ? "grey" : "black"}
-              style={{ fill: pin ? 'black' : 'none' }}
-              onClick={pin ? handleUnpin : handlePin}
-              className="cursor-pointer"
-            />
-            <LayoutTemplate
-              size={15}
-              className="cursor-pointer"
-              onClick={handleTemplateDownload}
-            />
+        <div className="d-flex align-items-start justify-content-start">
+          <Bot className="me-2 mt-3 " style={{ color: 'grey' }} size={24} />
+          <div
+            className={`message px-3 py-2 bot-message d-flex align-items-center`}
+          >
+            <div style={{ whiteSpace: "pre-wrap" }}>
+              <Markdown>
+                {message?.response?.response}
+              </Markdown>
+            </div>
           </div>
-        )}
+        </div>
+        <div className="d-flex align-items-center gap-3 ms-5 action-btn relative">
+          <Copy
+            onClick={handleCopy}
+            size={15}
+            color="black"
+            className="cursor-pointer"
+          />
+          <Volume2
+            size={15}
+            className="cursor-pointer"
+            fill={isSpeaking ? null : "#fafafa"}
+            onClick={handleSpeak}
+          />
+          <Download
+            size={18}
+            color="black"
+            className="cursor-pointer hover:scale-110 transition-transform"
+            onClick={() => setIsOpen(!isOpen)}
+          />
+          <Share2
+            onClick={handleShare}
+            size={15}
+            color="black"
+            className="cursor-pointer"
+          />
+          <Pin
+            size={15}
+            color={loading ? "grey" : "black"}
+            style={{ fill: pin ? 'black' : 'none' }}
+            onClick={pin ? handleUnpin : handlePin}
+            className="cursor-pointer"
+          />
+          <LayoutTemplate
+            size={15}
+            className="cursor-pointer"
+            onClick={handleTemplateDownload}
+          />
+        </div>
       </div>
       <DownloadModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        message={message.content?.response || message.content}
+        message={message?.response?.response}
       />
     </>
   );

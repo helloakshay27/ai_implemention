@@ -1,19 +1,18 @@
+import { useParams } from 'react-router-dom';
 import { useChatContext } from '../contexts/chatContext';
 import InputBox from './InputBox';
 
 const ChatInput = () => {
-    const { chats, currentChatId } = useChatContext();
-    const currentChat = chats.find((chat) => chat.id === currentChatId);
+    const { id } = useParams()
+    const { messages } = useChatContext();
 
     return (
         <>
-            {currentChat?.messages?.length > 0 && (
-                <div className="border-top p-3 chat-input" style={{
-                    background: "#FCFBF9",
-                }}>
-                    <InputBox />
-                </div>
-            )}
+            <div className="border-top p-3 chat-input" style={{
+                background: "#FCFBF9",
+            }}>
+                <InputBox id={id} />
+            </div>
         </>
     );
 };

@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import "../mor.css";
 import { useNavigate } from "react-router-dom";
 import Topbar from "./Topbar";
+import { SidebarCloseIcon } from "lucide-react";
+import { useChatContext } from "../contexts/chatContext";
 
-const Header = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const openNav = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
+  const { createNewChat } = useChatContext()
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -40,9 +40,9 @@ const Header = () => {
 
   const email = sessionStorage.getItem("email");
   const firstName = sessionStorage.getItem("firstname");
-  const lastName= sessionStorage.getItem("lastname");
-  const avatarLetter = firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() || "U";
-
+  const lastName = sessionStorage.getItem("lastname");
+  const avatarLetter =
+    firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() || "U";
 
   return (
     <>
@@ -65,16 +65,30 @@ const Header = () => {
               />
             </div>
             <div className="text-center pb-2">
-              <div className="avatar2">
+              <div className="avatar2 mx-auto">
                 <div className="avatar__letters2">{avatarLetter}</div>
               </div>
               <br />
-              <h5 style={{ color: "black" ,display:"inline", marginRight:"5px"}}>{firstName || "FirstName"}</h5>
-              <h5 style={{ color: "black" ,display:"inline"}}>{lastName || "LastName"}</h5>
+              <h5
+                style={{
+                  color: "black",
+                  display: "inline",
+                  marginRight: "5px",
+                }}
+              >
+                {firstName || "FirstName"}
+              </h5>
+              <h5 style={{ color: "black", display: "inline" }}>
+                {lastName || "LastName"}
+              </h5>
               <p className="text-muted">{email || "example@example.com"}</p>
               <button
                 className="purple-btn2 my-3"
-                style={{ width: "75%", backgroundColor: "rgba(196, 184, 157, 0.35)", color: "rgba(199, 32, 48, 1)" }}
+                style={{
+                  width: "75%",
+                  backgroundColor: "rgba(196, 184, 157, 0.35)",
+                  color: "rgba(199, 32, 48, 1)",
+                }}
                 aria-label="Close"
                 onClick={signout}
               >
@@ -84,25 +98,40 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <nav className="custom-header ">
-        <div className="container-fluid ">
-          {/* Left-aligned content */}
-          <Topbar />
+      <nav className={`${isSidebarOpen ? "custom-header-full" : "custom-header"} z-1`}>
+        {isSidebarOpen && (
+          <>
+            <SidebarCloseIcon
+              size={25}
+              className="cursor-pointer position-fixed"
+              style={{ top: "15px", left: "10px" }}
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            />
 
-          {/* Right-aligned avatar */}
-          <div className="header-icons me-5">
-            <ul className="d-flex gap-4 m-0">
-              <li>
-                <a className=" " onClick={handleOpen}>
-                  <div className="avatar2" style={{ height: "32px", width: "32px", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#f0f0f0", borderRadius: "50%" }}>
-                    <div style={{ fontSize: "18px" }}>{avatarLetter}</div>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
+            <img
+              className="cursor-pointer position-fixed"
+              style={{ cursor: "pointer", top: "16px", left: "50px" }}
+              onClick={createNewChat}
+              src="pajamas_duo-chat-new.svg"
+              alt="Chat Icon"
+            />
+          </>
+        )}
+        <div
+          className="avatar2"
+          style={{
+            height: "32px",
+            width: "32px",
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "#f0f0f0",
+            borderRadius: "50%",
+            cursor: "pointer"
+          }}
+          onClick={handleOpen}
+        >
+          <div style={{ fontSize: "18px" }}>{avatarLetter}</div>
         </div>
-
       </nav>
     </>
   );
