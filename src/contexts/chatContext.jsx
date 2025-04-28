@@ -167,52 +167,52 @@ const ChatProvider = ({ children }) => {
     };
 
     // WebSocket effect for real-time message updates
-    useEffect(() => {
-        if (!storedId) return;
+    // useEffect(() => {
+    //     if (!storedId) return;
 
-        const socket = new WebSocket(`ws://43.204.42.235:8000/ws/chat/${storedId}/`);
-        ws.current = socket;
+    //     const socket = new WebSocket(`ws://ai-implementation.lockated.com/ws/chat/${storedId}/`);
+    //     ws.current = socket;
 
-        socket.onopen = () => {
-            console.log("WebSocket connected");
-        };
+    //     socket.onopen = () => {
+    //         console.log("WebSocket connected");
+    //     };
 
-        socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            const { response, prompt_id } = data;
+    //     socket.onmessage = (event) => {
+    //         const data = JSON.parse(event.data);
+    //         const { response, prompt_id } = data;
 
-            // Update messages with the response
-            // setMessages((prevMessages) => {
-            //     const updatedMessages = [...prevMessages];
-            //     const index = updatedMessages.findIndex((msg) => msg.message_id === prompt_id);
+    //         // Update messages with the response
+    //         // setMessages((prevMessages) => {
+    //         //     const updatedMessages = [...prevMessages];
+    //         //     const index = updatedMessages.findIndex((msg) => msg.message_id === prompt_id);
 
-            //     if (index !== -1) {
-            //         updatedMessages[index] = {
-            //             ...updatedMessages[index],
-            //             response, // directly update response
-            //         };
-            //     }
+    //         //     if (index !== -1) {
+    //         //         updatedMessages[index] = {
+    //         //             ...updatedMessages[index],
+    //         //             response, // directly update response
+    //         //         };
+    //         //     }
 
-            //     return updatedMessages;
-            // });
+    //         //     return updatedMessages;
+    //         // });
 
-            setIsTyping(false);
-        };
+    //         setIsTyping(false);
+    //     };
 
-        socket.onerror = (err) => {
-            console.error("WebSocket Error:", err);
-            setIsTyping(false);
-        };
+    //     socket.onerror = (err) => {
+    //         console.error("WebSocket Error:", err);
+    //         setIsTyping(false);
+    //     };
 
-        socket.onclose = () => {
-            console.log("WebSocket closed");
-        };
+    //     socket.onclose = () => {
+    //         console.log("WebSocket closed");
+    //     };
 
-        // Cleanup WebSocket on component unmount or when storedId changes
-        return () => {
-            socket.close();
-        };
-    }, [storedId]);
+    //     // Cleanup WebSocket on component unmount or when storedId changes
+    //     return () => {
+    //         socket.close();
+    //     };
+    // }, [storedId]);
 
 
 
