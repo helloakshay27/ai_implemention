@@ -45,9 +45,9 @@ const SignIn = () => {
 
             if (user) {
                 localStorage.setItem("access_token", user.api_key);
-                sessionStorage.setItem("email", user.email);
-                sessionStorage.setItem("firstname", user.first_name || "");
-                sessionStorage.setItem("lastname", user.last_name || "");
+                localStorage.setItem("email", user.email);
+                localStorage.setItem("firstname", user.first_name || "");
+                localStorage.setItem("lastname", user.last_name || "");
 
                 navigate("/");
             } else {
@@ -114,13 +114,14 @@ const SignIn = () => {
                 }
             );
 
-            const { access_token, email, firstname } = response.data;
+            const { access_token, email, firstname, lastname } = response.data;
             console.log("OTP verified successfully:", response.data);
 
             if (access_token) {
                 localStorage.setItem("access_token", access_token);
-                sessionStorage.setItem("email", email);
-                sessionStorage.setItem("firstname", firstname);
+                localStorage.setItem("email", email);
+                localStorage.setItem("firstname", firstname);
+                localStorage.setItem("lastname", lastname);
 
                 navigate("/");
                 toast.success("Login successfully")

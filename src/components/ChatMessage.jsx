@@ -1,14 +1,24 @@
-import { Bot, Copy, Download, LayoutTemplate, Pin, Share2, User, Volume2 } from "lucide-react";
+import {
+  Bot,
+  Copy,
+  Download,
+  LayoutTemplate,
+  Pin,
+  Share2,
+  User,
+  Volume2,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { toast } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Markdown from "react-markdown";
 import DownloadModal from "./Download";
 import RemoveMarkdown from "remove-markdown";
 import Presale from "../templates/presale";
-import { marked } from "marked";
-import { useParams } from "react-router-dom";
+import remarkGfm from 'remark-gfm';
+
 
 const ChatMessage = ({ message }) => {
   const { id } = useParams();
@@ -131,33 +141,67 @@ const ChatMessage = ({ message }) => {
     }
   };
 
-  const parseOutline = (text) => {
-    // Start from "1. " — trim intro
-    const startIndex = text.search(/^\s*1\.\s+/m);
-    if (startIndex === -1) return []; // fallback
+  const parseOutline = (text, startMarker = null) => {
+    const lines = text
+      .split("\n")
+      .map((line) => line.replace(/\r$/, ""))
+      .filter((line) => line.trim());
 
-    // Extract only the portion starting from "1."
-    const trimmed = text.slice(startIndex);
+    if (!lines.length) return [];
 
-    // Match all lines that look like bullet/numbered points or subpoints
-    const lines = trimmed
-      .split('\n')
-      .filter(line => line.trim().match(/^(\s*[\*\-\d\.]+\s+)/)); // include only points
+    const listItemPattern = /^([*\-•]|\d+\.|[\w]\.|[\w]\)|\d+(\.\d+)+)\s+[^ \t]/;
+
+    let firstListItemIndex = -1;
+    let lastListItemIndex = -1;
+
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].trim().match(listItemPattern)) {
+        if (firstListItemIndex === -1) {
+          firstListItemIndex = i;
+        }
+        lastListItemIndex = i;
+      }
+    }
+
+    if (firstListItemIndex === -1 || lastListItemIndex === -1) return [];
+
+    let startIndex = firstListItemIndex;
+    if (startMarker) {
+      const regex = new RegExp(`^\\s*${startMarker.replace(/\./g, "\\.")}\\s+[^ \\t]`, "m");
+      startIndex = lines.findIndex(
+        (line, index) => index >= firstListItemIndex && line.match(regex)
+      );
+      if (startIndex === -1 || startIndex > lastListItemIndex) return [];
+    }
+
+    const relevantLines = lines.slice(startIndex, lastListItemIndex + 1);
 
     const stack = [];
     const root = [];
 
     const getLevel = (line) => {
       const spaces = line.match(/^\s*/)[0].length;
-      return Math.floor(spaces / 2); // tune if needed
+      return Math.floor(spaces / 2);
     };
 
-    for (const line of lines) {
-      const level = getLevel(line);
-      const title = line.replace(/^\s*[\*\-\d\.]+\s*/, '').trim();
-      const node = { title, children: [], level };
+    let lastListItem = null;
 
-      while (stack.length && stack[stack.length - 1].level >= level) {
+    for (const line of relevantLines) {
+      const level = getLevel(line);
+      const isListItem = line.trim().match(listItemPattern);
+      const isFeatureOrStory = line.trim().match(/^(Feature:|User Story:)\s*[^ \t]/);
+      const title = isListItem
+        ? line.replace(/^\s*([*\-•]|\d+\.|[\w]\.|[\w]\)|\d+(\.\d+)+)\s*/, "").trim()
+        : line.trim();
+
+      let effectiveLevel = level;
+      if (isFeatureOrStory && lastListItem && level <= lastListItem.level) {
+        effectiveLevel = lastListItem.level + 1;
+      }
+
+      const node = { title, children: [], level: effectiveLevel };
+
+      while (stack.length && stack[stack.length - 1].level >= effectiveLevel) {
         stack.pop();
       }
 
@@ -168,29 +212,31 @@ const ChatMessage = ({ message }) => {
       }
 
       stack.push(node);
+
+      if (isListItem) {
+        lastListItem = node;
+      }
     }
 
     const cleanLevels = (arr) =>
       arr.map(({ level, ...rest }) => ({
         ...rest,
-        children: cleanLevels(rest.children || [])
+        children: cleanLevels(rest.children || []),
       }));
 
     return cleanLevels(root);
   };
 
-
-
   const cleanOutline = (outline) => {
     return outline.map((item) => ({
       title: RemoveMarkdown(item.title),
-      children: item.children ? cleanOutline(item.children) : []
+      children: item.children ? cleanOutline(item.children) : [],
     }));
   };
 
   const handleTemplateDownload = () => {
-    const outline = parseOutline(message.response.response)
-    const cleaned = cleanOutline(outline)
+    const outline = parseOutline(message.response.response);
+    const cleaned = cleanOutline(outline);
 
     const htmlString = renderToStaticMarkup(<Presale content={cleaned} />);
 
@@ -198,7 +244,8 @@ const ChatMessage = ({ message }) => {
     element.innerHTML = htmlString;
 
     import("html2pdf.js").then((html2pdf) => {
-      html2pdf.default()
+      html2pdf
+        .default()
         .set({
           margin: 10,
           filename: "response.pdf",
@@ -210,6 +257,16 @@ const ChatMessage = ({ message }) => {
     });
   };
 
+  const fixMarkdownTables = (markdown) => {
+    return markdown.replace(
+      /(\|[^|\n]+\|[^|\n]+(?:\|[^|\n]+)*\|?)\n(?=\|[^-])/g,
+      (match, headerRow) => {
+        const colCount = (headerRow.match(/\|/g) || []).length - 1;
+        const separator = '|' + ' --- |'.repeat(colCount);
+        return `${headerRow}\n${separator}\n`;
+      }
+    );
+  };
 
   return (
     <>
@@ -222,19 +279,56 @@ const ChatMessage = ({ message }) => {
               {message?.query?.user_prompt}
             </div>
           </div>
-          <User className="ms-2 mt-3" style={{ color: 'grey' }} size={24} />
+          <User className="ms-2 mt-3" style={{ color: "grey" }} size={24} />
         </div>
         <div className="d-flex align-items-start justify-content-start">
-          <Bot className="me-2 mt-3 " style={{ color: 'grey' }} size={24} />
-          <div
-            className={`message px-3 py-2 bot-message  align-items-center`}
-          >
-            <div >
-              <Markdown>
-                {message?.response?.response}
+          <Bot className="me-2 mt-3 " style={{ color: "grey" }} size={24} />
+          {message?.response?.response ? (
+            <div
+              className={`message px-3 py-2 bot-message  align-items-center`}
+            >
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  table: ({ node, ...props }) => (
+                    <table style={{ borderCollapse: 'collapse', width: '100%' }} {...props} />
+                  ),
+                  th: ({ node, ...props }) => (
+                    <th
+                      style={{
+                        border: '1px solid #ddd',
+                        padding: '8px',
+                        backgroundColor: '#f2f2f2',
+                        textAlign: 'left',
+                      }}
+                      {...props}
+                    />
+                  ),
+                  td: ({ node, ...props }) => (
+                    <td
+                      style={{
+                        border: '1px solid #ddd',
+                        padding: '8px',
+                        textAlign: 'left',
+                      }}
+                      {...props}
+                    />
+                  )
+                }}
+              >
+                {
+                  fixMarkdownTables(
+                    message.response.response
+                      .replace(/```(?:\w+)?\n([\s\S]*?)```/g, (_, inner) => inner.trim())
+                      .replace(/(?<!\n)\n(?!\n)/g, '  \n')
+                      .replace(/```/g, '')
+                  )
+                }
               </Markdown>
             </div>
-          </div>
+          ) : (
+            <div className="bot-thinking" style={{ minHeight: "30px" }} />
+          )}
         </div>
         <div className="d-flex align-items-center gap-3 ms-5 action-btn relative">
           <Copy
@@ -264,7 +358,7 @@ const ChatMessage = ({ message }) => {
           <Pin
             size={15}
             color={loading ? "grey" : "black"}
-            style={{ fill: pin ? 'black' : 'none' }}
+            style={{ fill: pin ? "black" : "none" }}
             onClick={pin ? handleUnpin : handlePin}
             className="cursor-pointer"
           />

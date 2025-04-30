@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import "../mor.css";
 import { useNavigate } from "react-router-dom";
-import Topbar from "./Topbar";
 import { SidebarCloseIcon } from "lucide-react";
 import { useChatContext } from "../contexts/chatContext";
 
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { createNewChat } = useChatContext()
 
@@ -38,9 +35,9 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     navigate("/login");
   };
 
-  const email = sessionStorage.getItem("email");
-  const firstName = sessionStorage.getItem("firstname");
-  const lastName = sessionStorage.getItem("lastname");
+  const email = localStorage.getItem("email");
+  const firstName = localStorage.getItem("firstname");
+  const lastName = localStorage.getItem("lastname");
   const avatarLetter =
     firstName?.[0]?.toUpperCase() || email?.[0]?.toUpperCase() || "U";
 
@@ -112,7 +109,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
               className="cursor-pointer position-fixed"
               style={{ cursor: "pointer", top: "16px", left: "50px" }}
               onClick={createNewChat}
-              src="pajamas_duo-chat-new.svg"
+              src="/newchat.svg"
               alt="Chat Icon"
             />
           </>

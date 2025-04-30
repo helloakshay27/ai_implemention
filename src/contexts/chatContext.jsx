@@ -10,13 +10,11 @@ const ChatProvider = ({ children }) => {
     const [messages, setMessages] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
     const [mode, setMode] = useState(""); // "CHATS" or "BRD"
+    const [storedId, setStoredId] = useState(null);
+
     const token = localStorage.getItem('access_token');
     const navigate = useNavigate();
-    const { id } = useParams();
-    const ws = useRef(null);
-    const [storedId, setStoredId] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     useEffect(() => {
         const idFromStorage = localStorage.getItem("conversation_token");
         setStoredId(idFromStorage);
@@ -106,10 +104,12 @@ const ChatProvider = ({ children }) => {
             timestamp: new Date().toISOString(),
         };
 
+        console.log(userQuery)
+
         const userMessage = {
             message_id: userQuery.id,
             query: userQuery,
-            response: "", // No response yet
+            response: <>{isTyping && <div className=" bot-thinking" />}</>, // No response yet
         };
 
         // Immediately show user message
@@ -222,7 +222,11 @@ const ChatProvider = ({ children }) => {
 
     const deleteChat = async (chatId) => {
         try {
-            await axios.delete(`https://ai-implementation.lockated.com/delete_conversation/?conversation_token=${chatId}&token=${token}`)
+            const response = await axios.delete(`https://ai-implementation.lockated.com/delete_conversation/?conversation_token=${chatId}&token=${token}`)
+            console.log(response)
+            if (response.data.success) {
+                fetchChatList()
+            }
         } catch (error) {
             console.log(error)
         }

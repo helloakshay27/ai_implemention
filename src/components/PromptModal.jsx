@@ -12,7 +12,7 @@ const PromptModal = ({ setIsModalOpen }) => {
         problemStatement: "",
         userRoles: "",
         features: "",
-        competitors: [{ name: "", website: "" }],
+        competitors: [{ name: "", website: "", username: "", password: "" }],
         videoBenchmarks: [{ competitor: "", feature: "", videoLink: "" }],
     });
 
@@ -49,6 +49,11 @@ const PromptModal = ({ setIsModalOpen }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+
+        const textarea = e.target;
+        textarea.style.height = "auto"; // Reset height
+        const maxHeight = 5 * 24; // Assuming approx 24px per line
+        textarea.style.height = Math.min(textarea.scrollHeight, maxHeight) + "px";
     };
 
     const handleCompetitorChange = (index, field, value) => {
@@ -90,11 +95,12 @@ const PromptModal = ({ setIsModalOpen }) => {
                 }}
             >
                 <div className="d-flex align-items-center justify-content-end">
-                    <button onClick={onClose} className="btn-close" />
+                    <button onClick={onClose} className="btn-close" style={{ height: "10px", width: "10px" }} />
                 </div>
                 <div className="modal-body mt-4">
-                    <input
+                    <textarea
                         type="text"
+                        rows={1}
                         name="prompt"
                         value={formData.prompt}
                         onChange={handleChange}
@@ -102,15 +108,17 @@ const PromptModal = ({ setIsModalOpen }) => {
                         className="w-100 modal-input"
                     />
                     <div className="d-flex align-items-center justify-content-between gap-1">
-                        <input
+                        <textarea
                             type="text"
+                            rows={1}
                             placeholder="Business Objective"
                             className="modal-input w-100"
                             name="businessObjective"
                             value={formData.businessObjective}
                             onChange={handleChange}
                         />
-                        <input
+                        <textarea
+                            rows={1}
                             type="text"
                             placeholder="What problem are you solving for?"
                             className="modal-input w-100"
@@ -118,7 +126,8 @@ const PromptModal = ({ setIsModalOpen }) => {
                             value={formData.problemStatement}
                             onChange={handleChange}
                         />
-                        <input
+                        <textarea
+                            rows={1}
                             type="text"
                             placeholder="List of User Roles"
                             className="modal-input w-100"
@@ -127,7 +136,8 @@ const PromptModal = ({ setIsModalOpen }) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <input
+                    <textarea
+                        rows={1}
                         type="text"
                         placeholder="List of features"
                         className="w-100 modal-input"
@@ -139,8 +149,8 @@ const PromptModal = ({ setIsModalOpen }) => {
                     <div className="benchmark-section mt-1">
                         <div className="d-flex justify-content-end mb-2">
                             <button
-                                className="border px-3 py-2 text-white"
-                                style={{ fontSize: "14px", backgroundColor: "#C72030" }}
+                                className="border px-3 py-1"
+                                style={{ fontSize: "14px", backgroundColor: "#E3DED5", color: "#C72030" }}
                                 onClick={() => {
                                     if (formData.competitors.length < 3) {
                                         setFormData((prev) => ({
@@ -158,15 +168,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                             </button>
                         </div>
                         <div className="benchmark-row mb-2">
-                            {/* <div className="benchmark-col flex-grow-1">
-                                <input
-                                    type="text"
-                                    className="modal-input h-100"
-                                    placeholder="Insert three competitors to benchmark"
-                                    readOnly
-                                />
-                            </div> */}
-                            <div className="benchmark-col">
+                            <div className="benchmark-col" style={{ width: "30%" }}>
                                 {formData.competitors.map((competitor, index) => (
                                     <input
                                         key={index}
@@ -180,7 +182,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                                     />
                                 ))}
                             </div>
-                            <div className="benchmark-col">
+                            <div className="benchmark-col" style={{ width: "30%" }}>
                                 {formData.competitors.map((competitor, index) => (
                                     <input
                                         key={index}
@@ -194,14 +196,43 @@ const PromptModal = ({ setIsModalOpen }) => {
                                     />
                                 ))}
                             </div>
+                            <div className="benchmark-col" style={{ width: "20%" }}>
+                                {formData.competitors.map((competitor, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        className="modal-input"
+                                        placeholder={`Username`}
+                                        value={competitor.username}
+                                        onChange={(e) =>
+                                            handleCompetitorChange(index, "username", e.target.value)
+                                        }
+                                    />
+                                ))}
+                            </div>
+                            <div className="benchmark-col" style={{ width: "20%" }}>
+                                {formData.competitors.map((competitor, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        className="modal-input"
+                                        placeholder={`Password`}
+                                        value={competitor.password}
+                                        onChange={(e) =>
+                                            handleCompetitorChange(index, "password", e.target.value)
+                                        }
+                                    />
+                                ))}
+                            </div>
                             <div className="d-flex flex-column">
                                 {formData.competitors.map((competitor, index) => (
                                     <button
-                                        className="border px-3 py-2 text-white modal-input"
+                                        className="border px-2 py-1 modal-input"
                                         style={{
                                             fontSize: "20px",
-                                            backgroundColor: "#C72030",
-                                            width: "50px",
+                                            backgroundColor: "#E3DED5",
+                                            color: "#C72030",
+                                            width: "40px",
                                         }}
                                         onClick={() => removeCompetitor(index)}
                                         title="Remove competitor"
@@ -214,8 +245,8 @@ const PromptModal = ({ setIsModalOpen }) => {
 
                         <div className="d-flex justify-content-end mb-2">
                             <button
-                                className="border px-3 py-2 text-white"
-                                style={{ fontSize: "14px", backgroundColor: "#C72030" }}
+                                className="border px-3 py-1"
+                                style={{ fontSize: "14px", backgroundColor: "#E3DED5", color: "#C72030" }}
                                 onClick={() => {
                                     if (formData.videoBenchmarks.length < 3) {
                                         setFormData((prev) => ({
@@ -233,15 +264,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                             </button>
                         </div>
                         <div className="benchmark-row">
-                            {/* <div className="benchmark-col flex-grow-1">
-                                <input
-                                    type="text"
-                                    className="modal-input h-100"
-                                    placeholder="Insert videos for inspiration e.g. Training, Demo Videos"
-                                    readOnly
-                                />
-                            </div> */}
-                            <div className="benchmark-col">
+                            <div className="benchmark-col" style={{ width: "30%" }}>
                                 {formData.videoBenchmarks.map((video, index) => (
                                     <input
                                         key={index}
@@ -255,7 +278,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                                     />
                                 ))}
                             </div>
-                            <div className="benchmark-col">
+                            <div className="benchmark-col" style={{ width: "50%" }}>
                                 {formData.videoBenchmarks.map((video, index) => (
                                     <input
                                         key={index}
@@ -269,7 +292,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                                     />
                                 ))}
                             </div>
-                            <div className="benchmark-col">
+                            <div className="benchmark-col" style={{ width: "20%" }}>
                                 {formData.videoBenchmarks.map((video, index) => (
                                     <input
                                         key={index}
@@ -286,11 +309,12 @@ const PromptModal = ({ setIsModalOpen }) => {
                             <div className="d-flex flex-column">
                                 {formData.videoBenchmarks.map((video, index) => (
                                     <button
-                                        className="border px-3 py-2 text-white modal-input"
+                                        className="border px-2 py-1 modal-input"
                                         style={{
                                             fontSize: "20px",
-                                            backgroundColor: "#C72030",
-                                            width: "50px",
+                                            backgroundColor: "#E3DED5",
+                                            color: "#C72030",
+                                            width: "40px",
                                         }}
                                         onClick={() => removeVideo(index)}
                                         title="Remove video row"
@@ -305,7 +329,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                     <div className="benchmark-row my-3">
                         <div className="benchmark-col flex-grow-1">
                             <div
-                                className="modal-input h-100 p-3"
+                                className="modal-input py-2 px-3"
                                 style={{ color: "#afafaf", cursor: "pointer" }}
                                 onClick={() => handleClick(fileInput1)}
                             >
@@ -339,7 +363,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                         </div>
                         <div className="benchmark-col flex-grow-1">
                             <div
-                                className="modal-input h-100 p-3"
+                                className="modal-input py-2 px-3"
                                 style={{ color: "#afafaf", cursor: "pointer" }}
                                 onClick={() => handleClick(fileInput2)}
                             >
@@ -373,7 +397,7 @@ const PromptModal = ({ setIsModalOpen }) => {
                         </div>
                         <div className="benchmark-col flex-grow-1">
                             <div
-                                className="modal-input h-100 p-3"
+                                className="modal-input py-2 px-3"
                                 style={{ color: "#afafaf", cursor: "pointer" }}
                                 onClick={() => handleClick(fileInput3)}
                             >

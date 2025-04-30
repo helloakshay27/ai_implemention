@@ -1,10 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { useChatContext } from '../contexts/chatContext';
 import InputBox from './InputBox';
 
 const ChatInput = () => {
     const { id } = useParams()
-    const { messages } = useChatContext();
 
     return (
         <>

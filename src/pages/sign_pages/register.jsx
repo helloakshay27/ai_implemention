@@ -22,8 +22,6 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-
-
   const startResendTimer = () => {
     setResendDisabled(true);
     setResendTimer(300);
@@ -79,9 +77,9 @@ const Register = () => {
 
       if (response.data.token) {
         localStorage.setItem("access_token", response.data.token);
-        sessionStorage.setItem("email", response.data.email);
-        sessionStorage.setItem("firstname", response.data.firstname);
-        sessionStorage.setItem("lastname", response.data.lastname);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("firstname", response.data.firstname);
+        localStorage.setItem("lastname", response.data.lastname);
       }
       navigate("/");
       toast.success("Registered successfully");
