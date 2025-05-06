@@ -11,6 +11,7 @@ const ChatProvider = ({ children }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [mode, setMode] = useState(""); // "CHATS" or "BRD"
     const [storedId, setStoredId] = useState(null);
+    const [BRDFormData,setBRDFormData]=useState({});
 
     const token = localStorage.getItem('access_token');
     const navigate = useNavigate();
@@ -245,7 +246,9 @@ const ChatProvider = ({ children }) => {
                 setCurrentChatId,
                 mode,
                 setMode,
-                fetchConversations
+                fetchConversations,
+                BRDFormData,
+                setBRDFormData,
             }}
         >
             {children}

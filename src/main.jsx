@@ -8,11 +8,12 @@ import './index.css'
 import App from './App.jsx'
 import ChatProvider from './contexts/chatContext.jsx'
 import { BrowserRouter } from 'react-router-dom';
+import BRDTable from './components/BRDTable.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <ChatProvider>
       <App />
-    </ChatProvider>
+      </ChatProvider>
   </BrowserRouter>
 )

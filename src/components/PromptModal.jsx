@@ -5,7 +5,7 @@ import axios from "axios";
 
 const PromptModal = ({ setIsModalOpen }) => {
     const { id } = useParams()
-    const { sendMessage } = useChatContext();
+    const { sendMessage ,setBRDFormData} = useChatContext();
     const [formData, setFormData] = useState({
         prompt: "",
         businessObjective: "",
@@ -70,6 +70,7 @@ const PromptModal = ({ setIsModalOpen }) => {
 
     const handleSubmit = async () => {
         const message = `${formData.prompt}. ${formData.businessObjective}. ${formData.problemStatement}. ${formData.userRoles}. ${formData.features}`;
+        setBRDFormData(formData);
         sendMessage(message, formData.competitors, formData.videoBenchmarks, id);
         console.log(formData);
     };

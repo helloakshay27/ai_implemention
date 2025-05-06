@@ -18,6 +18,14 @@ import DownloadModal from "./Download";
 import RemoveMarkdown from "remove-markdown";
 import Presale from "../templates/presale";
 import remarkGfm from 'remark-gfm';
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  createColumnHelper,
+} from '@tanstack/react-table';
+import { useChatContext } from "../contexts/chatContext";
+import BRDTable from "./BRDTable";
 
 
 const ChatMessage = ({ message }) => {
@@ -27,6 +35,7 @@ const ChatMessage = ({ message }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voices, setVoices] = useState([]);
+  const {mode}=useChatContext();
 
   const token = localStorage.getItem("access_token");
   const userEmail = sessionStorage.getItem("email");
@@ -268,6 +277,7 @@ const ChatMessage = ({ message }) => {
     );
   };
 
+
   return (
     <>
       <div>
@@ -276,7 +286,8 @@ const ChatMessage = ({ message }) => {
             className={`message px-3 py-2 user-message d-flex align-items-center`}
           >
             <div style={{ whiteSpace: "pre-wrap" }}>
-              {message?.query?.user_prompt}
+
+              { mode==='BRD'&& message?.query?.user_prompt.split(".").length>2?<BRDTable/>:message?.query?.user_prompt}
             </div>
           </div>
           <User className="ms-2 mt-3" style={{ color: "grey" }} size={24} />
