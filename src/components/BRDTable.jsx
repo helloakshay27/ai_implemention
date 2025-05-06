@@ -75,7 +75,7 @@ const BRDTable = () => {
             <tr>
               <td style={boldCell} rowSpan="4">Competitors</td>
               <td style={boldCell}>{`Competitor ${index + 1}`}</td>
-              <td style={cellStyle}></td>
+              <td style={cellStyle}>{comp.name}</td>
             </tr>
             <tr>
               <td style={boldCell}>Website</td>
@@ -98,7 +98,7 @@ const BRDTable = () => {
             <tr>
               <td style={boldCell} rowSpan="3">Video Benchmarks</td>
               <td style={boldCell}>{`Competitor ${index + 1}`}</td>
-              <td style={cellStyle}></td>
+              <td style={cellStyle}>{vb.competitor}</td>
             </tr>
             <tr>
               <td style={boldCell}>Feature</td>
