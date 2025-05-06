@@ -8,7 +8,7 @@ const BRDTable = () => {
   console.log(formData);
   const tableStyle = {
     borderCollapse: "collapse",
-    width: "50%",
+    width: "100%",
     height:"auto",
     backgroundColor: "rgba(233, 235, 235, 0.42)",
   };
