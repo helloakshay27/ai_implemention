@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const ChatContext = createContext(undefined);
 
@@ -11,7 +12,10 @@ const ChatProvider = ({ children }) => {
     const [isTyping, setIsTyping] = useState(false);
     const [mode, setMode] = useState(""); // "CHATS" or "BRD"
     const [storedId, setStoredId] = useState(null);
-    const [BRDFormData,setBRDFormData]=useState({});
+    const [BRDFormData, setBRDFormData] = useState({});
+    const [logs, setLogs] = useState("")
+
+    console.log(logs)
 
     const token = localStorage.getItem('access_token');
     const navigate = useNavigate();
@@ -25,35 +29,6 @@ const ChatProvider = ({ children }) => {
     useEffect(() => {
         console.log("Current Chat ID:", messages);
     }, [messages]);
-
-    // useEffect(() => {
-    //     if (!storedId) return;
-
-    //     const socket = new WebSocket(`ws://43.204.42.235:8000/ws/chat/${storedId}/`);
-    //     ws.current = socket;
-
-    //     socket.onopen = () => console.log("WebSocket connected");
-
-    //     socket.onmessage = (event) => {
-    //         const data = JSON.parse(event.data);
-    //         const { response, prompt_id } = data;
-
-    //         setMessages((prevMessages) => ({
-    //             ...prevMessages,
-    //             response: response, // or just "response," in modern JS
-    //         }));
-
-
-    //         setIsTyping(false);
-    //     };
-
-
-    //     socket.onerror = (err) => console.error("WebSocket Error:", err);
-    //     socket.onclose = () => console.log("WebSocket closed");
-
-    //     return () => socket.close();
-    // }, [storedId]);
-
 
     const fetchChatList = async () => {
         try {
@@ -110,7 +85,7 @@ const ChatProvider = ({ children }) => {
         const userMessage = {
             message_id: userQuery.id,
             query: userQuery,
-            response: <>{isTyping && <div className=" bot-thinking" />}</>, // No response yet
+            response: <>{isTyping && <div className="bot-thinking">{logs}</div>}</>, // No response yet
         };
 
         // Immediately show user message
@@ -143,11 +118,13 @@ const ChatProvider = ({ children }) => {
             });
 
             // Send message to server
-            await axios.post(
+            const response = await axios.post(
                 `https://ai-implementation.lockated.com/process_prompt/?token=${token}`,
                 requestData
             );
-
+            if (response.data.warning) {
+                toast.error(response.data.warning);
+            }
             fetchConversations(currentChatId);
 
             // Save chat if new
@@ -166,60 +143,6 @@ const ChatProvider = ({ children }) => {
             setIsTyping(false);
         }
     };
-
-    // WebSocket effect for real-time message updates
-    // useEffect(() => {
-    //     if (!storedId) return;
-
-    //     const socket = new WebSocket(`ws://ai-implementation.lockated.com/ws/chat/${storedId}/`);
-    //     ws.current = socket;
-
-    //     socket.onopen = () => {
-    //         console.log("WebSocket connected");
-    //     };
-
-    //     socket.onmessage = (event) => {
-    //         const data = JSON.parse(event.data);
-    //         const { response, prompt_id } = data;
-
-    //         // Update messages with the response
-    //         // setMessages((prevMessages) => {
-    //         //     const updatedMessages = [...prevMessages];
-    //         //     const index = updatedMessages.findIndex((msg) => msg.message_id === prompt_id);
-
-    //         //     if (index !== -1) {
-    //         //         updatedMessages[index] = {
-    //         //             ...updatedMessages[index],
-    //         //             response, // directly update response
-    //         //         };
-    //         //     }
-
-    //         //     return updatedMessages;
-    //         // });
-
-    //         setIsTyping(false);
-    //     };
-
-    //     socket.onerror = (err) => {
-    //         console.error("WebSocket Error:", err);
-    //         setIsTyping(false);
-    //     };
-
-    //     socket.onclose = () => {
-    //         console.log("WebSocket closed");
-    //     };
-
-    //     // Cleanup WebSocket on component unmount or when storedId changes
-    //     return () => {
-    //         socket.close();
-    //     };
-    // }, [storedId]);
-
-
-
-
-
-    console.log(messages)
 
     const deleteChat = async (chatId) => {
         try {
@@ -249,6 +172,8 @@ const ChatProvider = ({ children }) => {
                 fetchConversations,
                 BRDFormData,
                 setBRDFormData,
+                logs,
+                setLogs
             }}
         >
             {children}

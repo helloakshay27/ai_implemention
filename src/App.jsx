@@ -24,7 +24,13 @@ import OptionModal from './components/OptionModal';
 function App() {
   return (
     <>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          style: {
+            fontSize: "14px"
+          }
+        }}
+      />
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={<SignIn />} />

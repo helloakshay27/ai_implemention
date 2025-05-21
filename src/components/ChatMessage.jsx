@@ -35,7 +35,7 @@ const ChatMessage = ({ message }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voices, setVoices] = useState([]);
-  const { mode } = useChatContext();
+  const { mode, logs } = useChatContext();
 
   const token = localStorage.getItem("access_token");
   const userEmail = sessionStorage.getItem("email");
@@ -338,7 +338,7 @@ const ChatMessage = ({ message }) => {
               </Markdown>
             </div>
           ) : (
-            <div className="bot-thinking" style={{ minHeight: "30px" }} />
+            <div className="bot-thinking" style={{ minHeight: "30px" }}>{logs}<span className="dot-anim">...</span> </div>
           )}
         </div>
         {
