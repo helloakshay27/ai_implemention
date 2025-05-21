@@ -37,7 +37,10 @@ const ChatArea = () => {
     };
 
     useEffect(() => {
-        wsRef.current = new WebSocket(`ws://43.204.42.235:8000/ws/chat/${id}/`);
+        // wsRef.current = new WebSocket(`ws://43.204.42.235:8000/ws/chat/${id}/`);
+        const socket = new WebSocket(`ws://43.204.42.235:8000/ws/chat/${id}/`);
+
+        wsRef.current = socket;
 
         wsRef.current.onopen = () => {
             console.log("WebSocket connection established");
