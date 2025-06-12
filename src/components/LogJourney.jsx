@@ -10,7 +10,13 @@ const stripAnsi = (str) => {
 
 const AVATARS = ['🤖', '🧑‍💻'];
 
-const LogJourney = ({ logs }) => {
+const statusColors = {
+    connected: 'green',
+    connecting: 'orange',
+    disconnected: 'red'
+};
+
+const LogJourney = ({ logs, websocketStatus = 'connected' }) => {
     if (!logs || logs.length === 0) return null;
     const logArray = Array.isArray(logs) ? logs : logs?.logs || [];
 
@@ -23,7 +29,24 @@ const LogJourney = ({ logs }) => {
 
     return (
         <div className="log-journey enhanced-log-journey">
-            <h3 className="log-journey-title">Agent Conversation</h3>
+            <div className="log-journey-header">
+                <span
+                    className="ws-status"
+                    style={{
+                        color: statusColors[websocketStatus] || 'gray',
+                        fontWeight: 'bold',
+                        marginLeft: 12
+                    }}
+                    title={`WebSocket: ${websocketStatus}`}
+                >
+                    ● {websocketStatus.charAt(0).toUpperCase() + websocketStatus.slice(1)}
+                </span>
+            </div>
+            {websocketStatus !== 'connected' && (
+                <div className="ws-warning">
+                    Please ensure WebSocket connection is active for real-time logs.
+                </div>
+            )}
             <div className="log-timeline">
                 {logArray.map((log, idx) => {
                     const isLeft = idx % 2 === 0;
