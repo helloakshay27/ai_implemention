@@ -5,7 +5,7 @@ import { useChatContext } from "../contexts/chatContext";
 const BRDTable = () => {
   const {BRDFormData}=useChatContext();
   const formData = BRDFormData;
-  console.log(formData);
+  // console.log(formData);
   const tableStyle = {
     borderCollapse: "collapse",
     width: "100%",

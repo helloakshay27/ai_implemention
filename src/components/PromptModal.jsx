@@ -72,7 +72,7 @@ const PromptModal = ({ setIsModalOpen }) => {
         const message = `${formData.prompt}. ${formData.businessObjective}. ${formData.problemStatement}. ${formData.userRoles}. ${formData.features}`;
         setBRDFormData(formData);
         sendMessage(message, formData.competitors, formData.videoBenchmarks, id);
-        console.log(formData);
+        // console.log(formData);
     };
 
     return (

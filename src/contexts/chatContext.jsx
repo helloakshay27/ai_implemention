@@ -15,7 +15,7 @@ const ChatProvider = ({ children }) => {
     const [BRDFormData, setBRDFormData] = useState({});
     const [logs, setLogs] = useState("")
 
-    console.log(logs)
+    console.log("logs", logs)
 
     const token = localStorage.getItem('access_token');
     const navigate = useNavigate();
@@ -65,6 +65,7 @@ const ChatProvider = ({ children }) => {
             const response = await axios.get(`https://ai-implementation.lockated.com/get_conversation_details/?conversation_token=${id}&token=${token}`);
             const fetchedMessages = response.data?.messages ? response.data.messages : [];
             setMessages(fetchedMessages);
+            setLogs(response.data?.messages?.logs || ""); // Set logs if available
         } catch (error) {
             console.log(error);
             setMessages([]); // fallback to empty array on error

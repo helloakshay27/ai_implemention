@@ -26,6 +26,7 @@ import {
 } from '@tanstack/react-table';
 import { useChatContext } from "../contexts/chatContext";
 import BRDTable from "./BRDTable";
+import LogJourney from "./LogJourney";
 
 
 const ChatMessage = ({ message }) => {
@@ -36,6 +37,7 @@ const ChatMessage = ({ message }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voices, setVoices] = useState([]);
   const { mode, logs } = useChatContext();
+  const [showLogs, setShowLogs] = useState(true);
 
   const token = localStorage.getItem("access_token");
   const userEmail = sessionStorage.getItem("email");
@@ -292,9 +294,22 @@ const ChatMessage = ({ message }) => {
           </div>
           <User className="ms-2 mt-3" style={{ color: "grey" }} size={24} />
         </div>
+                <div className="d-flex align-items-start justify-content-start">
+          <Bot className="me-2 mt-3 " style={{ color: "grey" }} size={24} />
+          <div className={`message px-3 py-2 bot-message align-items-center`}>
+            <button
+              className="btn btn-sm btn-outline-secondary mb-2"
+              onClick={() => setShowLogs((prev) => !prev)}
+              style={{ fontSize: "0.9rem" }}
+            >
+              {showLogs ? "Hide Logs ▲" : "Show Logs ▼"}
+            </button>
+            {showLogs && <LogJourney logs={logs || message?.logs} />}
+          </div>
+        </div>
         <div className="d-flex align-items-start justify-content-start">
           <Bot className="me-2 mt-3 " style={{ color: "grey" }} size={24} />
-          {message?.response?.response ? (
+          {message?.response?.response && (
             <div
               className={`message px-3 py-2 bot-message  align-items-center`}
             >
@@ -337,10 +352,12 @@ const ChatMessage = ({ message }) => {
                 }
               </Markdown>
             </div>
-          ) : (
-            <div className="bot-thinking" style={{ minHeight: "30px" }}>{logs}<span className="dot-anim">...</span> </div>
           )}
+
         </div>
+
+
+
         {
           message?.response?.response && (
             <div className="d-flex align-items-center gap-3 ms-5 action-btn relative">

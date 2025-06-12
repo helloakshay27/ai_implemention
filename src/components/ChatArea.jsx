@@ -4,6 +4,8 @@ import ChatMessage from './ChatMessage';
 import PromptModal from './PromptModal';
 import BRDTable from './BRDTable';
 import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid'; // at the top of your file
+
 
 const ChatArea = () => {
     const { id } = useParams();
@@ -51,13 +53,22 @@ const ChatArea = () => {
                 if (data.type === "log") {
                     const cleanLog = stripAnsi(data.log).trim();
 
-                    const isStructuredObjectLog = cleanLog == "" || cleanLog.includes("api_token") || cleanLog.startsWith("{") || cleanLog.startsWith("[") && cleanLog.includes("'user_prompt':") || cleanLog.includes("'response':") || cleanLog.includes("'message':");
+                    const isStructuredObjectLog =
+                        cleanLog === "" ||
+                        cleanLog.includes("api_token") ||
+                        (cleanLog.startsWith("{") || cleanLog.startsWith("[")) && (
+                            cleanLog.includes("'user_prompt':") ||
+                            cleanLog.includes("'response':") ||
+                            cleanLog.includes("'message':")
+                        );
 
-                    if (isStructuredObjectLog) {
-                        setLogs("Thinking");
-                    } else {
-                        setLogs(cleanLog.length > 80 ? cleanLog.slice(0, 80) : cleanLog);
-                    }
+                    const newLog = {
+                        log_id: uuidv4(), // generates unique ID
+                        timestamp: Date.now(),
+                        log_message: isStructuredObjectLog ? "Thinking..." : cleanLog.length > 80 ? cleanLog.slice(0, 80) : cleanLog
+                    };
+
+                    setLogs(prevLogs => [...prevLogs, newLog]); // 👈 push to logs array
                 }
             } catch (err) {
                 console.error("Failed to parse WebSocket message:", err);
@@ -80,7 +91,7 @@ const ChatArea = () => {
         };
     }, [])
 
-    console.log(messages);
+    // console.log(messages);
     return (
         <div className='chat-area'>
             {messages && messages.map((message) => {
