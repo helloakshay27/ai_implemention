@@ -50,13 +50,13 @@ const ChatModal = () => {
             >
                 <Image size={20} /> Image Chat
             </button>
-            <button
+            {/* <button
                 className="purple-btn2 d-flex align-items-center gap-2 justify-content-center"
                 style={{ width: "250px", backgroundColor: "#E3DED5", color: "#C72030" }}
                 onClick={() => handleTypeSelection("structured")}
             >
                 <Database size={20} /> Structured Data
-            </button>
+            </button> */}
         </div>
     );
 };
