@@ -8,7 +8,7 @@ import {
   User,
   Volume2,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
@@ -17,55 +17,99 @@ import RemoveMarkdown from "remove-markdown";
 import remarkGfm from 'remark-gfm';
 import PublicLogJourney from "./PublicLogJourney";
 import DownloadModal from "./Download";
+import { publicChatAPI } from "../services/PublicChatAPI";
 
 const PublicChatMessage = ({ message }) => {
   const { id } = useParams();
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [voices, setVoices] = useState([]);
   const [showLogs, setShowLogs] = useState(true);
   const [pin, setPinned] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
-    const loadVoices = () => {
-      const synthVoices = window.speechSynthesis.getVoices();
-      if (synthVoices.length) {
-        setVoices(synthVoices);
-      }
-    };
-
-    loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-
     return () => {
-      window.speechSynthesis.cancel();
+      // Cleanup: stop audio and revoke object URL on unmount
+      if (audioRef.current) {
+        audioRef.current.pause();
+        if (audioRef.current.src) {
+          URL.revokeObjectURL(audioRef.current.src);
+        }
+      }
     };
   }, []);
 
-  const handleSpeak = () => {
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
+  const handleSpeak = async () => {
+    // Stop currently playing audio
+    if (audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
       setIsSpeaking(false);
       return;
     }
 
+    // Get clean text from message
     const raw = message?.response?.response;
-    const cleanText = RemoveMarkdown(raw);
-
-    if (!voices.length) {
-      toast.error("Voices not loaded yet");
+    if (!raw) {
+      toast.error("No text to speak");
       return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.voice = voices[2] || voices[0];
+    const cleanText = RemoveMarkdown(raw);
 
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+    if (!cleanText || cleanText.trim().length === 0) {
+      toast.error("No text content available");
+      return;
+    }
 
-    window.speechSynthesis.speak(utterance);
+    try {
+      setIsSpeaking(true);
+      toast.loading("Generating speech...", { id: "tts-loading" });
+
+      // Call OpenAI TTS API
+      const result = await publicChatAPI.textToSpeech(cleanText, {
+        model: 'tts-1', // or 'tts-1-hd' for higher quality
+        voice: 'alloy', // Options: alloy, echo, fable, onyx, nova, shimmer
+        speed: 1.0
+      });
+
+      toast.dismiss("tts-loading");
+
+      if (result.error) {
+        toast.error(`Speech generation failed: ${result.message}`);
+        setIsSpeaking(false);
+        return;
+      }
+
+      // Create audio element and play
+      if (!audioRef.current) {
+        audioRef.current = new Audio();
+      }
+
+      audioRef.current.src = result.audioUrl;
+      
+      audioRef.current.onended = () => {
+        setIsSpeaking(false);
+        URL.revokeObjectURL(result.audioUrl);
+      };
+
+      audioRef.current.onerror = (e) => {
+        console.error("Audio playback error:", e);
+        toast.error("Failed to play audio");
+        setIsSpeaking(false);
+        URL.revokeObjectURL(result.audioUrl);
+      };
+
+      await audioRef.current.play();
+      toast.success("Playing speech", { duration: 2000 });
+
+    } catch (error) {
+      console.error("TTS Error:", error);
+      toast.dismiss("tts-loading");
+      toast.error("Failed to generate speech");
+      setIsSpeaking(false);
+    }
   };
 
   const handleCopy = () => {
@@ -309,8 +353,10 @@ const PublicChatMessage = ({ message }) => {
                 <Volume2
                   size={15}
                   className="cursor-pointer"
-                  fill={isSpeaking ? null : "#fafafa"}
+                  fill={isSpeaking ? "#000000" : "#fafafa"}
+                  color={isSpeaking ? "#000000" : "black"}
                   onClick={handleSpeak}
+                  title={isSpeaking ? "Stop speaking" : "Play with OpenAI TTS"}
                 />
                 <Download
                   size={18}
