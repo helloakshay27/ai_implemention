@@ -329,7 +329,7 @@ const PublicSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             </div>
           )}
         </div>
-        {/* <div>
+        <div>
           <svg
             style={{ margin: "30px auto", display: "block" }}
             width="143"
@@ -361,7 +361,7 @@ const PublicSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               />
             </defs>
           </svg>
-        </div> */}
+        </div>
       </div>
     </>
   );
