@@ -190,28 +190,49 @@ const PublicInputBox = ({ id, chatType }) => {
 
             <div className='d-flex w-100 align-items-center gap-4 justify-content-center'>
             <form className="w-100 position-relative form" onSubmit={handleSubmit}>
-                <div className="" style={{ display: 'inline-block' }}>
-                    <Paperclip
-                        className={`position-absolute cursor-pointer `}
-                        style={{
-                            left: "15px",
-                            transform: "translateY(-180%)",
-                            color: "inherit"
-                        }}
-                        onClick={handleUploadFile}
-                        size={20}
-                        color='#C72030'
-                    />
+                {/* Attachment button - properly aligned */}
+                <button
+                    type="button"
+                    className="position-absolute p-2 border-0 rounded-1"
+                    onClick={handleUploadFile}
+                    title="Attach file"
+                    aria-label="Attach file"
+                    style={{
+                        left: "15px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        background: "transparent",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        zIndex: 10
+                    }}
+                >
+                    <Paperclip size={20} color='#C72030' />
                     {files.length > 0 && (
-                        <span className="attachment-badge" style={{
-                            position: 'absolute',
-                            left: '26px',
-                            top: 'calc(50% - 12px)'
-                        }}>
+                        <span 
+                            className="attachment-badge" 
+                            style={{
+                                position: 'absolute',
+                                top: '-4px',
+                                right: '-4px',
+                                backgroundColor: '#C72030',
+                                color: 'white',
+                                borderRadius: '50%',
+                                width: '18px',
+                                height: '18px',
+                                fontSize: '11px',
+                                fontWeight: 'bold',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
                             {files.length}
                         </span>
                     )}
-                </div>
+                </button>
 
                 {/* Hidden file input */}
                 <input
@@ -243,21 +264,23 @@ const PublicInputBox = ({ id, chatType }) => {
                     }}
                     placeholder={
                         chatType === 'image' 
-                            ? (imagePreviews.length > 0 ? "Describe what you want to know about the image..." : "Attach an image and ask a question...")
+                            ? (imagePreviews.length > 0 ? "Describe what you want to know about the image..." : "Ask Me Anything...")
                             : chatType === 'structured'
                             ? "Ask about structured data..."
                             : imagePreviews.length > 0 
-                                ? "Ask about the attached image..."
+                                ? "Ask Me Anything..."
                                 : "Ask Me Anything..."
                     }
                     className="w-100 py-3 input text-black"
                     style={{
-                        paddingLeft: "3rem",
-                        paddingRight: "10rem",
+                        paddingLeft: "3.5rem",
+                        paddingRight: "7rem",
                         overflow: 'hidden',
                         resize: 'none',
                         lineHeight: "24px",
-                        outline: "none"
+                        outline: "none",
+                        borderRadius: "8px",
+                        border: "1px solid rgba(0,0,0,0.1)"
                     }}
                     aria-label="Chat message input"
                 />
@@ -273,8 +296,12 @@ const PublicInputBox = ({ id, chatType }) => {
                         right: "60px",
                         top: "50%",
                         transform: "translateY(-50%)",
-                        background: isRecording ? "red" : "",
-                        color: isRecording ? "white" : "inherit"
+                        background: isRecording ? "red" : "transparent",
+                        color: isRecording ? "white" : "inherit",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer"
                     }}
                 >
                     <Mic size={20} color={isRecording ? 'white' : '#C72030'} />
@@ -287,11 +314,15 @@ const PublicInputBox = ({ id, chatType }) => {
                     disabled={!input.trim() && files.length === 0}
                     aria-label="Send message"
                     style={{ 
-                        right: "20px", 
+                        right: "15px", 
                         top: "50%", 
                         transform: "translateY(-50%)",
                         opacity: (!input.trim() && files.length === 0) ? 0.5 : 1,
-                        cursor: (!input.trim() && files.length === 0) ? 'not-allowed' : 'pointer'
+                        cursor: (!input.trim() && files.length === 0) ? 'not-allowed' : 'pointer',
+                        background: "transparent",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
                     }}
                 >
                     <SendHorizonal size={20} color='#C72030' />

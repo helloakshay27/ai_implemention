@@ -56,31 +56,7 @@ const PublicLayout = ({ children }) => {
           {children}
         </main>
 
-        {/* Floating sidebar toggle button (mobile only) */}
-        {!isSidebarOpen && (
-          <button
-            className="btn btn-primary floating-sidebar-toggle d-md-none"
-            onClick={() => setIsSidebarOpen(true)}
-            style={{
-              position: "fixed",
-              bottom: "20px",
-              left: "20px",
-              zIndex: 1000,
-              borderRadius: "50%",
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-              backgroundColor: "#C72030",
-              borderColor: "#C72030",
-            }}
-            title="Open Menu"
-          >
-            <MessageSquare size={20} />
-          </button>
-        )}
+
       </div>
     </>
   );
@@ -186,59 +162,66 @@ const PublicSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   return (
     <>
-      {/* Sidebar Overlay for mobile */}
+      {/* Sidebar Overlay - covers entire screen when sidebar is open */}
       {isSidebarOpen && (
         <div
-          className="sidebar-overlay d-md-none"
+          className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 999,
-          }}
+          // style={{
+          //   position: "fixed",
+          //   top: 0,
+          //   left: 0,
+          //   width: "100vw",
+          //   height: "100vh",
+          //   backgroundColor: "rgba(0, 0, 0, 0.5)",
+          //   zIndex: 1050,
+          //   cursor: "pointer",
+          // }}
         />
       )}
 
-      <div className={`sidebar ${isSidebarOpen ? "show" : ""} z-1`}>
-        <div className="d-flex justify-content-between align-items-center p-3 gap-4">
-          {/* Desktop close button */}
-          <SidebarCloseIcon
-            size={25}
-            className="cursor-pointer d-none d-md-block"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            title="Toggle Sidebar"
-          />
-
-          {/* Mobile hamburger/close button */}
+      <div className={`sidebar ${isSidebarOpen ? "show" : ""}`} style={{ zIndex: 1051 }}>
+        <div className="d-flex justify-content-between align-items-center p-2 p-md-3 gap-2 gap-md-4">
+          {/* Close sidebar button */}
           <button
-            className="btn text-white p-0 d-md-none"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            title="Toggle Menu"
+            className="btn text-white p-1 p-md-0 d-flex align-items-center justify-content-center"
+            onClick={() => setIsSidebarOpen(false)}
+            title="Close Sidebar"
+            style={{
+              minWidth: "32px",
+              minHeight: "32px",
+              borderRadius: "8px",
+              transition: "all 0.2s ease"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
           >
-            {isSidebarOpen ? <X size={24} /> : <SidebarCloseIcon size={24} />}
+            <SidebarCloseIcon color="#000000" size={window.innerWidth < 768 ? 20 : 25} />
           </button>
 
-          <img
-            style={{ cursor: "pointer" }}
-            onClick={createNewPublicChat}
-            src="/newchat.svg"
-            alt="New Chat"
-            title="Start New Chat"
-          />
-
-          {/* Additional close button for mobile */}
+          {/* New chat button */}
           <button
-            className="btn text-white d-md-none p-0"
-            onClick={() => {
-              setIsSidebarOpen(false);
+            className="btn p-1 p-md-0 d-flex align-items-center justify-content-center"
+            onClick={createNewPublicChat}
+            title="Start New Chat"
+            style={{
+              minWidth: "32px",
+              minHeight: "32px",
+              borderRadius: "8px",
+              transition: "all 0.2s ease"
             }}
-            title="Close Sidebar"
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
           >
-            <X size={24} />
+            <img
+              src="/newchat.svg"
+              alt="New Chat"
+              style={{ 
+                width: window.innerWidth < 768 ? "20px" : "24px",
+                height: window.innerWidth < 768 ? "20px" : "24px",
+                cursor: "pointer" 
+              }}
+            />
           </button>
         </div>
 
@@ -340,6 +323,10 @@ const PublicHeader = ({ noTier, isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
+  const createNewPublicChat = () => {
+    navigate("/chats");
+  };
+
   const handleClose = () => {
     setShowModal(false);
   };
@@ -426,18 +413,53 @@ const PublicHeader = ({ noTier, isSidebarOpen, setIsSidebarOpen }) => {
       <div
         className={`${isSidebarOpen ? "custom-header-full" : "custom-header"}`}
       >
-        <div className="d-flex align-items-center gap-2">
-          {/* Sidebar toggle button for all screen sizes */}
-          {/* <button
-                        className="btn text-dark p-0 sidebar-toggle"
-                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        style={{ cursor: "pointer" }}
-                        title={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
-                    >
-                        <SidebarCloseIcon size={25} />
-                    </button> */}
+        <div className="d-flex align-items-center gap-2 gap-md-3">
+          {/* Sidebar toggle button - visible when sidebar is closed */}
+          {!isSidebarOpen && (
+            <button
+              className="btn text-dark p-1 p-md-0 d-flex align-items-center justify-content-center"
+              onClick={() => setIsSidebarOpen(true)}
+              style={{ 
+                cursor: "pointer",
+                minWidth: "32px",
+                minHeight: "32px",
+                borderRadius: "8px",
+                transition: "all 0.2s ease"
+              }}
+              title="Open Sidebar"
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+            >
+              <SidebarCloseIcon color="#000000" size={window.innerWidth < 768 ? 20 : 25} />
+            </button>
+          )}
 
-          {/* App title/brand */}
+          {/* New Chat button - visible when sidebar is closed */}
+          {!isSidebarOpen && (
+            <button
+              className="btn p-1 p-md-0 d-flex align-items-center justify-content-center"
+              onClick={createNewPublicChat}
+              style={{ 
+                cursor: "pointer",
+                minWidth: "32px",
+                minHeight: "32px",
+                borderRadius: "8px",
+                transition: "all 0.2s ease"
+              }}
+              title="Start New Chat"
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+            >
+              <img
+                src="/newchat.svg"
+                alt="New Chat"
+                style={{ 
+                  width: window.innerWidth < 768 ? "20px" : "24px",
+                  height: window.innerWidth < 768 ? "20px" : "24px"
+                }}
+              />
+            </button>
+          )}
         </div>
 
         <div className="header-icons">
@@ -445,15 +467,18 @@ const PublicHeader = ({ noTier, isSidebarOpen, setIsSidebarOpen }) => {
             <div
               className="d-flex align-items-center justify-content-center rounded-circle"
               style={{
-                width: "40px",
-                height: "40px",
+                width: window.innerWidth < 768 ? "36px" : "40px",
+                height: window.innerWidth < 768 ? "36px" : "40px",
                 backgroundColor: "#C72030",
                 color: "white",
                 cursor: "pointer",
-                fontSize: "16px",
+                fontSize: window.innerWidth < 768 ? "14px" : "16px",
                 fontWeight: "bold",
+                transition: "all 0.2s ease"
               }}
               onClick={handleOpen}
+              onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+              onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
             >
               P
             </div>

@@ -6,15 +6,52 @@
     width: 200px;
     height: 100vh;
     background-color: rgba(196, 184, 157, 0.25);
+    background: #C4B89D40;
+
     transition: transform 0.3s ease;
     z-index: 1040;
     display: flex;
     flex-direction: column;
     transform: translateX(0);
+    position: relative;
 }
 
-.sidebar.show {
-    transform: translateX(-100%);
+
+/* Mobile: sidebar is hidden by default */
+@media (max-width: 767px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 280px;
+        max-width: 85vw;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1050;
+    }
+    
+    .sidebar.show {
+        background: #C4B89D40;
+
+
+        transform: translateX(0);
+    }
+}
+    .sidebar.show {
+        background: #C4B89D40;
+
+
+    }
+
+/* Desktop: sidebar is always visible */
+@media (min-width: 768px) {
+    .sidebar {
+        position: relative;
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
 }
 
 .add-chat {
@@ -70,12 +107,35 @@
     height: 100vh;
     width: calc(100% - 200px);
     background: #FFFFFF;
+    transition: width 0.3s ease;
+    position: relative;
 }
 
 .main-full {
     height: 100vh;
     width: 100vw;
     background: #FFFFFF;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+/* Desktop behavior */
+@media (min-width: 768px) {
+    .main {
+        width: calc(100% - 200px);
+    }
+    
+    .main-full {
+        width: 100%;
+    }
+}
+
+/* Mobile behavior - main always full width */
+@media (max-width: 767px) {
+    .main,
+    .main-full {
+        width: 100vw !important;
+    }
 }
 
 html,
@@ -259,7 +319,11 @@ select.custom-select option:hover {
         top: 0;
         bottom: 0;
         left: 0;
+        width: 280px;
+        max-width: 85vw;
         transform: translateX(-100%);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1050;
     }
 
     .sidebar.show {
@@ -267,11 +331,51 @@ select.custom-select option:hover {
     }
 
     .main {
-        height: 100%;
+        width: 100vw !important;
+        height: 100vh;
     }
 
     .chat-area {
-        height: calc(90vh - 146.667px);
+        padding: 5% !important;
+        padding-bottom: 120px !important;
+        height: calc(100vh - 60px);
+    }
+    
+    .chat-input {
+        width: 100% !important;
+        left: 0 !important;
+        padding: 10px !important;
+    }
+    
+    .message {
+        max-width: 95% !important;
+    }
+    
+    .form {
+        max-width: 100% !important;
+        min-width: 100% !important;
+    }
+    
+    /* Make action buttons more touch-friendly */
+    .action-btn {
+        gap: 15px !important;
+        padding: 10px 0 !important;
+    }
+    
+    .action-btn svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    /* Header adjustments */
+    .custom-header,
+    .custom-header-full {
+        padding: 10px 15px !important;
+    }
+    
+    /* Chat items in sidebar */
+    .chat {
+        padding: 12px !important;
     }
 }
 
@@ -637,20 +741,15 @@ p {
     border-radius: 0.5rem;
 }
 
-.rounded-2 {
-    border-radius: 0.5rem;
+/* Input box improvements */
+.input {
+    padding-right: 7rem !important;
+    transition: all 0.2s ease;
 }
 
-.border {
-    border: 1px solid #ddd;
-}
-
-.bg-transparent {
-    background-color: transparent;
-}
-
-.text-white {
-    color: #fff;
+.input:focus {
+    border-color: rgba(199, 32, 48, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(199, 32, 48, 0.1) !important;
 }
 
 /* Button Styles for ChatInput */
@@ -774,4 +873,161 @@ svg {
         background-color: #3e3e3e;
         border-radius: 10px;
     }
+}
+
+/* Sidebar overlay for mobile */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1040;
+    transition: opacity 0.3s ease;
+}
+
+/* Improved sidebar scrolling */
+.sidebar .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar .overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.sidebar .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Touch-friendly improvements */
+@media (max-width: 767px) {
+    /* Increase touch target sizes */
+    button, .cursor-pointer {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Prevent text selection on double tap */
+    .chat, .sidebar button, .header-icons {
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Smooth scrolling on mobile */
+    .chat-area, .sidebar .overflow-y-auto {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    /* Mobile adjustments for input */
+    .chat-input {
+        padding: 15px !important;
+    }
+    
+    .input {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding-left: 3.5rem !important;
+        padding-right: 7rem !important;
+    }
+    
+    /* Make buttons larger on mobile for better touch targets */
+    .position-absolute.p-2 {
+        padding: 10px !important;
+    }
+    
+    /* Image preview adjustments */
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+}
+
+/* Attachment badge */
+.attachment-badge {
+    position: absolute;
+    background-color: #C72030;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -4px;
+    right: -4px;
+}
+
+/* Image preview container */
+.image-preview-container {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.image-preview-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: #fff;
+    border: 2px solid #dee2e6;
+}
+
+.image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-preview-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(199, 32, 48, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.image-preview-remove:hover {
+    background: #C72030;
+    transform: scale(1.1);
+}
+
+/* File attachment container */
+.file-attachment-container {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.file-attachment-item {
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
 }

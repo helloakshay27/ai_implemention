@@ -341,47 +341,138 @@ const PublicChatMessage = ({ message }) => {
               </div>
             </div>
 
-            {/* Action Buttons - Exact implementation from ChatMessage.jsx */}
+            {/* Action Buttons - Responsive implementation */}
             {message?.response?.response && (
-              <div className="d-flex align-items-center gap-3 ms-5 action-btn relative">
-                <Copy
+              <div className="d-flex align-items-center gap-2 gap-md-3 ms-3 ms-md-5 action-btn relative flex-wrap">
+                <button
                   onClick={handleCopy}
-                  size={15}
-                  color="black"
-                  className="cursor-pointer"
-                />
-                <Volume2
-                  size={15}
-                  className="cursor-pointer"
-                  fill={isSpeaking ? "#000000" : "#fafafa"}
-                  color={isSpeaking ? "#000000" : "black"}
+                  className="btn p-1 d-flex align-items-center justify-content-center"
+                  title="Copy to clipboard"
+                  style={{
+                    minWidth: "32px",
+                    minHeight: "32px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "transparent",
+                    transition: "all 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <Copy
+                    size={window.innerWidth < 768 ? 16 : 18}
+                    color="black"
+                  />
+                </button>
+
+                <button
                   onClick={handleSpeak}
+                  className="btn p-1 d-flex align-items-center justify-content-center"
                   title={isSpeaking ? "Stop speaking" : "Play with OpenAI TTS"}
-                />
-                <Download
-                  size={18}
-                  color="black"
-                  className="cursor-pointer hover:scale-110 transition-transform"
+                  style={{
+                    minWidth: "32px",
+                    minHeight: "32px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "transparent",
+                    transition: "all 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <Volume2
+                    size={window.innerWidth < 768 ? 16 : 18}
+                    fill={isSpeaking ? "#000000" : "#fafafa"}
+                    color={isSpeaking ? "#000000" : "black"}
+                  />
+                </button>
+
+                <button
                   onClick={() => setIsOpen(!isOpen)}
-                />
-                <Share2
+                  className="btn p-1 d-flex align-items-center justify-content-center"
+                  title="Download"
+                  style={{
+                    minWidth: "32px",
+                    minHeight: "32px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "transparent",
+                    transition: "all 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <Download
+                    size={window.innerWidth < 768 ? 16 : 18}
+                    color="black"
+                  />
+                </button>
+
+                <button
                   onClick={handleShare}
-                  size={15}
-                  color="black"
-                  className="cursor-pointer"
-                />
-                <Pin
-                  size={15}
-                  color={loading ? "grey" : "black"}
-                  style={{ fill: pin ? "black" : "none" }}
+                  className="btn p-1 d-flex align-items-center justify-content-center"
+                  title="Share via email"
+                  style={{
+                    minWidth: "32px",
+                    minHeight: "32px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "transparent",
+                    transition: "all 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <Share2
+                    size={window.innerWidth < 768 ? 16 : 18}
+                    color="black"
+                  />
+                </button>
+
+                <button
                   onClick={pin ? handleUnpin : handlePin}
-                  className="cursor-pointer"
-                />
-                <LayoutTemplate
-                  size={15}
-                  className="cursor-pointer"
+                  disabled={loading}
+                  className="btn p-1 d-flex align-items-center justify-content-center"
+                  title={pin ? "Unpin" : "Pin message"}
+                  style={{
+                    minWidth: "32px",
+                    minHeight: "32px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "transparent",
+                    transition: "all 0.2s ease",
+                    cursor: loading ? "not-allowed" : "pointer"
+                  }}
+                  onMouseEnter={(e) => !loading && (e.currentTarget.style.backgroundColor = "#f0f0f0")}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <Pin
+                    size={window.innerWidth < 768 ? 16 : 18}
+                    color={loading ? "grey" : "black"}
+                    style={{ fill: pin ? "black" : "none" }}
+                  />
+                </button>
+
+                <button
                   onClick={handleTemplateDownload}
-                />
+                  className="btn p-1 d-flex align-items-center justify-content-center"
+                  title="Download as template"
+                  style={{
+                    minWidth: "32px",
+                    minHeight: "32px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "transparent",
+                    transition: "all 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                >
+                  <LayoutTemplate
+                    size={window.innerWidth < 768 ? 16 : 18}
+                    color="black"
+                  />
+                </button>
               </div>
             )}
           </>
