@@ -1,0 +1,172 @@
+/* Public Log Journey Styles */
+.public-log-journey {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 8px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.public-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.public-log-title {
+    font-weight: 600;
+    color: #495057;
+    font-size: 14px;
+}
+
+.public-log-count {
+    background: #007bff;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.public-log-timeline {
+    position: relative;
+}
+
+.public-log-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.public-log-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-right: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.public-log-content {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 3px solid #e9ecef;
+}
+
+.public-log-step {
+    font-weight: 600;
+    color: #495057;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.public-log-message {
+    color: #6c757d;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.public-log-time {
+    color: #adb5bd;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+}
+
+.public-log-connector {
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(to bottom, #dee2e6, transparent);
+}
+
+/* Hover effects */
+.public-log-item:hover .public-log-content {
+    background: #f8f9fa;
+    transform: translateX(2px);
+    transition: all 0.2s ease;
+}
+
+/* Success state */
+.public-log-item:has(.public-log-icon[style*="28a745"]) .public-log-content {
+    border-left-color: #28a745;
+}
+
+/* Error state */
+.public-log-item:has(.public-log-icon[style*="dc3545"]) .public-log-content {
+    border-left-color: #dc3545;
+}
+
+/* API Request state */
+.public-log-item:has(.public-log-icon[style*="007bff"]) .public-log-content {
+    border-left-color: #007bff;
+}
+
+/* Processing state */
+.public-log-item:has(.public-log-icon[style*="fd7e14"]) .public-log-content {
+    border-left-color: #fd7e14;
+}
+
+/* Scrollbar styling for webkit browsers */
+.public-log-journey::-webkit-scrollbar {
+    width: 6px;
+}
+
+.public-log-journey::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.public-log-journey::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.public-log-journey::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .public-log-journey {
+        padding: 12px;
+        margin: 6px 0;
+    }
+    
+    .public-log-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+        margin-right: 8px;
+    }
+    
+    .public-log-content {
+        padding: 6px 8px;
+    }
+    
+    .public-log-step {
+        font-size: 11px;
+    }
+    
+    .public-log-message {
+        font-size: 12px;
+    }
+}

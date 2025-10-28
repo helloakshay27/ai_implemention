@@ -5,8 +5,11 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import Layout from "./Layout";
+import PublicLayout from "./PublicLayout";
 import ChatArea from "./components/ChatArea";
+import PublicChatAreaNew from "./components/PublicChatAreaNew";
 import ChatInput from "./components/ChatInput";
+import PublicChatInput from "./components/PublicChatInput";
 
 import SignIn from "./pages/sign_pages/signIn";
 import Register from "./pages/sign_pages/register";
@@ -20,6 +23,7 @@ import ProtectedRoute from "./pages/sign_pages/ProtectedRoute";
 
 import "./mor.css";
 import OptionModal from './components/OptionModal';
+import ChatModal from './components/ChatModal';
 
 function App() {
   return (
@@ -38,6 +42,18 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/forgot-otp" element={<ForgotOtp />} />
         <Route path="/reset-password/:id" element={<CreatePassword />} />
+
+        {/* Public Chat Routes - No Authentication Required */}
+        <Route path="/chats" element={<ChatModal />} />
+        <Route
+          path="/chats/:id"
+          element={
+            <PublicLayout>
+              <PublicChatAreaNew />
+              <PublicChatInput />
+            </PublicLayout>
+          }
+        />
 
         {/* Protected Routes */}
         <Route
