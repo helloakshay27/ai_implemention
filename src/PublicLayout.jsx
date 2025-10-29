@@ -247,7 +247,7 @@ const PublicSidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
             // Width logic for different icon types
             const iconWidths = {
-              text: "16px",
+              text: "22px",
               image: "24px",
               structured: "24px",
               general: "16px",
